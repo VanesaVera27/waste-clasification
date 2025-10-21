@@ -1,7 +1,7 @@
 {
     "version":            "1.2",
     "project_name":       "waste-clasification",
-    "project_version":    "6fa140b-dirty",
+    "project_version":    "85e4bb5-dirty",
     "project_path":       "E:/Tesis/espressif/waste-clasification",
     "idf_path":           "C:/Users/vanes/esp/v5.5.1/esp-idf",
     "build_dir":          "E:/Tesis/espressif/waste-clasification/build",
