@@ -5287,6 +5287,54 @@
                 "children": [
                     {
                         "children": [],
+                        "depends_on": "<choice NN_OPTIMIZATIONS>",
+                        "help": "ANSI C versions for verification and debug purposes.",
+                        "id": "NN_ANSI_C",
+                        "name": "NN_ANSI_C",
+                        "range": null,
+                        "title": "ANSI C",
+                        "type": "bool"
+                    },
+                    {
+                        "children": [],
+                        "depends_on": "<choice NN_OPTIMIZATIONS>",
+                        "help": "Optimisations are automatically picked up for a chipset.\nFor ESP32-S3, assembly optimisations are selected.\nFor other platforms(viz., ESP32, ESP32-C3), generic optimisations are used.",
+                        "id": "NN_OPTIMIZED",
+                        "name": "NN_OPTIMIZED",
+                        "range": null,
+                        "title": "Optimized versions",
+                        "type": "bool"
+                    }
+                ],
+                "depends_on": null,
+                "help": "Use ANSI-C versions for verification and debug purpose.\nOptimisations are automatically picked up for a chipset.\nFor ESP32-S3, assembly optimisations are selected.\nFor other platforms(viz., ESP32, ESP32-C3), generic optimisations are used.",
+                "id": "esp-nn-optimization-for-nn-functions",
+                "name": "NN_OPTIMIZATIONS",
+                "title": "Optimization for nn functions",
+                "type": "choice"
+            },
+            {
+                "children": [],
+                "depends_on": null,
+                "help": null,
+                "id": "NN_OPTIMIZATIONS",
+                "name": "NN_OPTIMIZATIONS",
+                "range": null,
+                "title": null,
+                "type": "int"
+            }
+        ],
+        "depends_on": null,
+        "id": "esp-nn",
+        "title": "ESP-NN",
+        "type": "menu"
+    },
+    {
+        "children": [
+            {
+                "children": [
+                    {
+                        "children": [],
                         "depends_on": "<choice COMPILER_OPTIMIZATION>",
                         "help": null,
                         "id": "COMPILER_OPTIMIZATION_DEBUG",
@@ -5720,6 +5768,438 @@
                         "children": [
                             {
                                 "children": [],
+                                "depends_on": "SOC_TWAI_SUPPORTED",
+                                "help": "This configuration option used to bypass the conflict check mechanism with legacy code.",
+                                "id": "TWAI_SKIP_LEGACY_CONFLICT_CHECK",
+                                "name": "TWAI_SKIP_LEGACY_CONFLICT_CHECK",
+                                "range": null,
+                                "title": "Skip legacy driver conflict check",
+                                "type": "bool"
+                            },
+                            {
+                                "children": [],
+                                "depends_on": "IDF_TARGET_ESP32 && SOC_TWAI_SUPPORTED",
+                                "help": "When the bus-off condition is reached, the REC should be reset to 0 and frozen (via LOM) by the\ndriver's ISR. However on the ESP32, there is an edge case where the REC will increase before the\ndriver's ISR can respond in time (e.g., due to the rapid occurrence of bus errors), thus causing the\nREC to be non-zero after bus-off. A non-zero REC can prevent bus-off recovery as the bus-off recovery\ncondition is that both TEC and REC become 0. Enabling this option will add a workaround in the driver\nto forcibly reset REC to zero on reaching bus-off.",
+                                "id": "TWAI_ERRATA_FIX_BUS_OFF_REC",
+                                "name": "TWAI_ERRATA_FIX_BUS_OFF_REC",
+                                "range": null,
+                                "title": "Add SW workaround for REC change during bus-off",
+                                "type": "bool"
+                            },
+                            {
+                                "children": [],
+                                "depends_on": "IDF_TARGET_ESP32 && SOC_TWAI_SUPPORTED",
+                                "help": "On the ESP32, when a transmit interrupt occurs, and interrupt register is read on the same APB clock\ncycle, the transmit interrupt could be lost. Enabling this option will add a workaround that checks the\ntransmit buffer status bit to recover any lost transmit interrupt.",
+                                "id": "TWAI_ERRATA_FIX_TX_INTR_LOST",
+                                "name": "TWAI_ERRATA_FIX_TX_INTR_LOST",
+                                "range": null,
+                                "title": "Add SW workaround for TX interrupt lost errata",
+                                "type": "bool"
+                            },
+                            {
+                                "children": [],
+                                "depends_on": "IDF_TARGET_ESP32 && SOC_TWAI_SUPPORTED",
+                                "help": "On the ESP32, when receiving a data or remote frame, if a bus error occurs in the data or CRC field,\nthe data of the next received frame could be invalid. Enabling this option will add a workaround that\nwill reset the peripheral on detection of this errata condition. Note that if a frame is transmitted on\nthe bus whilst the reset is ongoing, the message will not be receive by the peripheral sent on the bus\nduring the reset, the message will be lost.",
+                                "id": "TWAI_ERRATA_FIX_RX_FRAME_INVALID",
+                                "name": "TWAI_ERRATA_FIX_RX_FRAME_INVALID",
+                                "range": null,
+                                "title": "Add SW workaround for invalid RX frame errata",
+                                "type": "bool"
+                            },
+                            {
+                                "children": [],
+                                "depends_on": "IDF_TARGET_ESP32 && SOC_TWAI_SUPPORTED",
+                                "help": "On the ESP32, when the RX FIFO overruns and the RX message counter maxes out at 64 messages, the entire\nRX FIFO is no longer recoverable. Enabling this option will add a workaround that resets the peripheral\non detection of this errata condition. Note that if a frame is being sent on the bus during the reset\nbus during the reset, the message will be lost.",
+                                "id": "TWAI_ERRATA_FIX_RX_FIFO_CORRUPT",
+                                "name": "TWAI_ERRATA_FIX_RX_FIFO_CORRUPT",
+                                "range": null,
+                                "title": "Add SW workaround for RX FIFO corruption errata",
+                                "type": "bool"
+                            },
+                            {
+                                "children": [],
+                                "depends_on": "(IDF_TARGET_ESP32 || IDF_TARGET_ESP32S2 || IDF_TARGET_ESP32S3 || IDF_TARGET_ESP32C3) && SOC_TWAI_SUPPORTED",
+                                "help": "When in the listen only mode, the TWAI controller must not influence the TWAI bus (i.e., must not send\nany dominant bits). However, while in listen only mode on the ESP32/ESP32-S2/ESP32-S3/ESP32-C3, the\nTWAI controller will still transmit dominant bits when it detects an error (i.e., as part of an active\nerror frame). Enabling this option will add a workaround that forces the TWAI controller into an error\npassive state on initialization, thus preventing any dominant bits from being sent.",
+                                "id": "TWAI_ERRATA_FIX_LISTEN_ONLY_DOM",
+                                "name": "TWAI_ERRATA_FIX_LISTEN_ONLY_DOM",
+                                "range": null,
+                                "title": "Add SW workaround for listen only transmits dominant bit errata",
+                                "type": "bool"
+                            }
+                        ],
+                        "depends_on": "SOC_TWAI_SUPPORTED",
+                        "id": "component-config-driver-configurations-legacy-twai-driver-configurations",
+                        "title": "Legacy TWAI Driver Configurations",
+                        "type": "menu"
+                    },
+                    {
+                        "children": [
+                            {
+                                "children": [],
+                                "depends_on": "SOC_DAC_SUPPORTED",
+                                "help": "If this is set, the ADC2 driver will disable the output of the DAC corresponding to the specified\nchannel. This is the default value.\n\nFor testing, disable this option so that we can measure the output of DAC by internal ADC.",
+                                "id": "ADC_DISABLE_DAC",
+                                "name": "ADC_DISABLE_DAC",
+                                "range": null,
+                                "title": "Disable DAC when ADC2 is used on GPIO 25 and 26",
+                                "type": "bool"
+                            },
+                            {
+                                "children": [],
+                                "depends_on": null,
+                                "help": "Whether to suppress the deprecation warnings when using legacy adc driver (driver/adc.h).\nIf you want to continue using the legacy driver, and don't want to see related deprecation warnings,\nyou can enable this option.",
+                                "id": "ADC_SUPPRESS_DEPRECATE_WARN",
+                                "name": "ADC_SUPPRESS_DEPRECATE_WARN",
+                                "range": null,
+                                "title": "Suppress legacy driver deprecated warning",
+                                "type": "bool"
+                            },
+                            {
+                                "children": [],
+                                "depends_on": null,
+                                "help": "This configuration option allows the user to bypass the conflict check mechanism with legacy code.",
+                                "id": "ADC_SKIP_LEGACY_CONFLICT_CHECK",
+                                "name": "ADC_SKIP_LEGACY_CONFLICT_CHECK",
+                                "range": null,
+                                "title": "Skip legacy conflict check",
+                                "type": "bool"
+                            },
+                            {
+                                "children": [
+                                    {
+                                        "children": [],
+                                        "depends_on": "IDF_TARGET_ESP32",
+                                        "help": "Some ESP32s have Two Point calibration values burned into eFuse BLOCK3.\nThis option will allow the ADC calibration component to characterize the\nADC-Voltage curve using Two Point values if they are available.",
+                                        "id": "ADC_CAL_EFUSE_TP_ENABLE",
+                                        "name": "ADC_CAL_EFUSE_TP_ENABLE",
+                                        "range": null,
+                                        "title": "Use Two Point Values",
+                                        "type": "bool"
+                                    },
+                                    {
+                                        "children": [],
+                                        "depends_on": "IDF_TARGET_ESP32",
+                                        "help": "Some ESP32s have Vref burned into eFuse BLOCK0. This option will allow\nthe ADC calibration component to characterize the ADC-Voltage curve using\neFuse Vref if it is available.",
+                                        "id": "ADC_CAL_EFUSE_VREF_ENABLE",
+                                        "name": "ADC_CAL_EFUSE_VREF_ENABLE",
+                                        "range": null,
+                                        "title": "Use eFuse Vref",
+                                        "type": "bool"
+                                    },
+                                    {
+                                        "children": [],
+                                        "depends_on": "IDF_TARGET_ESP32",
+                                        "help": "This option will allow the ADC calibration component to use Lookup Tables\nto correct for non-linear behavior in 11db attenuation. Other attenuations\ndo not exhibit non-linear behavior hence will not be affected by this option.",
+                                        "id": "ADC_CAL_LUT_ENABLE",
+                                        "name": "ADC_CAL_LUT_ENABLE",
+                                        "range": null,
+                                        "title": "Use Lookup Tables",
+                                        "type": "bool"
+                                    },
+                                    {
+                                        "children": [],
+                                        "depends_on": null,
+                                        "help": "Whether to suppress the deprecation warnings when using legacy adc calibration\ndriver (esp_adc_cal.h).\nIf you want to continue using the legacy driver, and don't want to see related\ndeprecation warnings, you can enable this option.",
+                                        "id": "ADC_CALI_SUPPRESS_DEPRECATE_WARN",
+                                        "name": "ADC_CALI_SUPPRESS_DEPRECATE_WARN",
+                                        "range": null,
+                                        "title": "Suppress legacy driver deprecated warning",
+                                        "type": "bool"
+                                    }
+                                ],
+                                "depends_on": null,
+                                "id": "component-config-driver-configurations-legacy-adc-driver-configuration-legacy-adc-calibration-configuration",
+                                "title": "Legacy ADC Calibration Configuration",
+                                "type": "menu"
+                            }
+                        ],
+                        "depends_on": null,
+                        "id": "component-config-driver-configurations-legacy-adc-driver-configuration",
+                        "title": "Legacy ADC Driver Configuration",
+                        "type": "menu"
+                    },
+                    {
+                        "children": [
+                            {
+                                "children": [],
+                                "depends_on": "SOC_DAC_SUPPORTED",
+                                "help": "Whether to suppress the deprecation warnings when using legacy dac driver (driver/dac.h).\nIf you want to continue using the legacy driver, and don't want to see related deprecation warnings,\nyou can enable this option.",
+                                "id": "DAC_SUPPRESS_DEPRECATE_WARN",
+                                "name": "DAC_SUPPRESS_DEPRECATE_WARN",
+                                "range": null,
+                                "title": "Suppress legacy driver deprecated warning",
+                                "type": "bool"
+                            },
+                            {
+                                "children": [],
+                                "depends_on": "SOC_DAC_SUPPORTED",
+                                "help": "This configuration option allows the user to bypass the conflict check mechanism with legacy code.",
+                                "id": "DAC_SKIP_LEGACY_CONFLICT_CHECK",
+                                "name": "DAC_SKIP_LEGACY_CONFLICT_CHECK",
+                                "range": null,
+                                "title": "Skip legacy conflict check",
+                                "type": "bool"
+                            }
+                        ],
+                        "depends_on": "SOC_DAC_SUPPORTED",
+                        "id": "component-config-driver-configurations-legacy-dac-driver-configurations",
+                        "title": "Legacy DAC Driver Configurations",
+                        "type": "menu"
+                    },
+                    {
+                        "children": [
+                            {
+                                "children": [],
+                                "depends_on": "SOC_MCPWM_SUPPORTED",
+                                "help": "Whether to suppress the deprecation warnings when using legacy MCPWM driver (driver/mcpwm.h).\nIf you want to continue using the legacy driver, and don't want to see related deprecation warnings,\nyou can enable this option.",
+                                "id": "MCPWM_SUPPRESS_DEPRECATE_WARN",
+                                "name": "MCPWM_SUPPRESS_DEPRECATE_WARN",
+                                "range": null,
+                                "title": "Suppress legacy driver deprecated warning",
+                                "type": "bool"
+                            },
+                            {
+                                "children": [],
+                                "depends_on": "SOC_MCPWM_SUPPORTED",
+                                "help": "This configuration option allows the user to bypass the conflict check mechanism with legacy code.",
+                                "id": "MCPWM_SKIP_LEGACY_CONFLICT_CHECK",
+                                "name": "MCPWM_SKIP_LEGACY_CONFLICT_CHECK",
+                                "range": null,
+                                "title": "Skip legacy conflict check",
+                                "type": "bool"
+                            }
+                        ],
+                        "depends_on": "SOC_MCPWM_SUPPORTED",
+                        "id": "component-config-driver-configurations-legacy-mcpwm-driver-configurations",
+                        "title": "Legacy MCPWM Driver Configurations",
+                        "type": "menu"
+                    },
+                    {
+                        "children": [
+                            {
+                                "children": [],
+                                "depends_on": "SOC_GPTIMER_SUPPORTED",
+                                "help": "Whether to suppress the deprecation warnings when using legacy timer group driver (driver/timer.h).\nIf you want to continue using the legacy driver, and don't want to see related deprecation warnings,\nyou can enable this option.",
+                                "id": "GPTIMER_SUPPRESS_DEPRECATE_WARN",
+                                "name": "GPTIMER_SUPPRESS_DEPRECATE_WARN",
+                                "range": null,
+                                "title": "Suppress legacy driver deprecated warning",
+                                "type": "bool"
+                            },
+                            {
+                                "children": [],
+                                "depends_on": "SOC_GPTIMER_SUPPORTED",
+                                "help": "This configuration option allows the user to bypass the conflict check mechanism with legacy code.",
+                                "id": "GPTIMER_SKIP_LEGACY_CONFLICT_CHECK",
+                                "name": "GPTIMER_SKIP_LEGACY_CONFLICT_CHECK",
+                                "range": null,
+                                "title": "Skip legacy conflict check",
+                                "type": "bool"
+                            }
+                        ],
+                        "depends_on": "SOC_GPTIMER_SUPPORTED",
+                        "id": "component-config-driver-configurations-legacy-timer-group-driver-configurations",
+                        "title": "Legacy Timer Group Driver Configurations",
+                        "type": "menu"
+                    },
+                    {
+                        "children": [
+                            {
+                                "children": [],
+                                "depends_on": "SOC_RMT_SUPPORTED",
+                                "help": "Whether to suppress the deprecation warnings when using legacy rmt driver (driver/rmt.h).\nIf you want to continue using the legacy driver, and don't want to see related deprecation warnings,\nyou can enable this option.",
+                                "id": "RMT_SUPPRESS_DEPRECATE_WARN",
+                                "name": "RMT_SUPPRESS_DEPRECATE_WARN",
+                                "range": null,
+                                "title": "Suppress legacy driver deprecated warning",
+                                "type": "bool"
+                            },
+                            {
+                                "children": [],
+                                "depends_on": "SOC_RMT_SUPPORTED",
+                                "help": "This configuration option allows the user to bypass the conflict check mechanism with legacy code.",
+                                "id": "RMT_SKIP_LEGACY_CONFLICT_CHECK",
+                                "name": "RMT_SKIP_LEGACY_CONFLICT_CHECK",
+                                "range": null,
+                                "title": "Skip legacy conflict check",
+                                "type": "bool"
+                            }
+                        ],
+                        "depends_on": "SOC_RMT_SUPPORTED",
+                        "id": "component-config-driver-configurations-legacy-rmt-driver-configurations",
+                        "title": "Legacy RMT Driver Configurations",
+                        "type": "menu"
+                    },
+                    {
+                        "children": [
+                            {
+                                "children": [],
+                                "depends_on": "SOC_I2S_SUPPORTED",
+                                "help": "Whether to suppress the deprecation warnings when using legacy i2s driver (driver/i2s.h).\nIf you want to continue using the legacy driver, and don't want to see related deprecation warnings,\nyou can enable this option.",
+                                "id": "I2S_SUPPRESS_DEPRECATE_WARN",
+                                "name": "I2S_SUPPRESS_DEPRECATE_WARN",
+                                "range": null,
+                                "title": "Suppress legacy driver deprecated warning",
+                                "type": "bool"
+                            },
+                            {
+                                "children": [],
+                                "depends_on": "SOC_I2S_SUPPORTED",
+                                "help": "This configuration option allows the user to bypass the conflict check mechanism with legacy code.",
+                                "id": "I2S_SKIP_LEGACY_CONFLICT_CHECK",
+                                "name": "I2S_SKIP_LEGACY_CONFLICT_CHECK",
+                                "range": null,
+                                "title": "Skip legacy conflict check",
+                                "type": "bool"
+                            }
+                        ],
+                        "depends_on": "SOC_I2S_SUPPORTED",
+                        "id": "component-config-driver-configurations-legacy-i2s-driver-configurations",
+                        "title": "Legacy I2S Driver Configurations",
+                        "type": "menu"
+                    },
+                    {
+                        "children": [
+                            {
+                                "children": [],
+                                "depends_on": "SOC_I2C_SUPPORTED",
+                                "help": "This configuration option allows the user to bypass the conflict check mechanism with legacy code.",
+                                "id": "I2C_SKIP_LEGACY_CONFLICT_CHECK",
+                                "name": "I2C_SKIP_LEGACY_CONFLICT_CHECK",
+                                "range": null,
+                                "title": "Skip legacy conflict check",
+                                "type": "bool"
+                            }
+                        ],
+                        "depends_on": "SOC_I2C_SUPPORTED",
+                        "id": "component-config-driver-configurations-legacy-i2c-driver-configurations",
+                        "title": "Legacy I2C Driver Configurations",
+                        "type": "menu"
+                    },
+                    {
+                        "children": [
+                            {
+                                "children": [],
+                                "depends_on": "SOC_PCNT_SUPPORTED",
+                                "help": "whether to suppress the deprecation warnings when using legacy PCNT driver (driver/pcnt.h).\nIf you want to continue using the legacy driver, and don't want to see related deprecation warnings,\nyou can enable this option.",
+                                "id": "PCNT_SUPPRESS_DEPRECATE_WARN",
+                                "name": "PCNT_SUPPRESS_DEPRECATE_WARN",
+                                "range": null,
+                                "title": "Suppress legacy driver deprecated warning",
+                                "type": "bool"
+                            },
+                            {
+                                "children": [],
+                                "depends_on": "SOC_PCNT_SUPPORTED",
+                                "help": "This configuration option allows the user to bypass the conflict check mechanism with legacy code.",
+                                "id": "PCNT_SKIP_LEGACY_CONFLICT_CHECK",
+                                "name": "PCNT_SKIP_LEGACY_CONFLICT_CHECK",
+                                "range": null,
+                                "title": "Skip legacy conflict check",
+                                "type": "bool"
+                            }
+                        ],
+                        "depends_on": "SOC_PCNT_SUPPORTED",
+                        "id": "component-config-driver-configurations-legacy-pcnt-driver-configurations",
+                        "title": "Legacy PCNT Driver Configurations",
+                        "type": "menu"
+                    },
+                    {
+                        "children": [
+                            {
+                                "children": [],
+                                "depends_on": "SOC_SDM_SUPPORTED",
+                                "help": "whether to suppress the deprecation warnings when using legacy SDM driver (driver/sigmadelta.h).\nIf you want to continue using the legacy driver, and don't want to see related deprecation warnings,\nyou can enable this option.",
+                                "id": "SDM_SUPPRESS_DEPRECATE_WARN",
+                                "name": "SDM_SUPPRESS_DEPRECATE_WARN",
+                                "range": null,
+                                "title": "Suppress legacy driver deprecated warning",
+                                "type": "bool"
+                            },
+                            {
+                                "children": [],
+                                "depends_on": "SOC_SDM_SUPPORTED",
+                                "help": "This configuration option allows the user to bypass the conflict check mechanism with legacy code.",
+                                "id": "SDM_SKIP_LEGACY_CONFLICT_CHECK",
+                                "name": "SDM_SKIP_LEGACY_CONFLICT_CHECK",
+                                "range": null,
+                                "title": "Skip legacy conflict check",
+                                "type": "bool"
+                            }
+                        ],
+                        "depends_on": "SOC_SDM_SUPPORTED",
+                        "id": "component-config-driver-configurations-legacy-sdm-driver-configurations",
+                        "title": "Legacy SDM Driver Configurations",
+                        "type": "menu"
+                    },
+                    {
+                        "children": [
+                            {
+                                "children": [],
+                                "depends_on": "SOC_TEMP_SENSOR_SUPPORTED",
+                                "help": "whether to suppress the deprecation warnings when using legacy temperature sensor driver\n(driver/temp_sensor.h). If you want to continue using the legacy driver,\nand don't want to see related deprecation warnings, you can enable this option.",
+                                "id": "TEMP_SENSOR_SUPPRESS_DEPRECATE_WARN",
+                                "name": "TEMP_SENSOR_SUPPRESS_DEPRECATE_WARN",
+                                "range": null,
+                                "title": "Suppress legacy driver deprecated warning",
+                                "type": "bool"
+                            },
+                            {
+                                "children": [],
+                                "depends_on": "SOC_TEMP_SENSOR_SUPPORTED",
+                                "help": "This configuration option allows the user to bypass the conflict check mechanism with legacy code.",
+                                "id": "TEMP_SENSOR_SKIP_LEGACY_CONFLICT_CHECK",
+                                "name": "TEMP_SENSOR_SKIP_LEGACY_CONFLICT_CHECK",
+                                "range": null,
+                                "title": "Skip legacy conflict check",
+                                "type": "bool"
+                            }
+                        ],
+                        "depends_on": "SOC_TEMP_SENSOR_SUPPORTED",
+                        "id": "component-config-driver-configurations-legacy-temperature-sensor-driver-configurations",
+                        "title": "Legacy Temperature Sensor Driver Configurations",
+                        "type": "menu"
+                    },
+                    {
+                        "children": [
+                            {
+                                "children": [],
+                                "depends_on": "SOC_TOUCH_SENSOR_SUPPORTED",
+                                "help": "whether to suppress the deprecation warnings when using legacy touch sensor driver\n(driver/touch_sensor.h). If you want to continue using the legacy driver,\nand don't want to see related deprecation warnings, you can enable this option.",
+                                "id": "TOUCH_SUPPRESS_DEPRECATE_WARN",
+                                "name": "TOUCH_SUPPRESS_DEPRECATE_WARN",
+                                "range": null,
+                                "title": "Suppress legacy driver deprecated warning",
+                                "type": "bool"
+                            },
+                            {
+                                "children": [],
+                                "depends_on": "SOC_TOUCH_SENSOR_SUPPORTED",
+                                "help": "This configuration option allows the user to bypass the conflict check mechanism with legacy code.",
+                                "id": "TOUCH_SKIP_LEGACY_CONFLICT_CHECK",
+                                "name": "TOUCH_SKIP_LEGACY_CONFLICT_CHECK",
+                                "range": null,
+                                "title": "Skip legacy conflict check",
+                                "type": "bool"
+                            }
+                        ],
+                        "depends_on": "SOC_TOUCH_SENSOR_SUPPORTED",
+                        "id": "component-config-driver-configurations-legacy-touch-sensor-driver-configurations",
+                        "title": "Legacy Touch Sensor Driver Configurations",
+                        "type": "menu"
+                    }
+                ],
+                "depends_on": null,
+                "id": "component-config-driver-configurations",
+                "title": "Driver Configurations",
+                "type": "menu"
+            },
+            {
+                "children": [
+                    {
+                        "children": [
+                            {
+                                "children": [],
                                 "depends_on": "EFUSE_CUSTOM_TABLE",
                                 "help": "Name of the custom eFuse CSV filename. This path is evaluated\nrelative to the project root directory.",
                                 "id": "EFUSE_CUSTOM_TABLE_FILENAME",
@@ -5856,6 +6336,140 @@
                 "children": [
                     {
                         "children": [],
+                        "depends_on": "SOC_ANA_CMPR_SUPPORTED",
+                        "help": "Place Analog Comparator ISR handler in IRAM to reduce latency caused by cache miss.",
+                        "id": "ANA_CMPR_ISR_HANDLER_IN_IRAM",
+                        "name": "ANA_CMPR_ISR_HANDLER_IN_IRAM",
+                        "range": null,
+                        "title": "Place Analog Comparator ISR handler in IRAM to reduce latency",
+                        "type": "bool"
+                    },
+                    {
+                        "children": [],
+                        "depends_on": "SOC_ANA_CMPR_SUPPORTED",
+                        "help": "Place Analog Comparator control functions (like ana_cmpr_set_internal_reference) into IRAM,\nso that these functions can be IRAM-safe and able to be called in an IRAM interrupt context.\nEnabling this option can improve driver performance as well.",
+                        "id": "ANA_CMPR_CTRL_FUNC_IN_IRAM",
+                        "name": "ANA_CMPR_CTRL_FUNC_IN_IRAM",
+                        "range": null,
+                        "title": "Place Analog Comparator control functions into IRAM",
+                        "type": "bool"
+                    },
+                    {
+                        "children": [],
+                        "depends_on": "SOC_ANA_CMPR_SUPPORTED",
+                        "help": "Enable this option to allow the Analog Comparator Interrupt Service Routine (ISR)\nto execute even when the cache is disabled. This can be useful in scenarios where the cache\nmight be turned off, but the comparator functionality is still required to operate correctly.",
+                        "id": "ANA_CMPR_ISR_CACHE_SAFE",
+                        "name": "ANA_CMPR_ISR_CACHE_SAFE",
+                        "range": null,
+                        "title": "Allow Analog Comparator ISR to execute when cache is disabled",
+                        "type": "bool"
+                    },
+                    {
+                        "children": [],
+                        "depends_on": "SOC_ANA_CMPR_SUPPORTED",
+                        "help": "This will ensure the driver object will not be allocated from a memory region\nwhere its cache can be disabled.",
+                        "id": "ANA_CMPR_OBJ_CACHE_SAFE",
+                        "name": "ANA_CMPR_OBJ_CACHE_SAFE",
+                        "range": null,
+                        "title": null,
+                        "type": "bool"
+                    },
+                    {
+                        "children": [],
+                        "depends_on": "SOC_ANA_CMPR_SUPPORTED",
+                        "help": "If enabled, the driver component will:\n1. ignore the global logging settings\n2. compile all log messages into the binary\n3. set the runtime log level to VERBOSE\nPlease enable this option by caution, as it will increase the binary size.",
+                        "id": "ANA_CMPR_ENABLE_DEBUG_LOG",
+                        "name": "ANA_CMPR_ENABLE_DEBUG_LOG",
+                        "range": null,
+                        "title": "Force enable debug log",
+                        "type": "bool"
+                    }
+                ],
+                "depends_on": "SOC_ANA_CMPR_SUPPORTED",
+                "id": "component-config-esp-driver-analog-comparator-configurations",
+                "title": "ESP-Driver:Analog Comparator Configurations",
+                "type": "menu"
+            },
+            {
+                "children": [
+                    {
+                        "children": [],
+                        "depends_on": "SOC_BITSCRAMBLER_SUPPORTED",
+                        "help": "Place BitScrambler control functions into IRAM for better performance and fewer cache misses.",
+                        "id": "BITSCRAMBLER_CTRL_FUNC_IN_IRAM",
+                        "name": "BITSCRAMBLER_CTRL_FUNC_IN_IRAM",
+                        "range": null,
+                        "title": "Place BitScrambler control functions in IRAM",
+                        "type": "bool"
+                    },
+                    {
+                        "children": [],
+                        "depends_on": "SOC_BITSCRAMBLER_SUPPORTED",
+                        "help": "This will ensure the BitScrambler object will not be allocated from a memory region\nwhere its cache can be disabled.",
+                        "id": "BITSCRAMBLER_OBJ_CACHE_SAFE",
+                        "name": "BITSCRAMBLER_OBJ_CACHE_SAFE",
+                        "range": null,
+                        "title": null,
+                        "type": "bool"
+                    }
+                ],
+                "depends_on": "SOC_BITSCRAMBLER_SUPPORTED",
+                "id": "component-config-bitscrambler-configurations",
+                "title": "BitScrambler Configurations",
+                "type": "menu"
+            },
+            {
+                "children": [
+                    {
+                        "children": [],
+                        "depends_on": "SOC_DAC_SUPPORTED",
+                        "help": "Place DAC control functions (e.g. 'dac_oneshot_output_voltage') into IRAM,\nso that this function can be IRAM-safe and able to be called in the other IRAM interrupt context.\nEnabling this option can improve driver performance as well.",
+                        "id": "DAC_CTRL_FUNC_IN_IRAM",
+                        "name": "DAC_CTRL_FUNC_IN_IRAM",
+                        "range": null,
+                        "title": "Place DAC control functions into IRAM",
+                        "type": "bool"
+                    },
+                    {
+                        "children": [],
+                        "depends_on": "SOC_DAC_SUPPORTED",
+                        "help": "Ensure the DAC interrupt is IRAM-Safe by allowing the interrupt handler to be\nexecutable when the cache is disabled (e.g. SPI Flash write).",
+                        "id": "DAC_ISR_IRAM_SAFE",
+                        "name": "DAC_ISR_IRAM_SAFE",
+                        "range": null,
+                        "title": "DAC ISR IRAM-Safe",
+                        "type": "bool"
+                    },
+                    {
+                        "children": [],
+                        "depends_on": "SOC_DAC_SUPPORTED",
+                        "help": "whether to enable the debug log message for DAC driver.\nNote that, this option only controls the DAC driver log, won't affect other drivers.",
+                        "id": "DAC_ENABLE_DEBUG_LOG",
+                        "name": "DAC_ENABLE_DEBUG_LOG",
+                        "range": null,
+                        "title": "Enable debug log",
+                        "type": "bool"
+                    },
+                    {
+                        "children": [],
+                        "depends_on": "SOC_DAC_DMA_16BIT_ALIGN && SOC_DAC_SUPPORTED",
+                        "help": "Whether to left shift the continuous data to align every bytes to 16 bits in the driver.\nOn ESP32, although the DAC resolution is only 8 bits,\nthe hardware requires 16 bits data in continuous mode.\nBy enabling this option, the driver will left shift 8 bits for the input data automatically.\nOnly disable this option when you decide to do this step by yourself.\nNote that the driver will allocate a new piece of memory to save the converted data.",
+                        "id": "DAC_DMA_AUTO_16BIT_ALIGN",
+                        "name": "DAC_DMA_AUTO_16BIT_ALIGN",
+                        "range": null,
+                        "title": "Align the continuous data to 16 bit automatically",
+                        "type": "bool"
+                    }
+                ],
+                "depends_on": "SOC_DAC_SUPPORTED",
+                "id": "component-config-esp-driver-dac-configurations",
+                "title": "ESP-Driver:DAC Configurations",
+                "type": "menu"
+            },
+            {
+                "children": [
+                    {
+                        "children": [],
                         "depends_on": "IDF_TARGET_ESP32",
                         "help": "This option is intended to fix the bug that ESP32 is not able to switch to configured\npullup/pulldown mode in sleep.\nIf this option is selected, chip will automatically emulate the behaviour of switching,\nand about 450B of source codes would be placed into IRAM.",
                         "id": "GPIO_ESP32_SUPPORT_SWITCH_SLP_PULL",
@@ -5878,6 +6492,667 @@
                 "depends_on": null,
                 "id": "component-config-esp-driver-gpio-configurations",
                 "title": "ESP-Driver:GPIO Configurations",
+                "type": "menu"
+            },
+            {
+                "children": [
+                    {
+                        "children": [],
+                        "depends_on": "SOC_GPTIMER_SUPPORTED",
+                        "help": "Place GPTimer ISR handler in IRAM to reduce latency caused by cache miss.",
+                        "id": "GPTIMER_ISR_HANDLER_IN_IRAM",
+                        "name": "GPTIMER_ISR_HANDLER_IN_IRAM",
+                        "range": null,
+                        "title": "Place GPTimer ISR handler in IRAM to reduce latency",
+                        "type": "bool"
+                    },
+                    {
+                        "children": [],
+                        "depends_on": "SOC_GPTIMER_SUPPORTED",
+                        "help": "Place GPTimer control functions (like start/stop) in IRAM, to reduce latency caused by cache miss.\nIf enabled, these functions can also be called when cache is disabled.",
+                        "id": "GPTIMER_CTRL_FUNC_IN_IRAM",
+                        "name": "GPTIMER_CTRL_FUNC_IN_IRAM",
+                        "range": null,
+                        "title": "Place GPTimer control functions in IRAM",
+                        "type": "bool"
+                    },
+                    {
+                        "children": [],
+                        "depends_on": "SOC_GPTIMER_SUPPORTED",
+                        "help": "Enable this option to allow the GPTimer Interrupt Service Routine (ISR)\nto execute even when the cache is disabled. This can be useful in scenarios where the cache\nmight be turned off, but the GPTimer functionality is still required to operate correctly.",
+                        "id": "GPTIMER_ISR_CACHE_SAFE",
+                        "name": "GPTIMER_ISR_CACHE_SAFE",
+                        "range": null,
+                        "title": "Allow GPTimer ISR to execute when cache is disabled",
+                        "type": "bool"
+                    },
+                    {
+                        "children": [],
+                        "depends_on": "SOC_GPTIMER_SUPPORTED",
+                        "help": "This will ensure the GPTimer object will not be allocated from a memory region\nwhere its cache can be disabled.",
+                        "id": "GPTIMER_OBJ_CACHE_SAFE",
+                        "name": "GPTIMER_OBJ_CACHE_SAFE",
+                        "range": null,
+                        "title": null,
+                        "type": "bool"
+                    },
+                    {
+                        "children": [],
+                        "depends_on": "SOC_GPTIMER_SUPPORTED",
+                        "help": "If enabled, GPTimer component will:\n1. ignore the global logging settings\n2. compile all log messages into the binary\n3. set the runtime log level to VERBOSE\nPlease enable this option by caution, as it will increase the binary size.",
+                        "id": "GPTIMER_ENABLE_DEBUG_LOG",
+                        "name": "GPTIMER_ENABLE_DEBUG_LOG",
+                        "range": null,
+                        "title": "Force enable debug log",
+                        "type": "bool"
+                    }
+                ],
+                "depends_on": "SOC_GPTIMER_SUPPORTED",
+                "id": "component-config-esp-driver-gptimer-configurations",
+                "title": "ESP-Driver:GPTimer Configurations",
+                "type": "menu"
+            },
+            {
+                "children": [
+                    {
+                        "children": [],
+                        "depends_on": "SOC_I2C_SUPPORTED",
+                        "help": "Ensure the I2C interrupt is IRAM-Safe by allowing the interrupt handler to be\nexecutable when the cache is disabled (e.g. SPI Flash write).\nnote: This cannot be used in the I2C legacy driver.",
+                        "id": "I2C_ISR_IRAM_SAFE",
+                        "name": "I2C_ISR_IRAM_SAFE",
+                        "range": null,
+                        "title": "I2C ISR IRAM-Safe",
+                        "type": "bool"
+                    },
+                    {
+                        "children": [],
+                        "depends_on": "SOC_I2C_SUPPORTED",
+                        "help": "whether to enable the debug log message for I2C driver.\nNote that this option only controls the I2C driver log, will not affect other drivers.\n\nnote: This cannot be used in the I2C legacy driver.",
+                        "id": "I2C_ENABLE_DEBUG_LOG",
+                        "name": "I2C_ENABLE_DEBUG_LOG",
+                        "range": null,
+                        "title": "Enable I2C debug log",
+                        "type": "bool"
+                    },
+                    {
+                        "children": [],
+                        "depends_on": "SOC_I2C_SUPPORTED",
+                        "help": "I2C slave version 2 solves some existing known issues. Such as write/read workflow, stretch handling, etc.",
+                        "id": "I2C_ENABLE_SLAVE_DRIVER_VERSION_2",
+                        "name": "I2C_ENABLE_SLAVE_DRIVER_VERSION_2",
+                        "range": null,
+                        "title": "Enable I2C slave driver version 2",
+                        "type": "bool"
+                    },
+                    {
+                        "children": [],
+                        "depends_on": "SOC_I2C_SUPPORTED",
+                        "help": "Place I2C master ISR handler into IRAM for better performance and fewer cache misses.",
+                        "id": "I2C_MASTER_ISR_HANDLER_IN_IRAM",
+                        "name": "I2C_MASTER_ISR_HANDLER_IN_IRAM",
+                        "range": null,
+                        "title": "Place I2C master ISR handler into IRAM",
+                        "type": "bool"
+                    }
+                ],
+                "depends_on": "SOC_I2C_SUPPORTED",
+                "id": "component-config-esp-driver-i2c-configurations",
+                "title": "ESP-Driver:I2C Configurations",
+                "type": "menu"
+            },
+            {
+                "children": [
+                    {
+                        "children": [],
+                        "depends_on": "SOC_I2S_SUPPORTED",
+                        "help": "Ensure the I2S interrupt is IRAM-Safe by allowing the interrupt handler to be\nexecutable when the cache is disabled (e.g. SPI Flash write).",
+                        "id": "I2S_ISR_IRAM_SAFE",
+                        "name": "I2S_ISR_IRAM_SAFE",
+                        "range": null,
+                        "title": "I2S ISR IRAM-Safe",
+                        "type": "bool"
+                    },
+                    {
+                        "children": [],
+                        "depends_on": "SOC_I2S_SUPPORTED",
+                        "help": "whether to enable the debug log message for I2S driver.\nNote that, this option only controls the I2S driver log, will not affect other drivers.",
+                        "id": "I2S_ENABLE_DEBUG_LOG",
+                        "name": "I2S_ENABLE_DEBUG_LOG",
+                        "range": null,
+                        "title": "Enable I2S debug log",
+                        "type": "bool"
+                    }
+                ],
+                "depends_on": "SOC_I2S_SUPPORTED",
+                "id": "component-config-esp-driver-i2s-configurations",
+                "title": "ESP-Driver:I2S Configurations",
+                "type": "menu"
+            },
+            {
+                "children": [
+                    {
+                        "children": [],
+                        "depends_on": null,
+                        "help": "Place LEDC control functions (ledc_update_duty and ledc_stop) into IRAM,\nso that these functions can be IRAM-safe and able to be called in an IRAM context.\nEnabling this option can improve driver performance as well.",
+                        "id": "LEDC_CTRL_FUNC_IN_IRAM",
+                        "name": "LEDC_CTRL_FUNC_IN_IRAM",
+                        "range": null,
+                        "title": "Place LEDC control functions into IRAM",
+                        "type": "bool"
+                    }
+                ],
+                "depends_on": null,
+                "id": "component-config-esp-driver-ledc-configurations",
+                "title": "ESP-Driver:LEDC Configurations",
+                "type": "menu"
+            },
+            {
+                "children": [
+                    {
+                        "children": [],
+                        "depends_on": "SOC_MCPWM_SUPPORTED",
+                        "help": "Place MCPWM ISR handler(s) in IRAM to reduce latency caused by cache miss.",
+                        "id": "MCPWM_ISR_HANDLER_IN_IRAM",
+                        "name": "MCPWM_ISR_HANDLER_IN_IRAM",
+                        "range": null,
+                        "title": "Place MCPWM ISR handler into IRAM to reduce latency",
+                        "type": "bool"
+                    },
+                    {
+                        "children": [],
+                        "depends_on": "SOC_MCPWM_SUPPORTED",
+                        "help": "Enable this option to allow the MCPWM Interrupt Service Routine (ISR)\nto execute even when the cache is disabled. This can be useful in scenarios where the cache\nmight be turned off, but the MCPWM functionality is still required to operate correctly.",
+                        "id": "MCPWM_ISR_CACHE_SAFE",
+                        "name": "MCPWM_ISR_CACHE_SAFE",
+                        "range": null,
+                        "title": "Allow MCPWM ISR to execute when cache is disabled",
+                        "type": "bool"
+                    },
+                    {
+                        "children": [],
+                        "depends_on": "SOC_MCPWM_SUPPORTED",
+                        "help": "Place MCPWM control functions in IRAM, to reduce latency caused by cache miss.\nIf enabled, these functions can also be called when cache is disabled.",
+                        "id": "MCPWM_CTRL_FUNC_IN_IRAM",
+                        "name": "MCPWM_CTRL_FUNC_IN_IRAM",
+                        "range": null,
+                        "title": "Place MCPWM control functions in IRAM",
+                        "type": "bool"
+                    },
+                    {
+                        "children": [],
+                        "depends_on": "SOC_MCPWM_SUPPORTED",
+                        "help": "This will ensure the MCPWM object will not be allocated from a memory region\nwhere its cache can be disabled.",
+                        "id": "MCPWM_OBJ_CACHE_SAFE",
+                        "name": "MCPWM_OBJ_CACHE_SAFE",
+                        "range": null,
+                        "title": null,
+                        "type": "bool"
+                    },
+                    {
+                        "children": [],
+                        "depends_on": "SOC_MCPWM_SUPPORTED",
+                        "help": "If enabled, MCPWM component will:\n1. ignore the global logging settings\n2. compile all log messages into the binary\n3. set the runtime log level to VERBOSE\nPlease enable this option with caution, as it will increase the binary size.",
+                        "id": "MCPWM_ENABLE_DEBUG_LOG",
+                        "name": "MCPWM_ENABLE_DEBUG_LOG",
+                        "range": null,
+                        "title": "Force enable debug log",
+                        "type": "bool"
+                    }
+                ],
+                "depends_on": "SOC_MCPWM_SUPPORTED",
+                "id": "component-config-esp-driver-mcpwm-configurations",
+                "title": "ESP-Driver:MCPWM Configurations",
+                "type": "menu"
+            },
+            {
+                "children": [
+                    {
+                        "children": [],
+                        "depends_on": "SOC_PARLIO_SUPPORTED",
+                        "help": "Place Parallel IO TX ISR handler in IRAM to reduce latency caused by cache miss.",
+                        "id": "PARLIO_TX_ISR_HANDLER_IN_IRAM",
+                        "name": "PARLIO_TX_ISR_HANDLER_IN_IRAM",
+                        "range": null,
+                        "title": "Place Parallel IO TX ISR handler in IRAM to reduce latency",
+                        "type": "bool"
+                    },
+                    {
+                        "children": [],
+                        "depends_on": "SOC_PARLIO_SUPPORTED",
+                        "help": "Place Parallel IO RX ISR handler in IRAM to reduce latency caused by cache miss.",
+                        "id": "PARLIO_RX_ISR_HANDLER_IN_IRAM",
+                        "name": "PARLIO_RX_ISR_HANDLER_IN_IRAM",
+                        "range": null,
+                        "title": "Place Parallel IO RX ISR handler in IRAM to reduce latency",
+                        "type": "bool"
+                    },
+                    {
+                        "children": [],
+                        "depends_on": "SOC_PARLIO_SUPPORTED",
+                        "help": "Enable this option to allow the Parallel IO TX Interrupt Service Routine (ISR)\nto execute even when the cache is disabled. This can be useful in scenarios where the cache\nmight be turned off, but the Parallel IO TX functionality is still required to operate correctly.",
+                        "id": "PARLIO_TX_ISR_CACHE_SAFE",
+                        "name": "PARLIO_TX_ISR_CACHE_SAFE",
+                        "range": null,
+                        "title": "Allow Parallel IO TX ISR to execute when cache is disabled",
+                        "type": "bool"
+                    },
+                    {
+                        "children": [],
+                        "depends_on": "SOC_PARLIO_SUPPORTED",
+                        "help": "Enable this option to allow the Parallel IO RX Interrupt Service Routine (ISR)\nto execute even when the cache is disabled. This can be useful in scenarios where the cache\nmight be turned off, but the Parallel IO RX functionality is still required to operate correctly.",
+                        "id": "PARLIO_RX_ISR_CACHE_SAFE",
+                        "name": "PARLIO_RX_ISR_CACHE_SAFE",
+                        "range": null,
+                        "title": "Allow Parallel IO RX ISR to execute when cache is disabled",
+                        "type": "bool"
+                    },
+                    {
+                        "children": [],
+                        "depends_on": "SOC_PARLIO_SUPPORTED",
+                        "help": "This will ensure the driver object will not be allocated from a memory region\nwhere its cache can be disabled.",
+                        "id": "PARLIO_OBJ_CACHE_SAFE",
+                        "name": "PARLIO_OBJ_CACHE_SAFE",
+                        "range": null,
+                        "title": null,
+                        "type": "bool"
+                    },
+                    {
+                        "children": [],
+                        "depends_on": "SOC_PARLIO_SUPPORTED",
+                        "help": "If enabled, Parallel IO driver component will:\n1. ignore the global logging settings\n2. compile all log messages into the binary\n3. set the runtime log level to VERBOSE\nPlease enable this option by caution, as it will increase the binary size.",
+                        "id": "PARLIO_ENABLE_DEBUG_LOG",
+                        "name": "PARLIO_ENABLE_DEBUG_LOG",
+                        "range": null,
+                        "title": "Force enable debug log",
+                        "type": "bool"
+                    },
+                    {
+                        "children": [],
+                        "depends_on": "SOC_PARLIO_SUPPORTED",
+                        "help": "Ensure the Parallel IO interrupt is IRAM-Safe by allowing the interrupt handler to be\nexecutable when the cache is disabled (e.g. SPI Flash write).",
+                        "id": "PARLIO_ISR_IRAM_SAFE",
+                        "name": "PARLIO_ISR_IRAM_SAFE",
+                        "range": null,
+                        "title": "Parallel IO ISR IRAM-Safe (Deprecated)",
+                        "type": "bool"
+                    }
+                ],
+                "depends_on": "SOC_PARLIO_SUPPORTED",
+                "id": "component-config-esp-driver-parallel-io-configurations",
+                "title": "ESP-Driver:Parallel IO Configurations",
+                "type": "menu"
+            },
+            {
+                "children": [
+                    {
+                        "children": [],
+                        "depends_on": "SOC_PCNT_SUPPORTED",
+                        "help": "Place PCNT control functions (like start/stop) into IRAM,\nso that these functions can be IRAM-safe and able to be called in the other IRAM interrupt context.\nEnabling this option can improve driver performance as well.",
+                        "id": "PCNT_CTRL_FUNC_IN_IRAM",
+                        "name": "PCNT_CTRL_FUNC_IN_IRAM",
+                        "range": null,
+                        "title": "Place PCNT control functions into IRAM",
+                        "type": "bool"
+                    },
+                    {
+                        "children": [],
+                        "depends_on": "SOC_PCNT_SUPPORTED",
+                        "help": "Ensure the PCNT interrupt is IRAM-Safe by allowing the interrupt handler to be\nexecutable when the cache is disabled (e.g. SPI Flash write).",
+                        "id": "PCNT_ISR_IRAM_SAFE",
+                        "name": "PCNT_ISR_IRAM_SAFE",
+                        "range": null,
+                        "title": "PCNT ISR IRAM-Safe",
+                        "type": "bool"
+                    },
+                    {
+                        "children": [],
+                        "depends_on": "SOC_PCNT_SUPPORTED",
+                        "help": "whether to enable the debug log message for PCNT driver.\nNote that, this option only controls the PCNT driver log, won't affect other drivers.",
+                        "id": "PCNT_ENABLE_DEBUG_LOG",
+                        "name": "PCNT_ENABLE_DEBUG_LOG",
+                        "range": null,
+                        "title": "Enable debug log",
+                        "type": "bool"
+                    }
+                ],
+                "depends_on": "SOC_PCNT_SUPPORTED",
+                "id": "component-config-esp-driver-pcnt-configurations",
+                "title": "ESP-Driver:PCNT Configurations",
+                "type": "menu"
+            },
+            {
+                "children": [
+                    {
+                        "children": [],
+                        "depends_on": "SOC_RMT_SUPPORTED",
+                        "help": "Place RMT encoder function into IRAM for better performance and fewer cache misses.",
+                        "id": "RMT_ENCODER_FUNC_IN_IRAM",
+                        "name": "RMT_ENCODER_FUNC_IN_IRAM",
+                        "range": null,
+                        "title": "Place RMT encoder function in IRAM",
+                        "type": "bool"
+                    },
+                    {
+                        "children": [],
+                        "depends_on": "SOC_RMT_SUPPORTED",
+                        "help": "Place RMT TX ISR handler in IRAM to reduce latency caused by cache miss.",
+                        "id": "RMT_TX_ISR_HANDLER_IN_IRAM",
+                        "name": "RMT_TX_ISR_HANDLER_IN_IRAM",
+                        "range": null,
+                        "title": "Place RMT TX ISR handler in IRAM to reduce latency",
+                        "type": "bool"
+                    },
+                    {
+                        "children": [],
+                        "depends_on": "SOC_RMT_SUPPORTED",
+                        "help": "Place RMT RX ISR handler in IRAM to reduce latency caused by cache miss.",
+                        "id": "RMT_RX_ISR_HANDLER_IN_IRAM",
+                        "name": "RMT_RX_ISR_HANDLER_IN_IRAM",
+                        "range": null,
+                        "title": "Place RMT RX ISR handler in IRAM to reduce latency",
+                        "type": "bool"
+                    },
+                    {
+                        "children": [],
+                        "depends_on": "SOC_RMT_SUPPORTED",
+                        "help": "Place RMT receive function into IRAM for better performance and fewer cache misses.",
+                        "id": "RMT_RECV_FUNC_IN_IRAM",
+                        "name": "RMT_RECV_FUNC_IN_IRAM",
+                        "range": null,
+                        "title": "Place RMT receive function in IRAM",
+                        "type": "bool"
+                    },
+                    {
+                        "children": [],
+                        "depends_on": "SOC_RMT_SUPPORTED",
+                        "help": "Enable this option to allow the RMT TX Interrupt Service Routine (ISR)\nto execute even when the cache is disabled. This can be useful in scenarios where the cache\nmight be turned off, but the RMT TX functionality is still required to operate correctly.",
+                        "id": "RMT_TX_ISR_CACHE_SAFE",
+                        "name": "RMT_TX_ISR_CACHE_SAFE",
+                        "range": null,
+                        "title": "Allow RMT TX ISR to execute when cache is disabled",
+                        "type": "bool"
+                    },
+                    {
+                        "children": [],
+                        "depends_on": "SOC_RMT_SUPPORTED",
+                        "help": "Enable this option to allow the RMT RX Interrupt Service Routine (ISR)\nto execute even when the cache is disabled. This can be useful in scenarios where the cache\nmight be turned off, but the RMT RX functionality is still required to operate correctly.",
+                        "id": "RMT_RX_ISR_CACHE_SAFE",
+                        "name": "RMT_RX_ISR_CACHE_SAFE",
+                        "range": null,
+                        "title": "Allow RMT RX ISR to execute when cache is disabled",
+                        "type": "bool"
+                    },
+                    {
+                        "children": [],
+                        "depends_on": "SOC_RMT_SUPPORTED",
+                        "help": "This will ensure the RMT object will not be allocated from a memory region\nwhere its cache can be disabled.",
+                        "id": "RMT_OBJ_CACHE_SAFE",
+                        "name": "RMT_OBJ_CACHE_SAFE",
+                        "range": null,
+                        "title": null,
+                        "type": "bool"
+                    },
+                    {
+                        "children": [],
+                        "depends_on": "SOC_RMT_SUPPORTED",
+                        "help": "If enabled, RMT driver component will:\n1. ignore the global logging settings\n2. compile all log messages into the binary\n3. set the runtime log level to VERBOSE\nPlease enable this option by caution, as it will increase the binary size.",
+                        "id": "RMT_ENABLE_DEBUG_LOG",
+                        "name": "RMT_ENABLE_DEBUG_LOG",
+                        "range": null,
+                        "title": "Force enable debug log",
+                        "type": "bool"
+                    },
+                    {
+                        "children": [],
+                        "depends_on": "SOC_RMT_SUPPORTED",
+                        "help": "Ensure the RMT interrupt is IRAM-Safe by allowing the interrupt handler to be\nexecutable when the cache is disabled (e.g. SPI Flash write).",
+                        "id": "RMT_ISR_IRAM_SAFE",
+                        "name": "RMT_ISR_IRAM_SAFE",
+                        "range": null,
+                        "title": "RMT ISR IRAM-Safe (Deprecated)",
+                        "type": "bool"
+                    }
+                ],
+                "depends_on": "SOC_RMT_SUPPORTED",
+                "id": "component-config-esp-driver-rmt-configurations",
+                "title": "ESP-Driver:RMT Configurations",
+                "type": "menu"
+            },
+            {
+                "children": [
+                    {
+                        "children": [],
+                        "depends_on": "SOC_SDM_SUPPORTED",
+                        "help": "Place SDM control functions (like set_duty) into IRAM,\nso that these functions can be IRAM-safe and able to be called in the other IRAM interrupt context.\nEnabling this option can improve driver performance as well.",
+                        "id": "SDM_CTRL_FUNC_IN_IRAM",
+                        "name": "SDM_CTRL_FUNC_IN_IRAM",
+                        "range": null,
+                        "title": "Place SDM control functions into IRAM",
+                        "type": "bool"
+                    },
+                    {
+                        "children": [],
+                        "depends_on": "SOC_SDM_SUPPORTED",
+                        "help": "whether to enable the debug log message for SDM driver.\nNote that, this option only controls the SDM driver log, won't affect other drivers.",
+                        "id": "SDM_ENABLE_DEBUG_LOG",
+                        "name": "SDM_ENABLE_DEBUG_LOG",
+                        "range": null,
+                        "title": "Enable debug log",
+                        "type": "bool"
+                    }
+                ],
+                "depends_on": "SOC_SDM_SUPPORTED",
+                "id": "component-config-esp-driver-sigma-delta-modulator-configurations",
+                "title": "ESP-Driver:Sigma Delta Modulator Configurations",
+                "type": "menu"
+            },
+            {
+                "children": [
+                    {
+                        "children": [],
+                        "depends_on": "!FREERTOS_PLACE_FUNCTIONS_INTO_FLASH && SOC_GPSPI_SUPPORTED",
+                        "help": "Normally only the ISR of SPI master is placed in the IRAM, so that it\ncan work without the flash when interrupt is triggered.\nFor other functions, there's some possibility that the flash cache\nmiss when running inside and out of SPI functions, which may increase\nthe interval of SPI transactions.\nEnable this to put ``queue_trans``, ``get_trans_result`` and\n``transmit`` functions into the IRAM to avoid possible cache miss.\n\nThis configuration won't be available if `CONFIG_FREERTOS_PLACE_FUNCTIONS_INTO_FLASH` is enabled.\n\nDuring unit test, this is enabled to measure the ideal case of api.",
+                        "id": "SPI_MASTER_IN_IRAM",
+                        "name": "SPI_MASTER_IN_IRAM",
+                        "range": null,
+                        "title": "Place transmitting functions of SPI master into IRAM",
+                        "type": "bool"
+                    },
+                    {
+                        "children": [],
+                        "depends_on": "!HEAP_PLACE_FUNCTION_INTO_FLASH && SOC_GPSPI_SUPPORTED",
+                        "help": "Place the SPI master ISR in to IRAM to avoid possible cache miss.\n\nEnabling this configuration is possible only when HEAP_PLACE_FUNCTION_INTO_FLASH\nis disabled since the spi master uses can allocate transactions buffers into DMA\nmemory section using the heap component API that ipso facto has to be placed in IRAM.\n\nAlso you can forbid the ISR being disabled during flash writing\naccess, by add ESP_INTR_FLAG_IRAM when initializing the driver.",
+                        "id": "SPI_MASTER_ISR_IN_IRAM",
+                        "name": "SPI_MASTER_ISR_IN_IRAM",
+                        "range": null,
+                        "title": "Place SPI master ISR function into IRAM",
+                        "type": "bool"
+                    },
+                    {
+                        "children": [],
+                        "depends_on": "SOC_GPSPI_SUPPORTED",
+                        "help": "Normally only the ISR of SPI slave is placed in the IRAM, so that it\ncan work without the flash when interrupt is triggered.\nFor other functions, there's some possibility that the flash cache\nmiss when running inside and out of SPI functions, which may increase\nthe interval of SPI transactions.\nEnable this to put ``queue_trans``, ``get_trans_result`` and\n``transmit`` functions into the IRAM to avoid possible cache miss.",
+                        "id": "SPI_SLAVE_IN_IRAM",
+                        "name": "SPI_SLAVE_IN_IRAM",
+                        "range": null,
+                        "title": "Place transmitting functions of SPI slave into IRAM",
+                        "type": "bool"
+                    },
+                    {
+                        "children": [],
+                        "depends_on": "SOC_GPSPI_SUPPORTED",
+                        "help": "Place the SPI slave ISR in to IRAM to avoid possible cache miss.\n\nAlso you can forbid the ISR being disabled during flash writing\naccess, by add ESP_INTR_FLAG_IRAM when initializing the driver.",
+                        "id": "SPI_SLAVE_ISR_IN_IRAM",
+                        "name": "SPI_SLAVE_ISR_IN_IRAM",
+                        "range": null,
+                        "title": "Place SPI slave ISR function into IRAM",
+                        "type": "bool"
+                    }
+                ],
+                "depends_on": "SOC_GPSPI_SUPPORTED",
+                "id": "component-config-esp-driver-spi-configurations",
+                "title": "ESP-Driver:SPI Configurations",
+                "type": "menu"
+            },
+            {
+                "children": [
+                    {
+                        "children": [],
+                        "depends_on": "SOC_TEMP_SENSOR_SUPPORTED",
+                        "help": "whether to enable the debug log message for temperature sensor driver.\nNote that, this option only controls the temperature sensor driver log, won't affect other drivers.",
+                        "id": "TEMP_SENSOR_ENABLE_DEBUG_LOG",
+                        "name": "TEMP_SENSOR_ENABLE_DEBUG_LOG",
+                        "range": null,
+                        "title": "Enable debug log",
+                        "type": "bool"
+                    },
+                    {
+                        "children": [],
+                        "depends_on": "SOC_TEMPERATURE_SENSOR_INTR_SUPPORT && SOC_TEMP_SENSOR_SUPPORTED",
+                        "help": "Ensure the Temperature Sensor interrupt is IRAM-Safe by allowing the interrupt handler to be\nexecutable when the cache is disabled (e.g. SPI Flash write).",
+                        "id": "TEMP_SENSOR_ISR_IRAM_SAFE",
+                        "name": "TEMP_SENSOR_ISR_IRAM_SAFE",
+                        "range": null,
+                        "title": "Temperature sensor ISR IRAM-Safe",
+                        "type": "bool"
+                    }
+                ],
+                "depends_on": "SOC_TEMP_SENSOR_SUPPORTED",
+                "id": "component-config-esp-driver-temperature-sensor-configurations",
+                "title": "ESP-Driver:Temperature Sensor Configurations",
+                "type": "menu"
+            },
+            {
+                "children": [
+                    {
+                        "children": [],
+                        "depends_on": "SOC_TWAI_SUPPORTED",
+                        "help": "Place the TWAI ISR in to IRAM to reduce latency and increase performance",
+                        "id": "TWAI_ISR_IN_IRAM",
+                        "name": "TWAI_ISR_IN_IRAM",
+                        "range": null,
+                        "title": "Place TWAI ISR function in IRAM",
+                        "type": "bool"
+                    },
+                    {
+                        "children": [],
+                        "depends_on": "SOC_TWAI_SUPPORTED",
+                        "help": "Allow TWAI works under Cache disabled (such as when writing to SPI Flash),\nto enabled this config, all callbacks and user_ctx should also place in IRAM",
+                        "id": "TWAI_ISR_CACHE_SAFE",
+                        "name": "TWAI_ISR_CACHE_SAFE",
+                        "range": null,
+                        "title": "Allow TWAI ISR execute when cache disabled",
+                        "type": "bool"
+                    },
+                    {
+                        "children": [],
+                        "depends_on": "SOC_TWAI_SUPPORTED",
+                        "help": "This will ensure the TWAI driver object will not be allocated from a memory region\nwhere its cache can be disabled.",
+                        "id": "TWAI_OBJ_CACHE_SAFE",
+                        "name": "TWAI_OBJ_CACHE_SAFE",
+                        "range": null,
+                        "title": null,
+                        "type": "bool"
+                    },
+                    {
+                        "children": [],
+                        "depends_on": "SOC_TWAI_SUPPORTED",
+                        "help": "If enabled, TWAI driver component will:\n1. ignore the global logging settings\n2. compile all log messages into the binary\n3. set the runtime log level to VERBOSE\nPlease enable this option by caution, as it will increase the binary size.",
+                        "id": "TWAI_ENABLE_DEBUG_LOG",
+                        "name": "TWAI_ENABLE_DEBUG_LOG",
+                        "range": null,
+                        "title": "Force enable debug log",
+                        "type": "bool"
+                    }
+                ],
+                "depends_on": "SOC_TWAI_SUPPORTED",
+                "id": "component-config-esp-driver-twai-configurations",
+                "title": "ESP-Driver:TWAI Configurations",
+                "type": "menu"
+            },
+            {
+                "children": [
+                    {
+                        "children": [],
+                        "depends_on": "!RINGBUF_PLACE_ISR_FUNCTIONS_INTO_FLASH",
+                        "help": "If this option is not selected, UART interrupt will be disabled for a long time and\nmay cause data lost when doing spi flash operation.",
+                        "id": "UART_ISR_IN_IRAM",
+                        "name": "UART_ISR_IN_IRAM",
+                        "range": null,
+                        "title": "Place UART ISR function into IRAM",
+                        "type": "bool"
+                    }
+                ],
+                "depends_on": null,
+                "id": "component-config-esp-driver-uart-configurations",
+                "title": "ESP-Driver:UART Configurations",
+                "type": "menu"
+            },
+            {
+                "children": [
+                    {
+                        "children": [],
+                        "depends_on": null,
+                        "help": "If this option is not selected, UHCI interrupt will be disabled for a long time and\nmay cause data lost when doing spi flash operation.",
+                        "id": "UHCI_ISR_HANDLER_IN_IRAM",
+                        "name": "UHCI_ISR_HANDLER_IN_IRAM",
+                        "range": null,
+                        "title": "Place UHCI ISR function into IRAM",
+                        "type": "bool"
+                    },
+                    {
+                        "children": [],
+                        "depends_on": null,
+                        "help": "Enable this option to allow the ISR for UHCI to execute even when the cache is disabled.\nThis can be useful in scenarios where the cache might be turned off, but the UHCI\nfunctionality is still required to operate correctly.",
+                        "id": "UHCI_ISR_CACHE_SAFE",
+                        "name": "UHCI_ISR_CACHE_SAFE",
+                        "range": null,
+                        "title": "Allow UHCI ISR to execute when cache is disabled",
+                        "type": "bool"
+                    },
+                    {
+                        "children": [],
+                        "depends_on": null,
+                        "help": "whether to enable the debug log message for UHCI driver.\nNote that, this option only controls the UHCI driver log, won't affect other drivers.",
+                        "id": "UHCI_ENABLE_DEBUG_LOG",
+                        "name": "UHCI_ENABLE_DEBUG_LOG",
+                        "range": null,
+                        "title": "Enable debug log",
+                        "type": "bool"
+                    }
+                ],
+                "depends_on": null,
+                "id": "component-config-esp-driver-uhci-configurations",
+                "title": "ESP-Driver:UHCI Configurations",
+                "type": "menu"
+            },
+            {
+                "children": [
+                    {
+                        "children": [
+                            {
+                                "children": [],
+                                "depends_on": "PM_ENABLE && ESP_CONSOLE_USB_SERIAL_JTAG_ENABLED && !SOC_USB_SERIAL_JTAG_SUPPORT_LIGHT_SLEEP && USJ_ENABLE_USB_SERIAL_JTAG && SOC_USB_SERIAL_JTAG_SUPPORTED",
+                                "help": "If enabled, the chip will constantly monitor the connection status of the USB Serial/JTAG port. As long\nas the USB Serial/JTAG is connected, a ESP_PM_NO_LIGHT_SLEEP power management lock will be acquired to\nprevent the system from entering light sleep.\nThis option can be useful if serial monitoring is needed via USB Serial/JTAG while power management is\nenabled, as the USB Serial/JTAG cannot work under light sleep and after waking up from light sleep.\nNote. This option can only control the automatic Light-Sleep behavior. If esp_light_sleep_start() is\ncalled manually from the program, enabling this option will not prevent light sleep entry even if the\nUSB Serial/JTAG is in use.",
+                                "id": "USJ_NO_AUTO_LS_ON_CONNECTION",
+                                "name": "USJ_NO_AUTO_LS_ON_CONNECTION",
+                                "range": null,
+                                "title": "Don't enter the automatic light sleep when USB Serial/JTAG port is connected",
+                                "type": "bool"
+                            }
+                        ],
+                        "depends_on": "SOC_USB_SERIAL_JTAG_SUPPORTED",
+                        "help": "The USB-Serial-JTAG module on ESP chips is turned on by default after power-on.\nIf your application does not need it and not rely on it to be used as system\nconsole or use the built-in JTAG for debugging, you can disable this option,\nthen the clock of this module will be disabled at startup, which will save\nsome power consumption.",
+                        "id": "USJ_ENABLE_USB_SERIAL_JTAG",
+                        "name": "USJ_ENABLE_USB_SERIAL_JTAG",
+                        "range": null,
+                        "title": "Enable USB-Serial-JTAG Module",
+                        "type": "bool"
+                    }
+                ],
+                "depends_on": "SOC_USB_SERIAL_JTAG_SUPPORTED",
+                "id": "component-config-esp-driver-usb-serial-jtag-configuration",
+                "title": "ESP-Driver:USB Serial/JTAG Configuration",
                 "type": "menu"
             },
             {
@@ -7146,6 +8421,691 @@
                 "depends_on": null,
                 "id": "component-config-power-management",
                 "title": "Power Management",
+                "type": "menu"
+            },
+            {
+                "children": [
+                    {
+                        "children": [
+                            {
+                                "children": [
+                                    {
+                                        "children": [],
+                                        "depends_on": "SPIRAM && !APP_BUILD_TYPE_PURE_RAM_APP",
+                                        "help": null,
+                                        "id": "SPIRAM_MODE_QUAD",
+                                        "name": "SPIRAM_MODE_QUAD",
+                                        "range": null,
+                                        "title": null,
+                                        "type": "bool"
+                                    },
+                                    {
+                                        "children": [
+                                            {
+                                                "children": [],
+                                                "depends_on": "<choice SPIRAM_TYPE>",
+                                                "help": null,
+                                                "id": "SPIRAM_TYPE_AUTO",
+                                                "name": "SPIRAM_TYPE_AUTO",
+                                                "range": null,
+                                                "title": "Auto-detect",
+                                                "type": "bool"
+                                            },
+                                            {
+                                                "children": [],
+                                                "depends_on": "<choice SPIRAM_TYPE>",
+                                                "help": null,
+                                                "id": "SPIRAM_TYPE_ESPPSRAM16",
+                                                "name": "SPIRAM_TYPE_ESPPSRAM16",
+                                                "range": null,
+                                                "title": "ESP-PSRAM16 or APS1604",
+                                                "type": "bool"
+                                            },
+                                            {
+                                                "children": [],
+                                                "depends_on": "<choice SPIRAM_TYPE>",
+                                                "help": null,
+                                                "id": "SPIRAM_TYPE_ESPPSRAM32",
+                                                "name": "SPIRAM_TYPE_ESPPSRAM32",
+                                                "range": null,
+                                                "title": "ESP-PSRAM32",
+                                                "type": "bool"
+                                            },
+                                            {
+                                                "children": [],
+                                                "depends_on": "<choice SPIRAM_TYPE>",
+                                                "help": null,
+                                                "id": "SPIRAM_TYPE_ESPPSRAM64",
+                                                "name": "SPIRAM_TYPE_ESPPSRAM64",
+                                                "range": null,
+                                                "title": "ESP-PSRAM64 or LY68L6400",
+                                                "type": "bool"
+                                            }
+                                        ],
+                                        "depends_on": "SPIRAM && !APP_BUILD_TYPE_PURE_RAM_APP",
+                                        "help": null,
+                                        "id": "component-config-esp-psram-support-for-external-spi-connected-ram-spi-ram-config-type-of-spi-ram-chip-in-use",
+                                        "name": "SPIRAM_TYPE",
+                                        "title": "Type of SPI RAM chip in use",
+                                        "type": "choice"
+                                    },
+                                    {
+                                        "children": [
+                                            {
+                                                "children": [],
+                                                "depends_on": "<choice SPIRAM_SPEED>",
+                                                "help": null,
+                                                "id": "SPIRAM_SPEED_40M",
+                                                "name": "SPIRAM_SPEED_40M",
+                                                "range": null,
+                                                "title": "40MHz clock speed",
+                                                "type": "bool"
+                                            },
+                                            {
+                                                "children": [],
+                                                "depends_on": "ESPTOOLPY_FLASHFREQ_80M && <choice SPIRAM_SPEED>",
+                                                "help": null,
+                                                "id": "SPIRAM_SPEED_80M",
+                                                "name": "SPIRAM_SPEED_80M",
+                                                "range": null,
+                                                "title": "80MHz clock speed",
+                                                "type": "bool"
+                                            }
+                                        ],
+                                        "depends_on": "SPIRAM && !APP_BUILD_TYPE_PURE_RAM_APP",
+                                        "help": "Select the speed for the SPI RAM chip.\nIf SPI RAM is enabled, we only support three combinations of SPI speed mode we supported now:\n\n1. Flash SPI running at 40Mhz and RAM SPI running at 40Mhz\n2. Flash SPI running at 80Mhz and RAM SPI running at 40Mhz\n3. Flash SPI running at 80Mhz and RAM SPI running at 80Mhz\n\nNote: If the third mode(80Mhz+80Mhz) is enabled for SPI RAM of type 32MBit, one of the HSPI/VSPI host\nwill be occupied by the system. Which SPI host to use can be selected by the config item\nSPIRAM_OCCUPY_SPI_HOST. Application code should never touch HSPI/VSPI hardware in this case. The\noption to select 80MHz will only be visible if the flash SPI speed is also 80MHz.\n(ESPTOOLPY_FLASHFREQ_80M is true)",
+                                        "id": "component-config-esp-psram-support-for-external-spi-connected-ram-spi-ram-config-set-ram-clock-speed",
+                                        "name": "SPIRAM_SPEED",
+                                        "title": "Set RAM clock speed",
+                                        "type": "choice"
+                                    },
+                                    {
+                                        "children": [],
+                                        "depends_on": "SPIRAM && !APP_BUILD_TYPE_PURE_RAM_APP",
+                                        "help": null,
+                                        "id": "SPIRAM_SPEED",
+                                        "name": "SPIRAM_SPEED",
+                                        "range": null,
+                                        "title": null,
+                                        "type": "int"
+                                    },
+                                    {
+                                        "children": [
+                                            {
+                                                "children": [],
+                                                "depends_on": "SPIRAM_BOOT_HW_INIT && SPIRAM && !APP_BUILD_TYPE_PURE_RAM_APP",
+                                                "help": "If this is enabled, the PSRAM will be enabled during initial boot. Unless you\nhave specific requirements, you'll want to leave this enabled so memory allocated\nduring boot-up can also be placed in PSRAM.",
+                                                "id": "SPIRAM_BOOT_INIT",
+                                                "name": "SPIRAM_BOOT_INIT",
+                                                "range": null,
+                                                "title": "Initialize PSRAM during startup, including the hardware and memory related configurations",
+                                                "type": "bool"
+                                            }
+                                        ],
+                                        "depends_on": "SPIRAM && SPIRAM && !APP_BUILD_TYPE_PURE_RAM_APP",
+                                        "help": "If this is enabled, the PSRAM hardware will be initialized during startup.\nEnabling this config does not ensure make sure the availability of the PSRAM for usage,\nbut just initialises the PSRAM hardware.\nThis is necessary to configure PSRAM memory protection during the boot up.",
+                                        "id": "SPIRAM_BOOT_HW_INIT",
+                                        "name": "SPIRAM_BOOT_HW_INIT",
+                                        "range": null,
+                                        "title": "Initialise the PSRAM related hardware",
+                                        "type": "bool"
+                                    },
+                                    {
+                                        "children": [],
+                                        "depends_on": "SPIRAM && SPIRAM && !APP_BUILD_TYPE_PURE_RAM_APP",
+                                        "help": "If this is enabled, the PSRAM will be pre-configured for memory protection during initial boot.\nThis configuration takes into consideration the PSRAM memory configurations that are performed\nby ESP-IDF's default PSRAM initialization function, esp_psram_init().\nThus, the config is enabled by default when SPIRAM_BOOT_INIT is enabled,\nbecause the function esp_psram_init() would be called in the startup code.\n\nIn case you wish to disable SPIRAM_BOOT_INIT just for delaying the PSRAM initialization and plan\nto use the ESP-IDF's default PSRAM initialization function, esp_psram_init() in the application code,\nyou should still enable this config to enable memory protection for the PSRAM.\n\nNote that enabling this config also considers that the rest of the PSRAM memory that is left after\nthe memory configurations are performed by esp_psram_init(), can be allocated to the heap using the function\nesp_psram_extram_add_to_heap_allocator(), thus configures this region with heap memory protection (RW).\n\nAs an advanced usage, if you plan to initialize the PSRAM memory regions manually by yourself without\nusing the function esp_psram_init(), you should disable this config to avoid any memory protection and\nusage conflicts.",
+                                        "id": "SPIRAM_PRE_CONFIGURE_MEMORY_PROTECTION",
+                                        "name": "SPIRAM_PRE_CONFIGURE_MEMORY_PROTECTION",
+                                        "range": null,
+                                        "title": "Pre-configure memory protection for PSRAM",
+                                        "type": "bool"
+                                    },
+                                    {
+                                        "children": [],
+                                        "depends_on": "SPIRAM_BOOT_HW_INIT && !SPIRAM_ALLOW_BSS_SEG_EXTERNAL_MEMORY && !SPIRAM_ALLOW_NOINIT_SEG_EXTERNAL_MEMORY && SPIRAM && !APP_BUILD_TYPE_PURE_RAM_APP",
+                                        "help": "Normally, if psram initialization is enabled during compile time but not found at runtime, it\nis seen as an error making the CPU panic. If this is enabled, booting will complete\nbut no PSRAM will be available. In particular, it is important to note that when SPIRAM_IGNORE_NOTFOUND\nis enabled, some WIFI related configs will be set to the default value used when SPIRAM is disabled.\nIt can be assumed that by enabling this config, WIFI and LWIP will assume that the current chip does not\nhave SPIRAM. SPIRAM_TRY_ALLOCATE_WIFI_LWIP will not work, buffers in WIFI and LWIP will be set to smaller\nranges and default values. WIFI_CACHE_TX_BUFFER_NUM and ESP_WIFI_AMSDU_TX_ENABLED will be disabled,\nESP_WIFI_TX_BUFFER will be set to ESP_WIFI_DYNAMIC_TX_BUFFER.",
+                                        "id": "SPIRAM_IGNORE_NOTFOUND",
+                                        "name": "SPIRAM_IGNORE_NOTFOUND",
+                                        "range": null,
+                                        "title": "Ignore PSRAM when not found",
+                                        "type": "bool"
+                                    },
+                                    {
+                                        "children": [
+                                            {
+                                                "children": [],
+                                                "depends_on": "IDF_TARGET_ESP32 && <choice SPIRAM_USE>",
+                                                "help": null,
+                                                "id": "SPIRAM_USE_MEMMAP",
+                                                "name": "SPIRAM_USE_MEMMAP",
+                                                "range": null,
+                                                "title": "Integrate RAM into memory map",
+                                                "type": "bool"
+                                            },
+                                            {
+                                                "children": [],
+                                                "depends_on": "<choice SPIRAM_USE>",
+                                                "help": null,
+                                                "id": "SPIRAM_USE_CAPS_ALLOC",
+                                                "name": "SPIRAM_USE_CAPS_ALLOC",
+                                                "range": null,
+                                                "title": "Make RAM allocatable using heap_caps_malloc(..., MALLOC_CAP_SPIRAM)",
+                                                "type": "bool"
+                                            },
+                                            {
+                                                "children": [],
+                                                "depends_on": "<choice SPIRAM_USE>",
+                                                "help": null,
+                                                "id": "SPIRAM_USE_MALLOC",
+                                                "name": "SPIRAM_USE_MALLOC",
+                                                "range": null,
+                                                "title": "Make RAM allocatable using malloc() as well",
+                                                "type": "bool"
+                                            }
+                                        ],
+                                        "depends_on": "SPIRAM && !APP_BUILD_TYPE_PURE_RAM_APP",
+                                        "help": "The SPI RAM can be accessed in multiple methods: by just having it available as an unmanaged\nmemory region in the CPU's memory map, by integrating it in the heap as 'special' memory\nneeding heap_caps_malloc to allocate, or by fully integrating it making malloc() also able to\nreturn SPI RAM pointers.",
+                                        "id": "component-config-esp-psram-support-for-external-spi-connected-ram-spi-ram-config-spi-ram-access-method",
+                                        "name": "SPIRAM_USE",
+                                        "title": "SPI RAM access method",
+                                        "type": "choice"
+                                    },
+                                    {
+                                        "children": [],
+                                        "depends_on": "SPIRAM_BOOT_INIT && SPIRAM && !APP_BUILD_TYPE_PURE_RAM_APP",
+                                        "help": "Runs a rudimentary memory test on initialization. Aborts when memory test fails. Disable this for\nslightly faster startup.",
+                                        "id": "SPIRAM_MEMTEST",
+                                        "name": "SPIRAM_MEMTEST",
+                                        "range": null,
+                                        "title": "Run memory test on SPI RAM initialization",
+                                        "type": "bool"
+                                    },
+                                    {
+                                        "children": [],
+                                        "depends_on": "SPIRAM_USE_MALLOC && SPIRAM && !APP_BUILD_TYPE_PURE_RAM_APP",
+                                        "help": "If malloc() is capable of also allocating SPI-connected ram, its allocation strategy will prefer to\nallocate chunks less than this size in internal memory, while allocations larger than this will be\ndone from external RAM. If allocation from the preferred region fails, an attempt is made to allocate\nfrom the non-preferred region instead, so malloc() will not suddenly fail when either internal or\nexternal memory is full.",
+                                        "id": "SPIRAM_MALLOC_ALWAYSINTERNAL",
+                                        "name": "SPIRAM_MALLOC_ALWAYSINTERNAL",
+                                        "range": [
+                                            0,
+                                            131072
+                                        ],
+                                        "title": "Maximum malloc() size, in bytes, to always put in internal memory",
+                                        "type": "int"
+                                    },
+                                    {
+                                        "children": [],
+                                        "depends_on": "(SPIRAM_USE_CAPS_ALLOC || SPIRAM_USE_MALLOC) && SPIRAM && !APP_BUILD_TYPE_PURE_RAM_APP",
+                                        "help": "Try to allocate memories of WiFi and LWIP in SPIRAM firstly. If failed, try to allocate internal\nmemory then.",
+                                        "id": "SPIRAM_TRY_ALLOCATE_WIFI_LWIP",
+                                        "name": "SPIRAM_TRY_ALLOCATE_WIFI_LWIP",
+                                        "range": null,
+                                        "title": "Try to allocate memories of WiFi and LWIP in SPIRAM firstly. If failed, allocate internal memory",
+                                        "type": "bool"
+                                    },
+                                    {
+                                        "children": [],
+                                        "depends_on": "SPIRAM_USE_MALLOC && SPIRAM && !APP_BUILD_TYPE_PURE_RAM_APP",
+                                        "help": "Because the external/internal RAM allocation strategy is not always perfect, it sometimes may happen\nthat the internal memory is entirely filled up. This causes allocations that are specifically done in\ninternal memory, for example the stack for new tasks or memory to service DMA or have memory that's\nalso available when SPI cache is down, to fail. This option reserves a pool specifically for requests\nlike that; the memory in this pool is not given out when a normal malloc() is called.\n\nSet this to 0 to disable this feature.\n\nNote that because FreeRTOS stacks are forced to internal memory, they will also use this memory pool;\nbe sure to keep this in mind when adjusting this value.\n\nNote also that the DMA reserved pool may not be one single contiguous memory region, depending on the\nconfigured size and the static memory usage of the app.",
+                                        "id": "SPIRAM_MALLOC_RESERVE_INTERNAL",
+                                        "name": "SPIRAM_MALLOC_RESERVE_INTERNAL",
+                                        "range": [
+                                            0,
+                                            262144
+                                        ],
+                                        "title": "Reserve this amount of bytes for data that specifically needs to be in DMA or internal memory",
+                                        "type": "int"
+                                    },
+                                    {
+                                        "children": [],
+                                        "depends_on": "SPIRAM && SPIRAM && !APP_BUILD_TYPE_PURE_RAM_APP",
+                                        "help": "If enabled, variables with EXT_RAM_BSS_ATTR attribute will be placed in SPIRAM instead of internal DRAM.\nBSS section of `lwip`, `net80211`, `pp`, `bt` libraries will be automatically placed\nin SPIRAM. BSS sections from other object files and libraries can also be placed in SPIRAM through\nlinker fragment scheme `extram_bss`.\n\nNote that the variables placed in SPIRAM using EXT_RAM_BSS_ATTR will be zero initialized.",
+                                        "id": "SPIRAM_ALLOW_BSS_SEG_EXTERNAL_MEMORY",
+                                        "name": "SPIRAM_ALLOW_BSS_SEG_EXTERNAL_MEMORY",
+                                        "range": null,
+                                        "title": "Allow .bss segment placed in external memory",
+                                        "type": "bool"
+                                    },
+                                    {
+                                        "children": [],
+                                        "depends_on": "SPIRAM && SPIRAM && !APP_BUILD_TYPE_PURE_RAM_APP",
+                                        "help": "If enabled, noinit variables can be placed in PSRAM using EXT_RAM_NOINIT_ATTR.\n\nNote the values placed into this section will not be initialized at startup and should keep its value\nafter software restart.",
+                                        "id": "SPIRAM_ALLOW_NOINIT_SEG_EXTERNAL_MEMORY",
+                                        "name": "SPIRAM_ALLOW_NOINIT_SEG_EXTERNAL_MEMORY",
+                                        "range": null,
+                                        "title": "Allow .noinit segment placed in external memory",
+                                        "type": "bool"
+                                    },
+                                    {
+                                        "children": [],
+                                        "depends_on": "(SPIRAM_USE_MEMMAP || SPIRAM_USE_CAPS_ALLOC || SPIRAM_USE_MALLOC) && ESP32_REV_MIN_FULL < 300 && SPIRAM && !APP_BUILD_TYPE_PURE_RAM_APP",
+                                        "help": "Revision 1 of the ESP32 has a bug that can cause a write to PSRAM not to take place in some situations\nwhen the cache line needs to be fetched from external RAM and an interrupt occurs. This enables a\nfix in the compiler (-mfix-esp32-psram-cache-issue) that makes sure the specific code that is\nvulnerable to this will not be emitted.\n\nThis will also not use any bits of newlib that are located in ROM, opting for a version that is\ncompiled with the workaround and located in flash instead.\n\nThe workaround is not required for ESP32 revision 3 and above.",
+                                        "id": "SPIRAM_CACHE_WORKAROUND",
+                                        "name": "SPIRAM_CACHE_WORKAROUND",
+                                        "range": null,
+                                        "title": "Enable workaround for bug in SPI RAM cache for Rev1 ESP32s",
+                                        "type": "bool"
+                                    },
+                                    {
+                                        "children": [
+                                            {
+                                                "children": [
+                                                    {
+                                                        "children": [],
+                                                        "depends_on": "<choice SPIRAM_CACHE_WORKAROUND_STRATEGY>",
+                                                        "help": null,
+                                                        "id": "SPIRAM_CACHE_WORKAROUND_STRATEGY_MEMW",
+                                                        "name": "SPIRAM_CACHE_WORKAROUND_STRATEGY_MEMW",
+                                                        "range": null,
+                                                        "title": "Insert memw after vulnerable instructions (default)",
+                                                        "type": "bool"
+                                                    },
+                                                    {
+                                                        "children": [],
+                                                        "depends_on": "<choice SPIRAM_CACHE_WORKAROUND_STRATEGY>",
+                                                        "help": null,
+                                                        "id": "SPIRAM_CACHE_WORKAROUND_STRATEGY_DUPLDST",
+                                                        "name": "SPIRAM_CACHE_WORKAROUND_STRATEGY_DUPLDST",
+                                                        "range": null,
+                                                        "title": "Duplicate LD/ST for 32-bit, memw for 8/16 bit",
+                                                        "type": "bool"
+                                                    },
+                                                    {
+                                                        "children": [],
+                                                        "depends_on": "<choice SPIRAM_CACHE_WORKAROUND_STRATEGY>",
+                                                        "help": null,
+                                                        "id": "SPIRAM_CACHE_WORKAROUND_STRATEGY_NOPS",
+                                                        "name": "SPIRAM_CACHE_WORKAROUND_STRATEGY_NOPS",
+                                                        "range": null,
+                                                        "title": "Insert nops between vulnerable loads/stores (old strategy, obsolete)",
+                                                        "type": "bool"
+                                                    }
+                                                ],
+                                                "depends_on": "SPIRAM_CACHE_WORKAROUND && SPIRAM && !APP_BUILD_TYPE_PURE_RAM_APP",
+                                                "help": "Select the workaround strategy. Note that the strategy for precompiled\nlibraries (libgcc, newlib, bt, wifi) is not affected by this selection.\n\nUnless you know you need a different strategy, it's suggested you stay\nwith the default MEMW strategy. Note that DUPLDST can interfere with hardware\nencryption and this will be automatically disabled if this workaround is selected.\n'Insert nops' is the workaround that was used in older esp-idf versions. This workaround\nstill can cause faulty data transfers from/to SPI RAM in some situation.",
+                                                "id": "component-config-esp-psram-support-for-external-spi-connected-ram-spi-ram-config-spiram-cache-workaround-debugging-workaround-strategy",
+                                                "name": "SPIRAM_CACHE_WORKAROUND_STRATEGY",
+                                                "title": "Workaround strategy",
+                                                "type": "choice"
+                                            },
+                                            {
+                                                "children": [],
+                                                "depends_on": "SPIRAM && !APP_BUILD_TYPE_PURE_RAM_APP",
+                                                "help": null,
+                                                "id": "SPIRAM_WORKAROUND_NEED_VOLATILE_SPINLOCK",
+                                                "name": "SPIRAM_WORKAROUND_NEED_VOLATILE_SPINLOCK",
+                                                "range": null,
+                                                "title": null,
+                                                "type": "bool"
+                                            }
+                                        ],
+                                        "depends_on": "SPIRAM && !APP_BUILD_TYPE_PURE_RAM_APP",
+                                        "id": "component-config-esp-psram-support-for-external-spi-connected-ram-spi-ram-config-spiram-cache-workaround-debugging",
+                                        "title": "SPIRAM cache workaround debugging",
+                                        "type": "menu"
+                                    },
+                                    {
+                                        "children": [
+                                            {
+                                                "children": [],
+                                                "depends_on": "SPIRAM_CACHE_WORKAROUND && SPIRAM && !APP_BUILD_TYPE_PURE_RAM_APP",
+                                                "help": "The functions affected by this option are: longjmp and setjmp.\nPutting these function in IRAM will allow them to be called when flash cache is disabled\nbut it will also reduce the available size of free IRAM for the user application.",
+                                                "id": "SPIRAM_CACHE_LIBJMP_IN_IRAM",
+                                                "name": "SPIRAM_CACHE_LIBJMP_IN_IRAM",
+                                                "range": null,
+                                                "title": "Put libc's jump related functions in IRAM",
+                                                "type": "bool"
+                                            },
+                                            {
+                                                "children": [],
+                                                "depends_on": "SPIRAM_CACHE_WORKAROUND && SPIRAM && !APP_BUILD_TYPE_PURE_RAM_APP",
+                                                "help": "The functions affected by this option are: abs, div, labs, ldiv, quorem, fpclassify,\nand nan.\nPutting these function in IRAM will allow them to be called when flash cache is disabled\nbut it will also reduce the available size of free IRAM for the user application.",
+                                                "id": "SPIRAM_CACHE_LIBMATH_IN_IRAM",
+                                                "name": "SPIRAM_CACHE_LIBMATH_IN_IRAM",
+                                                "range": null,
+                                                "title": "Put libc's math related functions in IRAM",
+                                                "type": "bool"
+                                            },
+                                            {
+                                                "children": [],
+                                                "depends_on": "SPIRAM_CACHE_WORKAROUND && SPIRAM && !APP_BUILD_TYPE_PURE_RAM_APP",
+                                                "help": "The functions affected by this option are: utoa, itoa, atoi, atol, strtol, and strtoul.\nPutting these function in IRAM will allow them to be called when flash cache is disabled\nbut it will also reduce the available size of free IRAM for the user application.",
+                                                "id": "SPIRAM_CACHE_LIBNUMPARSER_IN_IRAM",
+                                                "name": "SPIRAM_CACHE_LIBNUMPARSER_IN_IRAM",
+                                                "range": null,
+                                                "title": "Put libc's number parsing related functions in IRAM",
+                                                "type": "bool"
+                                            },
+                                            {
+                                                "children": [],
+                                                "depends_on": "SPIRAM_CACHE_WORKAROUND && SPIRAM && !APP_BUILD_TYPE_PURE_RAM_APP",
+                                                "help": "The functions affected by this option are: wcrtomb, fvwrite, wbuf, wsetup, fputwc, wctomb_r,\nungetc, makebuf, fflush, refill, and sccl.\nPutting these function in IRAM will allow them to be called when flash cache is disabled\nbut it will also reduce the available size of free IRAM for the user application.",
+                                                "id": "SPIRAM_CACHE_LIBIO_IN_IRAM",
+                                                "name": "SPIRAM_CACHE_LIBIO_IN_IRAM",
+                                                "range": null,
+                                                "title": "Put libc's I/O related functions in IRAM",
+                                                "type": "bool"
+                                            },
+                                            {
+                                                "children": [],
+                                                "depends_on": "SPIRAM_CACHE_WORKAROUND && SPIRAM && !APP_BUILD_TYPE_PURE_RAM_APP",
+                                                "help": "The functions affected by this option are: asctime, asctime_r, ctime, ctime_r, lcltime, lcltime_r,\ngmtime, gmtime_r, strftime, mktime, tzset_r, tzset, time, gettzinfo, systimes, month_lengths,\ntimelocal, tzvars, tzlock, tzcalc_limits, and strptime.\nPutting these function in IRAM will allow them to be called when flash cache is disabled\nbut it will also reduce the available size of free IRAM for the user application.",
+                                                "id": "SPIRAM_CACHE_LIBTIME_IN_IRAM",
+                                                "name": "SPIRAM_CACHE_LIBTIME_IN_IRAM",
+                                                "range": null,
+                                                "title": "Put libc's time related functions in IRAM",
+                                                "type": "bool"
+                                            },
+                                            {
+                                                "children": [],
+                                                "depends_on": "SPIRAM_CACHE_WORKAROUND && SPIRAM && !APP_BUILD_TYPE_PURE_RAM_APP",
+                                                "help": "The functions affected by this option are: ctype_, toupper, tolower, toascii, strupr, bzero,\nisalnum, isalpha, isascii, isblank, iscntrl, isdigit, isgraph, islower, isprint, ispunct,\nisspace, and isupper.\nPutting these function in IRAM will allow them to be called when flash cache is disabled\nbut it will also reduce the available size of free IRAM for the user application.",
+                                                "id": "SPIRAM_CACHE_LIBCHAR_IN_IRAM",
+                                                "name": "SPIRAM_CACHE_LIBCHAR_IN_IRAM",
+                                                "range": null,
+                                                "title": "Put libc's characters related functions in IRAM",
+                                                "type": "bool"
+                                            },
+                                            {
+                                                "children": [],
+                                                "depends_on": "SPIRAM_CACHE_WORKAROUND && SPIRAM && !APP_BUILD_TYPE_PURE_RAM_APP",
+                                                "help": "The functions affected by this option are: memccpy, memchr memmove, and memrchr.\nPutting these function in IRAM will allow them to be called when flash cache is disabled\nbut it will also reduce the available size of free IRAM for the user application.",
+                                                "id": "SPIRAM_CACHE_LIBMEM_IN_IRAM",
+                                                "name": "SPIRAM_CACHE_LIBMEM_IN_IRAM",
+                                                "range": null,
+                                                "title": "Put libc's memory related functions in IRAM",
+                                                "type": "bool"
+                                            },
+                                            {
+                                                "children": [],
+                                                "depends_on": "SPIRAM_CACHE_WORKAROUND && SPIRAM && !APP_BUILD_TYPE_PURE_RAM_APP",
+                                                "help": "The functions affected by this option are: strcasecmp, strcasestr, strchr, strcoll,\nstrcpy, strcspn, strdup, strdup_r, strlcat, strlcpy, strlen, strlwr, strncasecmp,\nstrncat, strncmp, strncpy, strndup, strndup_r, strrchr, strsep, strspn, strstr,\nstrtok_r, and strupr.\nPutting these function in IRAM will allow them to be called when flash cache is disabled\nbut it will also reduce the available size of free IRAM for the user application.",
+                                                "id": "SPIRAM_CACHE_LIBSTR_IN_IRAM",
+                                                "name": "SPIRAM_CACHE_LIBSTR_IN_IRAM",
+                                                "range": null,
+                                                "title": "Put libc's string related functions in IRAM",
+                                                "type": "bool"
+                                            },
+                                            {
+                                                "children": [],
+                                                "depends_on": "SPIRAM_CACHE_WORKAROUND && SPIRAM && !APP_BUILD_TYPE_PURE_RAM_APP",
+                                                "help": "The functions affected by this option are: srand, rand, and rand_r.\nPutting these function in IRAM will allow them to be called when flash cache is disabled\nbut it will also reduce the available size of free IRAM for the user application.",
+                                                "id": "SPIRAM_CACHE_LIBRAND_IN_IRAM",
+                                                "name": "SPIRAM_CACHE_LIBRAND_IN_IRAM",
+                                                "range": null,
+                                                "title": "Put libc's random related functions in IRAM",
+                                                "type": "bool"
+                                            },
+                                            {
+                                                "children": [],
+                                                "depends_on": "SPIRAM_CACHE_WORKAROUND && SPIRAM && !APP_BUILD_TYPE_PURE_RAM_APP",
+                                                "help": "The functions affected by this option are: environ, envlock, and getenv_r.\nPutting these function in IRAM will allow them to be called when flash cache is disabled\nbut it will also reduce the available size of free IRAM for the user application.",
+                                                "id": "SPIRAM_CACHE_LIBENV_IN_IRAM",
+                                                "name": "SPIRAM_CACHE_LIBENV_IN_IRAM",
+                                                "range": null,
+                                                "title": "Put libc's environment related functions in IRAM",
+                                                "type": "bool"
+                                            },
+                                            {
+                                                "children": [],
+                                                "depends_on": "SPIRAM_CACHE_WORKAROUND && SPIRAM && !APP_BUILD_TYPE_PURE_RAM_APP",
+                                                "help": "The functions affected by this option are: lock, isatty, fclose, open, close, creat, read,\nrshift, sbrk, stdio, syssbrk, sysclose, sysopen, creat, sysread, syswrite, impure, fwalk,\nand findfp.\nPutting these function in IRAM will allow them to be called when flash cache is disabled\nbut it will also reduce the available size of free IRAM for the user application.",
+                                                "id": "SPIRAM_CACHE_LIBFILE_IN_IRAM",
+                                                "name": "SPIRAM_CACHE_LIBFILE_IN_IRAM",
+                                                "range": null,
+                                                "title": "Put libc's file related functions in IRAM",
+                                                "type": "bool"
+                                            },
+                                            {
+                                                "children": [],
+                                                "depends_on": "SPIRAM_CACHE_WORKAROUND && SPIRAM && !APP_BUILD_TYPE_PURE_RAM_APP",
+                                                "help": "The functions affected by this option are: raise and system\nPutting these function in IRAM will allow them to be called when flash cache is disabled\nbut it will also reduce the available size of free IRAM for the user application.",
+                                                "id": "SPIRAM_CACHE_LIBMISC_IN_IRAM",
+                                                "name": "SPIRAM_CACHE_LIBMISC_IN_IRAM",
+                                                "range": null,
+                                                "title": "Put libc's miscellaneous functions in IRAM, see help",
+                                                "type": "bool"
+                                            }
+                                        ],
+                                        "depends_on": "SPIRAM && !APP_BUILD_TYPE_PURE_RAM_APP",
+                                        "id": "component-config-esp-psram-support-for-external-spi-connected-ram-spi-ram-config-spiram-workaround-libraries-placement",
+                                        "title": "SPIRAM workaround libraries placement",
+                                        "type": "menu"
+                                    },
+                                    {
+                                        "children": [
+                                            {
+                                                "children": [],
+                                                "depends_on": "SPIRAM_BANKSWITCH_ENABLE && SPIRAM && !APP_BUILD_TYPE_PURE_RAM_APP",
+                                                "help": "Select the amount of banks reserved for bank switching. Note that the amount of RAM allocatable with\nmalloc/esp_heap_alloc_caps will decrease by 32K for each page reserved here.\n\nNote that this reservation is only actually done if your program actually uses the himem API. Without\nany himem calls, the reservation is not done and the original amount of memory will be available\nto malloc/esp_heap_alloc_caps.",
+                                                "id": "SPIRAM_BANKSWITCH_RESERVE",
+                                                "name": "SPIRAM_BANKSWITCH_RESERVE",
+                                                "range": [
+                                                    1,
+                                                    62
+                                                ],
+                                                "title": "Amount of 32K pages to reserve for bank switching",
+                                                "type": "int"
+                                            }
+                                        ],
+                                        "depends_on": "(SPIRAM_USE_MEMMAP || SPIRAM_USE_CAPS_ALLOC || SPIRAM_USE_MALLOC) && SPIRAM && !APP_BUILD_TYPE_PURE_RAM_APP",
+                                        "help": "The ESP32 only supports 4MiB of external RAM in its address space. The hardware does support larger\nmemories, but these have to be bank-switched in and out of this address space. Enabling this allows you\nto reserve some MMU pages for this, which allows the use of the esp_himem api to manage these banks.\n\n#Note that this is limited to 62 banks, as esp_psram_extram_writeback_cache needs some kind of mapping of\n#some banks below that mark to work. We cannot at this moment guarantee this to exist when himem is\n#enabled.\n\nIf spiram 2T mode is enabled, the size of 64Mbit psram will be changed as 32Mbit, so himem will be\nunusable.",
+                                        "id": "SPIRAM_BANKSWITCH_ENABLE",
+                                        "name": "SPIRAM_BANKSWITCH_ENABLE",
+                                        "range": null,
+                                        "title": "Enable bank switching for >4MiB external RAM",
+                                        "type": "bool"
+                                    },
+                                    {
+                                        "children": [
+                                            {
+                                                "children": [],
+                                                "depends_on": "<choice SPIRAM_OCCUPY_SPI_HOST>",
+                                                "help": null,
+                                                "id": "SPIRAM_OCCUPY_HSPI_HOST",
+                                                "name": "SPIRAM_OCCUPY_HSPI_HOST",
+                                                "range": null,
+                                                "title": "HSPI host (SPI2)",
+                                                "type": "bool"
+                                            },
+                                            {
+                                                "children": [],
+                                                "depends_on": "<choice SPIRAM_OCCUPY_SPI_HOST>",
+                                                "help": null,
+                                                "id": "SPIRAM_OCCUPY_VSPI_HOST",
+                                                "name": "SPIRAM_OCCUPY_VSPI_HOST",
+                                                "range": null,
+                                                "title": "VSPI host (SPI3)",
+                                                "type": "bool"
+                                            },
+                                            {
+                                                "children": [],
+                                                "depends_on": "<choice SPIRAM_OCCUPY_SPI_HOST>",
+                                                "help": null,
+                                                "id": "SPIRAM_OCCUPY_NO_HOST",
+                                                "name": "SPIRAM_OCCUPY_NO_HOST",
+                                                "range": null,
+                                                "title": "Will not try to use any host, will abort if not able to use the PSRAM",
+                                                "type": "bool"
+                                            }
+                                        ],
+                                        "depends_on": "SPIRAM_SPEED_80M && SPIRAM && !APP_BUILD_TYPE_PURE_RAM_APP",
+                                        "help": "When both flash and PSRAM is working under 80MHz, and the PSRAM is of type 32MBit, one of the HSPI/VSPI\nhost will be used to output the clock. Select which one to use here.",
+                                        "id": "component-config-esp-psram-support-for-external-spi-connected-ram-spi-ram-config-spi-host-to-use-for-32mbit-psram",
+                                        "name": "SPIRAM_OCCUPY_SPI_HOST",
+                                        "title": "SPI host to use for 32MBit PSRAM",
+                                        "type": "choice"
+                                    },
+                                    {
+                                        "children": [
+                                            {
+                                                "children": [],
+                                                "depends_on": "SPIRAM && SPIRAM && !APP_BUILD_TYPE_PURE_RAM_APP",
+                                                "help": "The PSRAM CLOCK IO can be any unused GPIO, user can config it based on hardware design. If user use\n1.8V flash and 1.8V psram, this value can only be one of 6, 7, 8, 9, 10, 11, 16, 17.\n\nIf configured to the same pin as Flash, PSRAM shouldn't be rev0. Contact Espressif for more\ninformation.",
+                                                "id": "D0WD_PSRAM_CLK_IO",
+                                                "name": "D0WD_PSRAM_CLK_IO",
+                                                "range": [
+                                                    0,
+                                                    33
+                                                ],
+                                                "title": "PSRAM CLK IO number",
+                                                "type": "int"
+                                            },
+                                            {
+                                                "children": [],
+                                                "depends_on": "SPIRAM && SPIRAM && !APP_BUILD_TYPE_PURE_RAM_APP",
+                                                "help": "The PSRAM CS IO can be any unused GPIO, user can config it based on hardware design. If user use\n1.8V flash and 1.8V psram, this value can only be one of 6, 7, 8, 9, 10, 11, 16, 17.",
+                                                "id": "D0WD_PSRAM_CS_IO",
+                                                "name": "D0WD_PSRAM_CS_IO",
+                                                "range": [
+                                                    0,
+                                                    33
+                                                ],
+                                                "title": "PSRAM CS IO number",
+                                                "type": "int"
+                                            }
+                                        ],
+                                        "depends_on": "SPIRAM && !APP_BUILD_TYPE_PURE_RAM_APP",
+                                        "id": "component-config-esp-psram-support-for-external-spi-connected-ram-spi-ram-config-psram-clock-and-cs-io-for-esp32-dowd",
+                                        "title": "PSRAM clock and cs IO for ESP32-DOWD",
+                                        "type": "menu"
+                                    },
+                                    {
+                                        "children": [
+                                            {
+                                                "children": [],
+                                                "depends_on": "SPIRAM && SPIRAM && !APP_BUILD_TYPE_PURE_RAM_APP",
+                                                "help": "User can config it based on hardware design. For ESP32-D2WD chip, the psram can only be 1.8V psram,\nso this value can only be one of 6, 7, 8, 9, 10, 11, 16, 17.\n\nIf configured to the same pin (GPIO6) as Flash, PSRAM shouldn't be rev0. Contact Espressif for more\ninformation.",
+                                                "id": "D2WD_PSRAM_CLK_IO",
+                                                "name": "D2WD_PSRAM_CLK_IO",
+                                                "range": [
+                                                    0,
+                                                    33
+                                                ],
+                                                "title": "PSRAM CLK IO number",
+                                                "type": "int"
+                                            },
+                                            {
+                                                "children": [],
+                                                "depends_on": "SPIRAM && SPIRAM && !APP_BUILD_TYPE_PURE_RAM_APP",
+                                                "help": "User can config it based on hardware design. For ESP32-D2WD chip, the psram can only be 1.8V psram,\nso this value can only be one of 6, 7, 8, 9, 10, 11, 16, 17.",
+                                                "id": "D2WD_PSRAM_CS_IO",
+                                                "name": "D2WD_PSRAM_CS_IO",
+                                                "range": [
+                                                    0,
+                                                    33
+                                                ],
+                                                "title": "PSRAM CS IO number",
+                                                "type": "int"
+                                            }
+                                        ],
+                                        "depends_on": "SPIRAM && !APP_BUILD_TYPE_PURE_RAM_APP",
+                                        "id": "component-config-esp-psram-support-for-external-spi-connected-ram-spi-ram-config-psram-clock-and-cs-io-for-esp32-d2wd",
+                                        "title": "PSRAM clock and cs IO for ESP32-D2WD",
+                                        "type": "menu"
+                                    },
+                                    {
+                                        "children": [
+                                            {
+                                                "children": [],
+                                                "depends_on": "SPIRAM && SPIRAM && !APP_BUILD_TYPE_PURE_RAM_APP",
+                                                "help": "The PSRAM CS IO can be any unused GPIO, user can config it based on hardware design.\n\nFor ESP32-PICO chip, the psram share clock with flash, so user do not need to configure the clock\nIO.\nFor the reference hardware design, please refer to\nhttps://www.espressif.com/sites/default/files/documentation/esp32-pico-d4_datasheet_en.pdf",
+                                                "id": "PICO_PSRAM_CS_IO",
+                                                "name": "PICO_PSRAM_CS_IO",
+                                                "range": [
+                                                    0,
+                                                    33
+                                                ],
+                                                "title": "PSRAM CS IO number",
+                                                "type": "int"
+                                            }
+                                        ],
+                                        "depends_on": "SPIRAM && !APP_BUILD_TYPE_PURE_RAM_APP",
+                                        "id": "component-config-esp-psram-support-for-external-spi-connected-ram-spi-ram-config-psram-clock-and-cs-io-for-esp32-pico-d4",
+                                        "title": "PSRAM clock and cs IO for ESP32-PICO-D4",
+                                        "type": "menu"
+                                    },
+                                    {
+                                        "children": [],
+                                        "depends_on": "IDF_TARGET_ESP32 && (ESPTOOLPY_FLASHMODE_DIO || ESPTOOLPY_FLASHMODE_DOUT) && SPIRAM && !APP_BUILD_TYPE_PURE_RAM_APP",
+                                        "help": "This setting is only used if the SPI flash pins have been overridden by setting the eFuses\nSPI_PAD_CONFIG_xxx, and the SPI flash mode is DIO or DOUT.\n\nWhen this is the case, the eFuse config only defines 3 of the 4 Quad I/O data pins. The WP pin (aka\nESP32 pin \"SD_DATA_3\" or SPI flash pin \"IO2\") is not specified in eFuse. The psram only has QPI\nmode, so a WP pin setting is necessary.\n\nIf this config item is set to N (default), the correct WP pin will be automatically used for any\nEspressif chip or module with integrated flash. If a custom setting is needed, set this config item\nto Y and specify the GPIO number connected to the WP pin.\n\nWhen flash mode is set to QIO or QOUT, the PSRAM WP pin will be set the same as the SPI Flash WP pin\nconfigured in the bootloader.",
+                                        "id": "SPIRAM_CUSTOM_SPIWP_SD3_PIN",
+                                        "name": "SPIRAM_CUSTOM_SPIWP_SD3_PIN",
+                                        "range": null,
+                                        "title": "Use custom SPI PSRAM WP(SD3) Pin when flash pins set in eFuse (read help)",
+                                        "type": "bool"
+                                    },
+                                    {
+                                        "children": [],
+                                        "depends_on": "IDF_TARGET_ESP32 && (ESPTOOLPY_FLASHMODE_DIO || ESPTOOLPY_FLASHMODE_DOUT) && SPIRAM && !APP_BUILD_TYPE_PURE_RAM_APP",
+                                        "help": "The option \"Use custom SPI PSRAM WP(SD3) pin\" must be set or this value is ignored\n\nIf burning a customized set of SPI flash pins in eFuse and using DIO or DOUT mode for flash, set this\nvalue to the GPIO number of the SPIRAM WP pin.",
+                                        "id": "SPIRAM_SPIWP_SD3_PIN",
+                                        "name": "SPIRAM_SPIWP_SD3_PIN",
+                                        "range": [
+                                            0,
+                                            33
+                                        ],
+                                        "title": "Custom SPI PSRAM WP(SD3) Pin",
+                                        "type": "int"
+                                    },
+                                    {
+                                        "children": [],
+                                        "depends_on": "SPIRAM && SPIRAM && !APP_BUILD_TYPE_PURE_RAM_APP",
+                                        "help": "Enable this option to fix single bit errors inside 64Mbit PSRAM.\n\nSome 64Mbit PSRAM chips have a hardware issue in the RAM which causes bit errors at multiple\nfixed bit positions.\n\nNote: If this option is enabled, the 64Mbit PSRAM chip will appear to be 32Mbit in size.\nApplications will not be affected unless the use the esp_himem APIs, which are not supported\nin 2T mode.",
+                                        "id": "SPIRAM_2T_MODE",
+                                        "name": "SPIRAM_2T_MODE",
+                                        "range": null,
+                                        "title": "Enable SPI PSRAM 2T mode",
+                                        "type": "bool"
+                                    }
+                                ],
+                                "depends_on": "SPIRAM && !APP_BUILD_TYPE_PURE_RAM_APP",
+                                "id": "component-config-esp-psram-support-for-external-spi-connected-ram-spi-ram-config",
+                                "title": "SPI RAM config",
+                                "type": "menu"
+                            }
+                        ],
+                        "depends_on": "!APP_BUILD_TYPE_PURE_RAM_APP",
+                        "help": "This enables support for an external SPI RAM chip, connected in parallel with the\nmain SPI flash chip.",
+                        "id": "SPIRAM",
+                        "name": "SPIRAM",
+                        "range": null,
+                        "title": "Support for external, SPI-connected RAM",
+                        "type": "bool"
+                    }
+                ],
+                "depends_on": "!APP_BUILD_TYPE_PURE_RAM_APP",
+                "id": "component-config-esp-psram",
+                "title": "ESP PSRAM",
+                "type": "menu"
+            },
+            {
+                "children": [
+                    {
+                        "children": [
+                            {
+                                "children": [],
+                                "depends_on": "RINGBUF_PLACE_FUNCTIONS_INTO_FLASH",
+                                "help": "Place ISR ringbuf functions (like xRingbufferSendFromISR/xRingbufferReceiveFromISR) into flash.\nThis frees up IRAM, but the functions can no longer be called when the cache is disabled\nor from an IRAM interrupt context.\n\nThis option is not compatible with ESP-IDF drivers which are configured to\nrun the ISR from an IRAM context, e.g. CONFIG_UART_ISR_IN_IRAM.",
+                                "id": "RINGBUF_PLACE_ISR_FUNCTIONS_INTO_FLASH",
+                                "name": "RINGBUF_PLACE_ISR_FUNCTIONS_INTO_FLASH",
+                                "range": null,
+                                "title": "Place ISR ringbuf functions into flash",
+                                "type": "bool"
+                            }
+                        ],
+                        "depends_on": null,
+                        "help": "Place non-ISR ringbuf functions (like xRingbufferCreate/xRingbufferSend) into flash.\nThis frees up IRAM, but the functions can no longer be called when the cache is disabled.",
+                        "id": "RINGBUF_PLACE_FUNCTIONS_INTO_FLASH",
+                        "name": "RINGBUF_PLACE_FUNCTIONS_INTO_FLASH",
+                        "range": null,
+                        "title": "Place non-ISR ringbuf functions into flash",
+                        "type": "bool"
+                    }
+                ],
+                "depends_on": null,
+                "id": "component-config-esp-ringbuf",
+                "title": "ESP Ringbuf",
                 "type": "menu"
             },
             {

@@ -3,3 +3,4 @@ source "C:/Users/vanes/esp/v5.5.1/esp-idf/components/esp_app_format/Kconfig.proj
 source "C:/Users/vanes/esp/v5.5.1/esp-idf/components/esp_rom/Kconfig.projbuild"
 source "C:/Users/vanes/esp/v5.5.1/esp-idf/components/esptool_py/Kconfig.projbuild"
 source "C:/Users/vanes/esp/v5.5.1/esp-idf/components/partition_table/Kconfig.projbuild"
+source "E:/Tesis/espressif/waste-clasification/managed_components/espressif__esp-nn/Kconfig.projbuild"
