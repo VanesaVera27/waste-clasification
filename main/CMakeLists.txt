@@ -1,4 +1,13 @@
-idf_component_register(SRCS "model_data.cc" "main.cpp"
-                       PRIV_REQUIRES spi_flash esp_psram freertos
-                       INCLUDE_DIRS "."
-                       REQUIRES esp-tflite-micro)
+idf_component_register(
+    SRCS 
+        "main.cpp"
+        "model_data.cc"
+    INCLUDE_DIRS 
+        "."
+    PRIV_REQUIRES 
+        spi_flash 
+        esp_psram 
+        freertos
+    REQUIRES 
+        esp-tflite-micro
+)

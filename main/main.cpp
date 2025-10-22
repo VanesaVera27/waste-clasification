@@ -8,7 +8,8 @@
 #include "esp_heap_caps.h"
 #include "esp_psram.h"
 
-#include "model_data.h" 
+#include "model_data.h"      
+#include "imagen.h"         
 
 #include "tensorflow/lite/micro/micro_interpreter.h"
 #include "tensorflow/lite/micro/micro_mutable_op_resolver.h"
@@ -27,13 +28,11 @@ std::map<int, std::string> label_map = {
     {3, "plastico"}
 };
 
-// Imagen de prueba (rellena con valores dummy, 96x96x3)
-uint8_t test_image[96 * 96 * 3];
-
 extern "C" void app_main(void)
 {
-    ESP_LOGI(TAG, "Inicializando TensorFlow Lite Micro...");
+    ESP_LOGI(TAG, "=== Inicializando TensorFlow Lite Micro ===");
 
+    // Asignar memoria para tensor arena
     if (esp_psram_is_initialized()) {
         tensor_arena = (uint8_t *)heap_caps_malloc(kTensorArenaSize, MALLOC_CAP_SPIRAM | MALLOC_CAP_8BIT);
         ESP_LOGI(TAG, "PSRAM detectada y usada para tensor arena.");
@@ -50,7 +49,7 @@ extern "C" void app_main(void)
     // Cargar modelo
     const tflite::Model *model = tflite::GetModel(modelo_tflite);
     if (!model) {
-        ESP_LOGE(TAG, "No se pudo obtener el modelo (model == nullptr)");
+        ESP_LOGE(TAG, "Error: modelo no encontrado");
         return;
     }
     if (model->version() != TFLITE_SCHEMA_VERSION) {
@@ -58,13 +57,14 @@ extern "C" void app_main(void)
         return;
     }
 
-    ESP_LOGI(TAG, "Modelo cargado correctamente. Tamaño: %u bytes", modelo_tflite_len);
+    ESP_LOGI(TAG, "Modelo cargado correctamente (%u bytes).", modelo_tflite_len);
 
-    // Resolver ops
+    // Resolver operaciones
     static tflite::MicroMutableOpResolver<15> resolver;
     resolver.AddQuantize();
     resolver.AddDequantize();
     resolver.AddConv2D();
+    resolver.AddRelu();
     resolver.AddRelu6();
     resolver.AddDepthwiseConv2D();
     resolver.AddAdd();
@@ -74,45 +74,59 @@ extern "C" void app_main(void)
 
     // Crear intérprete
     static tflite::MicroInterpreter interpreter(model, resolver, tensor_arena, kTensorArenaSize);
-    ESP_LOGI(TAG, "Intérprete creado correctamente.");
-
     if (interpreter.AllocateTensors() != kTfLiteOk) {
         ESP_LOGE(TAG, "Error al asignar tensores.");
         return;
     }
-    ESP_LOGI(TAG, "Tensor arena asignada correctamente. Setup completo.");
 
-    // Copiar imagen de prueba al tensor de entrada
-    TfLiteTensor* input = interpreter.input(0);
-    if (input->type == kTfLiteUInt8) {
-        for (int i = 0; i < 96*96*3; i++) {
-            input->data.uint8[i] = test_image[i]; 
-        }
+    ESP_LOGI(TAG, "Tensor arena asignada correctamente.");
+
+    // Obtener tensor de entrada
+    TfLiteTensor *input = interpreter.input(0);
+
+    if (input->bytes != sizeof(test_jpg)) {
+        ESP_LOGW(TAG, "Tamaño de imagen (%d) no coincide con el esperado (%d).", sizeof(test_jpg), input->bytes);
     }
 
-    ESP_LOGI(TAG, "Iniciando inferencia de prueba...");
+    // Copiar imagen al tensor de entrada
+    if (input->type == kTfLiteUInt8) {
+        memcpy(input->data.uint8, test_jpg, sizeof(test_jpg));
+    } else if (input->type == kTfLiteInt8) {
+        for (int i = 0; i < sizeof(test_jpg); i++)
+            input->data.int8[i] = (int)test_jpg[i] - 128;  // Normalización si el modelo es int8
+    } else {
+        ESP_LOGE(TAG, "Tipo de tensor no soportado.");
+        return;
+    }
+
+    ESP_LOGI(TAG, "Ejecutando inferencia...");
     if (interpreter.Invoke() != kTfLiteOk) {
         ESP_LOGE(TAG, "Error al ejecutar inferencia.");
         return;
     }
-    ESP_LOGI(TAG, "Inferencia ejecutada correctamente.");
+
+    ESP_LOGI(TAG, "Inferencia completada correctamente.");
 
     // Procesar salida
-    TfLiteTensor* output = interpreter.output(0);
-    int predicted_class = 0;
-    float max_prob = 0.0f;
+    TfLiteTensor *output = interpreter.output(0);
+    int predicted_class = -1;
+    float max_prob = -1.0f;
 
     for (int i = 0; i < output->dims->data[1]; i++) {
-        float prob = static_cast<float>(output->data.uint8[i]) / 255.0f;
-        ESP_LOGI(TAG, "Clase %d (%s) -> %f", i, label_map[i].c_str(), prob);
+        float prob = (float)output->data.uint8[i] / 255.0f;
+        ESP_LOGI(TAG, "Clase %d (%s): %.4f", i, label_map[i].c_str(), prob);
         if (prob > max_prob) {
             max_prob = prob;
             predicted_class = i;
         }
     }
 
-    ESP_LOGI(TAG, "Clase predicha: %s con probabilidad: %f",
-             label_map[predicted_class].c_str(), max_prob);
+    if (predicted_class >= 0) {
+        ESP_LOGI(TAG, "✅ Clase predicha: %s (%.2f%%)", 
+                 label_map[predicted_class].c_str(), max_prob * 100);
+    } else {
+        ESP_LOGW(TAG, "No se pudo determinar clase.");
+    }
 
-    ESP_LOGI(TAG, "app_main finalizado.");
+    ESP_LOGI(TAG, "=== Fin de app_main ===");
 }
