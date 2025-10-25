@@ -1,0 +1,25 @@
+Command: ninja all
+[1/9] Performing build step for 'bootloader'
+[1/1] C:\WINDOWS\system32\cmd.exe /C "cd /D E:\Tesis\espressif\waste-clasification\build\bootloader\esp-idf\esptool_py && C:\Users\vanes\.espressif\python_env\idf5.5_py3.11_env\Scripts\python.exe C:/Users/vanes/esp/v5.5.1/esp-idf/components/partition_table/check_sizes.py --offset 0x8000 bootloader 0x1000 E:/Tesis/espressif/waste-clasification/build/bootloader/bootloader.bin"
+Bootloader binary size 0x6680 bytes. 0x980 bytes (8%) free.
+[2/9] No install step for 'bootloader'
+[3/9] Completed 'bootloader'
+[4/9] Building CXX object esp-idf/main/CMakeFiles/__idf_main.dir/main.cpp.obj
+E:/Tesis/espressif/waste-clasification/main/main.cpp: In function 'esp_err_t init_camera()':
+E:/Tesis/espressif/waste-clasification/main/main.cpp:89:5: warning: missing initializer for member 'camera_config_t::fb_location' [-Wmissing-field-initializers]
+   89 |     };
+      |     ^
+E:/Tesis/espressif/waste-clasification/main/main.cpp:89:5: warning: missing initializer for member 'camera_config_t::grab_mode' [-Wmissing-field-initializers]
+E:/Tesis/espressif/waste-clasification/main/main.cpp:89:5: warning: missing initializer for member 'camera_config_t::sccb_i2c_port' [-Wmissing-field-initializers]
+[5/9] Linking C static library esp-idf\main\libmain.a
+[6/9] Generating esp-idf/esp_system/ld/sections.ld
+[7/9] Linking CXX executable waste-clasification.elf
+[8/9] Generating binary image from built executable
+esptool.py v4.10.0
+Creating esp32 image...
+Merged 2 ELF sections
+Successfully created esp32 image.
+Generated E:/Tesis/espressif/waste-clasification/build/waste-clasification.bin
+[9/9] C:\WINDOWS\system32\cmd.exe /C "cd /D E:\Tesis\espressif\waste-clasification\build\esp-idf\esptool_py && C:\Users\vanes\.espressif\python_env\idf5.5_py3.11_env\Scripts\python.exe C:/Users/vanes/esp/v5.5.1/esp-idf/components/partition_table/check_sizes.py --offset 0x8000 partition --type app E:/Tesis/espressif/waste-clasification/build/partition_table/partition-table.bin E:/Tesis/espressif/waste-clasification/build/waste-clasification.bin"
+waste-clasification.bin binary size 0x1a66c0 bytes. Smallest app partition is 0x1a9000 bytes. 0x2940 bytes (1%) free.
+Warning: The smallest app partition is nearly full (1% free space left)!

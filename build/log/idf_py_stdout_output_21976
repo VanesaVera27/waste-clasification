@@ -1,0 +1,288 @@
+Command: C:\Users\vanes\.espressif\python_env\idf5.5_py3.11_env\Scripts\python.exe C:\Users\vanes\esp\v5.5.1\esp-idf\tools/idf_monitor.py -p COM6 -b 115200 --toolchain-prefix xtensa-esp32-elf- --target esp32 --revision 0 E:\Tesis\espressif\waste-clasification\build\waste-clasification.elf E:\Tesis\espressif\waste-clasification\build\bootloader\bootloader.elf --force-color -m 'C:\Users\vanes\.espressif\python_env\idf5.5_py3.11_env\Scripts\python.exe' 'C:\Users\vanes\esp\v5.5.1\esp-idf\tools\idf.py'
+ets Jul 29 2019 12:21:46
+
+rst:0x1 (POWERON_RESET),boot:0x13 (SPI_FAST_FLASH_BOOT)
+configsip: 0, SPIWP:0xee
+clk_drv:0x00,q_drv:0x00,d_drv:0x00,cs0_drv:0x00,hd_drv:0x00,wp_drv:0x00
+mode:DIO, clock div:2
+load:0x3fff0030,len:6380
+ho 0 tail 12 room 4
+load:0x40078000,len:15916
+load:0x40080400,len:3860
+entry 0x40080638
+[0;32mI (29) boot: ESP-IDF v5.5.1 2nd stage bootloader[0m
+[0;32mI (29) boot: compile time Oct 25 2025 15:24:07[0m
+[0;32mI (29) boot: Multicore bootloader[0m
+[0;32mI (31) boot: chip revision: v3.1[0m
+[0;32mI (33) boot.esp32: SPI Speed      : 40MHz[0m
+[0;32mI (37) boot.esp32: SPI Mode       : DIO[0m
+[0;32mI (41) boot.esp32: SPI Flash Size : 4MB[0m
+[0;32mI (44) boot: Enabling RNG early entropy source...[0m
+[0;32mI (49) boot: Partition Table:[0m
+[0;32mI (51) boot: ## Label            Usage          Type ST Offset   Length[0m
+[0;32mI (58) boot:  0 nvs              WiFi data        01 02 00009000 00006000[0m
+[0;32mI (64) boot:  1 otadata          OTA data         01 00 0000f000 00002000[0m
+[0;32mI (71) boot:  2 phy_init         RF data          01 01 00011000 00001000[0m
+[0;32mI (77) boot:  3 ota_0            OTA app          00 10 00020000 001a9000[0m
+[0;32mI (84) boot:  4 ota_1            OTA app          00 11 001d0000 001a9000[0m
+[0;32mI (90) boot: End of partition table[0m
+[0;32mI (94) boot: No factory image, trying OTA 0[0m
+[0;32mI (97) esp_image: segment 0: paddr=00020020 vaddr=3f400020 size=c64b0h (812208) map[0m
+[0;32mI (382) esp_image: segment 1: paddr=000e64d8 vaddr=3ffb0000 size=06784h ( 26500) load[0m
+[0;32mI (392) esp_image: segment 2: paddr=000ecc64 vaddr=40080000 size=033b4h ( 13236) load[0m
+[0;32mI (398) esp_image: segment 3: paddr=000f0020 vaddr=400d0020 size=bce90h (773776) map[0m
+[0;32mI (662) esp_image: segment 4: paddr=001aceb8 vaddr=400833b4 size=197b8h (104376) load[0m
+[0;32mI (703) esp_image: segment 5: paddr=001c6678 vaddr=50000000 size=00020h (    32) load[0m
+[0;32mI (718) boot: Loaded app from partition at offset 0x20000[0m
+[0;32mI (723) boot: Set actual ota_seq=1 in otadata[0][0m
+[0;32mI (723) boot: Disabling RNG early entropy source...[0m
+[0;32mI (735) quad_psram: This chip is ESP32-D0WD[0m
+[0;32mI (737) esp_psram: Found 8MB PSRAM device[0m
+[0;32mI (737) esp_psram: Speed: 40MHz[0m
+[0;32mI (737) esp_psram: PSRAM initialized, cache is in low/high (2-core) mode.[0m
+[0;33mW (742) esp_psram: Virtual address not enough for PSRAM, map as much as we can. 4MB is mapped[0m
+[0;32mI (750) cpu_start: Multicore app[0m
+[0;32mI (1659) esp_psram: SPI SRAM memory test OK[0m
+[0;32mI (1667) cpu_start: Pro cpu start user code[0m
+[0;32mI (1667) cpu_start: cpu freq: 160000000 Hz[0m
+[0;32mI (1667) app_init: Application information:[0m
+[0;32mI (1667) app_init: Project name:     waste-clasification[0m
+[0;32mI (1672) app_init: App version:      62a6a55-dirty[0m
+[0;32mI (1677) app_init: Compile time:     Oct 25 2025 15:23:51[0m
+[0;32mI (1682) app_init: ELF file SHA256:  067711888...[0m
+[0;32mI (1686) app_init: ESP-IDF:          v5.5.1[0m
+[0;32mI (1690) efuse_init: Min chip rev:     v0.0[0m
+[0;32mI (1694) efuse_init: Max chip rev:     v3.99 [0m
+[0;32mI (1698) efuse_init: Chip rev:         v3.1[0m
+[0;32mI (1703) heap_init: Initializing. RAM available for dynamic allocation:[0m
+[0;32mI (1709) heap_init: At 3FFAE6E0 len 00001920 (6 KiB): DRAM[0m
+[0;32mI (1714) heap_init: At 3FFBC310 len 00023CF0 (143 KiB): DRAM[0m
+[0;32mI (1719) heap_init: At 3FFE0440 len 00003AE0 (14 KiB): D/IRAM[0m
+[0;32mI (1725) heap_init: At 3FFE4350 len 0001BCB0 (111 KiB): D/IRAM[0m
+[0;32mI (1730) heap_init: At 4009CB6C len 00003494 (13 KiB): IRAM[0m
+[0;32mI (1736) esp_psram: Adding pool of 4096K of PSRAM memory to heap allocator[0m
+[0;32mI (1744) spi_flash: detected chip: generic[0m
+[0;32mI (1746) spi_flash: flash io: dio[0m
+[0;32mI (1751) main_task: Started on CPU0[0m
+[0;32mI (1761) esp_psram: Reserving pool of 32K of internal memory for DMA/internal allocations[0m
+[0;32mI (1761) main_task: Calling app_main()[0m
+[0;32mI (1801) wifi:wifi driver task: 3ffc447c, prio:23, stack:6656, core=0[0m
+[0;32mI (1811) wifi:wifi firmware version: 14da9b7[0m
+[0;32mI (1811) wifi:wifi certification version: v7.0[0m
+[0;32mI (1811) wifi:config NVS flash: enabled[0m
+[0;32mI (1811) wifi:config nano formatting: disabled[0m
+[0;32mI (1821) wifi:Init data frame dynamic rx buffer num: 32[0m
+[0;32mI (1821) wifi:Init static rx mgmt buffer num: 5[0m
+[0;32mI (1821) wifi:Init management short buffer num: 32[0m
+[0;32mI (1831) wifi:Init dynamic tx buffer num: 32[0m
+[0;32mI (1831) wifi:Init static rx buffer size: 1600[0m
+[0;32mI (1841) wifi:Init static rx buffer num: 10[0m
+[0;32mI (1841) wifi:Init dynamic rx buffer num: 32[0m
+[0;32mI (1851) wifi_init: rx ba win: 6[0m
+[0;32mI (1851) wifi_init: accept mbox: 6[0m
+[0;32mI (1851) wifi_init: tcpip mbox: 32[0m
+[0;32mI (1851) wifi_init: udp mbox: 6[0m
+[0;32mI (1861) wifi_init: tcp mbox: 6[0m
+[0;32mI (1861) wifi_init: tcp tx win: 5760[0m
+[0;32mI (1861) wifi_init: tcp rx win: 5760[0m
+[0;32mI (1871) wifi_init: tcp mss: 1440[0m
+[0;32mI (1871) wifi_init: WiFi IRAM OP enabled[0m
+[0;32mI (1871) wifi_init: WiFi RX IRAM OP enabled[0m
+[0;32mI (1881) phy_init: phy_version 4861,b71b5ad,Aug  5 2025,11:16:06[0m
+[0;32mI (1951) wifi:mode : sta (ec:e3:34:da:c5:b0)[0m
+[0;32mI (1961) wifi:enable tsf[0m
+[0;32mI (1961) Connect_WiFi: wifi_init_sta finished.[0m
+[0;32mI (1971) wifi:new:<1,0>, old:<1,0>, ap:<255,255>, sta:<1,0>, prof:1, snd_ch_cfg:0x0[0m
+[0;32mI (1971) wifi:state: init -> auth (0xb0)[0m
+[0;32mI (1981) wifi:state: auth -> assoc (0x0)[0m
+[0;32mI (1991) wifi:state: assoc -> run (0x10)[0m
+[0;32mI (2001) wifi:<ba-add>idx:0 (ifx:0, a4:08:f5:f2:b4:ae), tid:0, ssn:0, winSize:64[0m
+[0;32mI (2001) wifi:<ba-add>idx:1 (ifx:0, a4:08:f5:f2:b4:ae), tid:5, ssn:0, winSize:64[0m
+[0;32mI (2021) wifi:connected with Castillo, aid = 3, channel 1, BW20, bssid = a4:08:f5:f2:b4:ae[0m
+[0;32mI (2021) wifi:security: WPA2-PSK, phy: bgn, rssi: -56[0m
+[0;32mI (2021) wifi:pm start, type: 1[0m
+
+[0;32mI (2021) wifi:dp: 1, bi: 102400, li: 3, scale listen interval from 307200 us to 307200 us[0m
+[0;32mI (2041) wifi:AP's beacon interval = 102400 us, DTIM period = 1[0m
+[0;32mI (4091) esp_netif_handlers: sta ip: 192.168.0.75, mask: 255.255.255.0, gw: 192.168.0.1[0m
+[0;32mI (4091) Connect_WiFi: got ip:192.168.0.75[0m
+[0;32mI (4091) Connect_WiFi: connected to ap SSID:Castillo password:Ambulante[0m
+[0;32mI (4101) cam_hal: cam init ok[0m
+[0;32mI (4101) sccb-ng: pin_sda 26 pin_scl 27[0m
+[0;32mI (4101) sccb-ng: sccb_i2c_port=1[0m
+[0;32mI (4131) camera: Camera PID=0x26 VER=0x42 MIDL=0x7f MIDH=0xa2[0m
+[0;32mI (4131) camera: Detected OV2640 camera[0m
+[0;32mI (4131) camera: Detected camera at address=0x30[0m
+[0;32mI (4211) cam_hal: PSRAM DMA mode disabled[0m
+[0;32mI (4211) cam_hal: buffer_size: 32768, half_buffer_size: 4096, node_buffer_size: 2048, node_cnt: 16, total_cnt: 3[0m
+[0;32mI (4211) cam_hal: Allocating 15360 Byte frame buffer in PSRAM[0m
+[0;32mI (4221) cam_hal: cam config ok[0m
+[0;32mI (4221) ov2640: Set PLL: clk_2x: 0, clk_div: 0, pclk_auto: 0, pclk_div: 8[0m
+[0;32mI (4301) CAM+TFLM: Buffers asignados en PSRAM[0m
+[0;32mI (4301) CAM+TFLM: Inicializando TensorFlow Lite Micro...[0m
+[0;32mI (4301) CAM+TFLM: Usando PSRAM para tensor arena.[0m
+[0;32mI (4431) CAM+TFLM: Modelo inicializado correctamente.[0m
+[0;32mI (4431) CAM+TFLM: Servidor HTTP iniciado[0m
+[0;32mI (4431) CAM+TFLM: ✅ Sistema listo: cámara + modelo funcionando[0m
+[0;32mI (4441) main_task: Returned from app_main()[0m
+[0;32mI (8821) CAM+TFLM: 🧠 Objeto detectado: carton (67.45%)[0m
+[0;32mI (10651) CAM+TFLM: 🧠 Objeto detectado: carton (67.45%)[0m
+[0;32mI (12501) CAM+TFLM: 🧠 Objeto detectado: carton (70.98%)[0m
+[0;32mI (14341) CAM+TFLM: 🧠 Objeto detectado: metal (85.49%)[0m
+[0;32mI (16181) CAM+TFLM: 🧠 Objeto detectado: metal (54.90%)[0m
+[0;32mI (18021) CAM+TFLM: 🧠 Objeto detectado: papel (31.37%)[0m
+[0;32mI (19871) CAM+TFLM: 🧠 Objeto detectado: papel (41.96%)[0m
+[0;32mI (21811) CAM+TFLM: 🧠 Objeto detectado: carton (59.22%)[0m
+[0;32mI (23651) CAM+TFLM: 🧠 Objeto detectado: carton (90.59%)[0m
+[0;32mI (25491) CAM+TFLM: 🧠 Objeto detectado: carton (84.71%)[0m
+[0;32mI (27321) CAM+TFLM: 🧠 Objeto detectado: carton (88.63%)[0m
+[0;32mI (29161) CAM+TFLM: 🧠 Objeto detectado: carton (67.84%)[0m
+[0;32mI (30981) CAM+TFLM: 🧠 Objeto detectado: carton (72.55%)[0m
+[0;32mI (32821) CAM+TFLM: 🧠 Objeto detectado: metal (92.55%)[0m
+[0;32mI (34661) CAM+TFLM: 🧠 Objeto detectado: metal (93.73%)[0m
+[0;32mI (36511) CAM+TFLM: 🧠 Objeto detectado: metal (86.67%)[0m
+[0;32mI (38351) CAM+TFLM: 🧠 Objeto detectado: metal (88.24%)[0m
+[0;32mI (40181) CAM+TFLM: 🧠 Objeto detectado: metal (67.06%)[0m
+[0;32mI (42031) CAM+TFLM: 🧠 Objeto detectado: metal (65.49%)[0m
+[0;32mI (43871) CAM+TFLM: 🧠 Objeto detectado: metal (60.78%)[0m
+[0;32mI (45701) CAM+TFLM: 🧠 Objeto detectado: carton (46.67%)[0m
+[0;32mI (47541) CAM+TFLM: 🧠 Objeto detectado: carton (70.98%)[0m
+[0;32mI (49381) CAM+TFLM: 🧠 Objeto detectado: carton (77.65%)[0m
+[0;32mI (51221) CAM+TFLM: 🧠 Objeto detectado: carton (84.31%)[0m
+[0;32mI (53051) CAM+TFLM: 🧠 Objeto detectado: carton (71.37%)[0m
+[0;32mI (54891) CAM+TFLM: 🧠 Objeto detectado: carton (83.92%)[0m
+[0;32mI (56731) CAM+TFLM: 🧠 Objeto detectado: carton (70.98%)[0m
+[0;32mI (58581) CAM+TFLM: 🧠 Objeto detectado: carton (72.55%)[0m
+[0;32mI (60411) CAM+TFLM: 🧠 Objeto detectado: carton (80.78%)[0m
+[0;32mI (62261) CAM+TFLM: 🧠 Objeto detectado: carton (77.25%)[0m
+[0;32mI (64101) CAM+TFLM: 🧠 Objeto detectado: carton (56.08%)[0m
+[0;32mI (65931) CAM+TFLM: 🧠 Objeto detectado: carton (77.25%)[0m
+[0;32mI (67781) CAM+TFLM: 🧠 Objeto detectado: carton (75.29%)[0m
+[0;32mI (69611) CAM+TFLM: 🧠 Objeto detectado: carton (86.27%)[0m
+[0;32mI (71451) CAM+TFLM: 🧠 Objeto detectado: carton (90.20%)[0m
+[0;32mI (73291) CAM+TFLM: 🧠 Objeto detectado: carton (64.31%)[0m
+[0;32mI (75141) CAM+TFLM: 🧠 Objeto detectado: carton (56.86%)[0m
+[0;32mI (76971) CAM+TFLM: 🧠 Objeto detectado: carton (70.59%)[0m
+[0;32mI (78811) CAM+TFLM: 🧠 Objeto detectado: carton (55.69%)[0m
+[0;32mI (80651) CAM+TFLM: 🧠 Objeto detectado: metal (44.71%)[0m
+[0;32mI (82491) CAM+TFLM: 🧠 Objeto detectado: carton (48.24%)[0m
+[0;32mI (84331) CAM+TFLM: 🧠 Objeto detectado: carton (70.98%)[0m
+[0;32mI (86171) CAM+TFLM: 🧠 Objeto detectado: metal (53.73%)[0m
+[0;32mI (88041) CAM+TFLM: 🧠 Objeto detectado: carton (50.20%)[0m
+[0;32mI (89941) CAM+TFLM: 🧠 Objeto detectado: carton (44.71%)[0m
+[0;32mI (91781) CAM+TFLM: 🧠 Objeto detectado: carton (70.98%)[0m
+[0;32mI (93621) CAM+TFLM: 🧠 Objeto detectado: carton (78.04%)[0m
+[0;32mI (95461) CAM+TFLM: 🧠 Objeto detectado: carton (49.80%)[0m
+[0;32mI (97301) CAM+TFLM: 🧠 Objeto detectado: carton (50.20%)[0m
+[0;32mI (99551) CAM+TFLM: 🧠 Objeto detectado: carton (86.67%)[0m
+[0;32mI (101401) CAM+TFLM: 🧠 Objeto detectado: carton (40.39%)[0m
+[0;32mI (103441) CAM+TFLM: 🧠 Objeto detectado: carton (54.12%)[0m
+[0;32mI (105341) CAM+TFLM: 🧠 Objeto detectado: carton (44.71%)[0m
+[0;32mI (107271) CAM+TFLM: 🧠 Objeto detectado: carton (46.67%)[0m
+[0;32mI (109341) CAM+TFLM: 🧠 Objeto detectado: carton (58.04%)[0m
+[0;32mI (115591) CAM+TFLM: 🧠 Objeto detectado: metal (33.73%)[0m
+[0;32mI (117431) CAM+TFLM: 🧠 Objeto detectado: metal (34.12%)[0m
+[0;32mI (119321) CAM+TFLM: 🧠 Objeto detectado: metal (63.92%)[0m
+[0;32mI (121821) CAM+TFLM: 🧠 Objeto detectado: carton (31.76%)[0m
+[0;32mI (123761) CAM+TFLM: 🧠 Objeto detectado: carton (56.08%)[0m
+[0;32mI (125591) CAM+TFLM: 🧠 Objeto detectado: carton (63.53%)[0m
+[0;32mI (127421) CAM+TFLM: 🧠 Objeto detectado: carton (69.41%)[0m
+[0;32mI (129251) CAM+TFLM: 🧠 Objeto detectado: carton (64.31%)[0m
+[0;32mI (131081) CAM+TFLM: 🧠 Objeto detectado: metal (43.53%)[0m
+[0;32mI (132921) CAM+TFLM: 🧠 Objeto detectado: carton (49.02%)[0m
+[0;32mI (134771) CAM+TFLM: 🧠 Objeto detectado: metal (83.14%)[0m
+[0;32mI (136601) CAM+TFLM: 🧠 Objeto detectado: carton (71.37%)[0m
+[0;32mI (138441) CAM+TFLM: 🧠 Objeto detectado: carton (72.55%)[0m
+[0;32mI (140281) CAM+TFLM: 🧠 Objeto detectado: carton (75.69%)[0m
+[0;32mI (142121) CAM+TFLM: 🧠 Objeto detectado: carton (78.82%)[0m
+[0;32mI (143971) CAM+TFLM: 🧠 Objeto detectado: metal (45.88%)[0m
+[0;32mI (145801) CAM+TFLM: 🧠 Objeto detectado: metal (68.63%)[0m
+[0;32mI (147641) CAM+TFLM: 🧠 Objeto detectado: carton (35.69%)[0m
+[0;32mI (149481) CAM+TFLM: 🧠 Objeto detectado: carton (41.96%)[0m
+[0;32mI (151311) CAM+TFLM: 🧠 Objeto detectado: carton (48.24%)[0m
+[0;32mI (153161) CAM+TFLM: 🧠 Objeto detectado: carton (47.45%)[0m
+[0;32mI (154991) CAM+TFLM: 🧠 Objeto detectado: metal (50.59%)[0m
+[0;32mI (156831) CAM+TFLM: 🧠 Objeto detectado: carton (61.18%)[0m
+[0;32mI (158651) CAM+TFLM: 🧠 Objeto detectado: carton (64.71%)[0m
+[0;32mI (160471) CAM+TFLM: 🧠 Objeto detectado: carton (61.18%)[0m
+[0;32mI (162311) CAM+TFLM: 🧠 Objeto detectado: carton (67.06%)[0m
+[0;32mI (164151) CAM+TFLM: 🧠 Objeto detectado: carton (41.18%)[0m
+[0;32mI (165991) CAM+TFLM: 🧠 Objeto detectado: carton (60.00%)[0m
+[0;32mI (167841) CAM+TFLM: 🧠 Objeto detectado: carton (62.75%)[0m
+[0;32mI (169671) CAM+TFLM: 🧠 Objeto detectado: carton (64.31%)[0m
+[0;32mI (171511) CAM+TFLM: 🧠 Objeto detectado: carton (78.82%)[0m
+[0;32mI (173351) CAM+TFLM: 🧠 Objeto detectado: carton (51.76%)[0m
+[0;32mI (175181) CAM+TFLM: 🧠 Objeto detectado: carton (40.00%)[0m
+[0;32mI (177021) CAM+TFLM: 🧠 Objeto detectado: metal (38.04%)[0m
+[0;32mI (178871) CAM+TFLM: 🧠 Objeto detectado: carton (45.88%)[0m
+[0;32mI (180711) CAM+TFLM: 🧠 Objeto detectado: carton (59.61%)[0m
+[0;32mI (182531) CAM+TFLM: 🧠 Objeto detectado: carton (66.27%)[0m
+[0;32mI (184341) CAM+TFLM: 🧠 Objeto detectado: carton (55.69%)[0m
+[0;32mI (186181) CAM+TFLM: 🧠 Objeto detectado: carton (38.82%)[0m
+[0;32mI (188011) CAM+TFLM: 🧠 Objeto detectado: carton (45.10%)[0m
+[0;32mI (189911) CAM+TFLM: 🧠 Objeto detectado: carton (39.22%)[0m
+[0;32mI (191741) CAM+TFLM: 🧠 Objeto detectado: carton (46.67%)[0m
+[0;32mI (193621) CAM+TFLM: 🧠 Objeto detectado: carton (44.31%)[0m
+[0;32mI (195461) CAM+TFLM: 🧠 Objeto detectado: carton (52.55%)[0m
+[0;32mI (197301) CAM+TFLM: 🧠 Objeto detectado: metal (51.37%)[0m
+[0;32mI (199141) CAM+TFLM: 🧠 Objeto detectado: carton (43.92%)[0m
+[0;32mI (200981) CAM+TFLM: 🧠 Objeto detectado: metal (40.00%)[0m
+[0;32mI (202811) CAM+TFLM: 🧠 Objeto detectado: metal (51.37%)[0m
+[0;32mI (204651) CAM+TFLM: 🧠 Objeto detectado: carton (36.08%)[0m
+[0;32mI (206481) CAM+TFLM: 🧠 Objeto detectado: carton (46.27%)[0m
+[0;32mI (208321) CAM+TFLM: 🧠 Objeto detectado: metal (88.63%)[0m
+[0;32mI (210181) CAM+TFLM: 🧠 Objeto detectado: carton (60.39%)[0m
+[0;32mI (212011) CAM+TFLM: 🧠 Objeto detectado: carton (88.24%)[0m
+[0;32mI (213861) CAM+TFLM: 🧠 Objeto detectado: carton (60.78%)[0m
+[0;32mI (215701) CAM+TFLM: 🧠 Objeto detectado: carton (77.65%)[0m
+[0;32mI (217541) CAM+TFLM: 🧠 Objeto detectado: carton (95.69%)[0m
+[0;32mI (219411) CAM+TFLM: 🧠 Objeto detectado: carton (90.20%)[0m
+[0;32mI (221251) CAM+TFLM: 🧠 Objeto detectado: carton (74.51%)[0m
+[0;32mI (223091) CAM+TFLM: 🧠 Objeto detectado: carton (53.33%)[0m
+[0;32mI (224921) CAM+TFLM: 🧠 Objeto detectado: carton (54.12%)[0m
+[0;32mI (226751) CAM+TFLM: 🧠 Objeto detectado: carton (44.31%)[0m
+[0;32mI (228611) CAM+TFLM: 🧠 Objeto detectado: carton (54.90%)[0m
+[0;32mI (230471) CAM+TFLM: 🧠 Objeto detectado: carton (76.86%)[0m
+[0;32mI (232311) CAM+TFLM: 🧠 Objeto detectado: carton (80.00%)[0m
+[0;32mI (234141) CAM+TFLM: 🧠 Objeto detectado: carton (85.49%)[0m
+[0;32mI (235981) CAM+TFLM: 🧠 Objeto detectado: carton (85.49%)[0m
+[0;32mI (237821) CAM+TFLM: 🧠 Objeto detectado: carton (48.24%)[0m
+[0;32mI (239661) CAM+TFLM: 🧠 Objeto detectado: carton (60.39%)[0m
+[0;32mI (241511) CAM+TFLM: 🧠 Objeto detectado: carton (54.12%)[0m
+[0;32mI (243341) CAM+TFLM: 🧠 Objeto detectado: carton (79.61%)[0m
+[0;32mI (245181) CAM+TFLM: 🧠 Objeto detectado: carton (59.61%)[0m
+[0;32mI (247011) CAM+TFLM: 🧠 Objeto detectado: carton (62.75%)[0m
+[0;32mI (248861) CAM+TFLM: 🧠 Objeto detectado: carton (87.45%)[0m
+[0;32mI (250701) CAM+TFLM: 🧠 Objeto detectado: carton (88.24%)[0m
+[0;32mI (252561) CAM+TFLM: 🧠 Objeto detectado: carton (77.65%)[0m
+[0;32mI (254421) CAM+TFLM: 🧠 Objeto detectado: carton (78.82%)[0m
+[0;32mI (256301) CAM+TFLM: 🧠 Objeto detectado: carton (78.82%)[0m
+[0;32mI (258141) CAM+TFLM: 🧠 Objeto detectado: carton (76.86%)[0m
+[0;32mI (260001) CAM+TFLM: 🧠 Objeto detectado: carton (69.41%)[0m
+[0;32mI (261881) CAM+TFLM: 🧠 Objeto detectado: carton (69.80%)[0m
+[0;32mI (263731) CAM+TFLM: 🧠 Objeto detectado: carton (45.49%)[0m
+[0;32mI (265591) CAM+TFLM: 🧠 Objeto detectado: carton (72.16%)[0m
+[0;32mI (267431) CAM+TFLM: 🧠 Objeto detectado: carton (69.80%)[0m
+[0;32mI (269271) CAM+TFLM: 🧠 Objeto detectado: carton (77.25%)[0m
+[0;32mI (271121) CAM+TFLM: 🧠 Objeto detectado: carton (76.86%)[0m
+[0;32mI (272951) CAM+TFLM: 🧠 Objeto detectado: carton (38.04%)[0m
+[0;32mI (274781) CAM+TFLM: 🧠 Objeto detectado: metal (41.57%)[0m
+[0;32mI (276611) CAM+TFLM: 🧠 Objeto detectado: carton (38.04%)[0m
+[0;32mI (278441) CAM+TFLM: 🧠 Objeto detectado: metal (68.24%)[0m
+[0;32mI (280281) CAM+TFLM: 🧠 Objeto detectado: metal (54.12%)[0m
+[0;32mI (282131) CAM+TFLM: 🧠 Objeto detectado: metal (70.98%)[0m
+[0;32mI (284011) CAM+TFLM: 🧠 Objeto detectado: carton (56.47%)[0m
+[0;32mI (285841) CAM+TFLM: 🧠 Objeto detectado: metal (61.96%)[0m
+[0;32mI (287791) CAM+TFLM: 🧠 Objeto detectado: metal (70.98%)[0m
+[0;32mI (289651) CAM+TFLM: 🧠 Objeto detectado: metal (70.20%)[0m
+[0;32mI (291531) CAM+TFLM: 🧠 Objeto detectado: metal (72.55%)[0m
+[0;32mI (293391) CAM+TFLM: 🧠 Objeto detectado: metal (68.24%)[0m
+[0;32mI (295281) CAM+TFLM: 🧠 Objeto detectado: metal (65.88%)[0m
+[0;32mI (297221) CAM+TFLM: 🧠 Objeto detectado: metal (61.96%)[0m
+[0;32mI (299231) CAM+TFLM: 🧠 Objeto detectado: metal (61.96%)[0m
+[0;32mI (301241) CAM+TFLM: 🧠 Objeto detectado: metal (48.63%)[0m
+[0;32mI (303121) CAM+TFLM: 🧠 Objeto detectado: metal (56.47%)[0m
+[0;32mI (305001) CAM+TFLM: 🧠 Objeto detectado: metal (57.65%)[0m
+[0;32mI (306841) CAM+TFLM: 🧠 Objeto detectado: carton (47.06%)[0m
+[0;32mI (308671) CAM+TFLM: 🧠 Objeto detectado: carton (63.92%)[0m
+[0;32mI (310491) CAM+TFLM: 🧠 Objeto detectado: carton (87.84%)[0m

@@ -6,22 +6,22 @@ cmake_minimum_required(VERSION 3.5)
 # If CMAKE_DISABLE_SOURCE_CHANGES is set to true and the source directory is an
 # existing directory in our source tree, calling file(MAKE_DIRECTORY) on it
 # would cause a fatal error, even though it would be a no-op.
-if(NOT EXISTS "C:/Users/Recursiva/esp/v5.5.1/esp-idf/components/bootloader/subproject")
-  file(MAKE_DIRECTORY "C:/Users/Recursiva/esp/v5.5.1/esp-idf/components/bootloader/subproject")
+if(NOT EXISTS "C:/Users/vanes/esp/v5.5.1/esp-idf/components/bootloader/subproject")
+  file(MAKE_DIRECTORY "C:/Users/vanes/esp/v5.5.1/esp-idf/components/bootloader/subproject")
 endif()
 file(MAKE_DIRECTORY
-  "C:/Users/Recursiva/Documents/waste-clasification/build/bootloader"
-  "C:/Users/Recursiva/Documents/waste-clasification/build/bootloader-prefix"
-  "C:/Users/Recursiva/Documents/waste-clasification/build/bootloader-prefix/tmp"
-  "C:/Users/Recursiva/Documents/waste-clasification/build/bootloader-prefix/src/bootloader-stamp"
-  "C:/Users/Recursiva/Documents/waste-clasification/build/bootloader-prefix/src"
-  "C:/Users/Recursiva/Documents/waste-clasification/build/bootloader-prefix/src/bootloader-stamp"
+  "E:/Tesis/espressif/waste-clasification/build/bootloader"
+  "E:/Tesis/espressif/waste-clasification/build/bootloader-prefix"
+  "E:/Tesis/espressif/waste-clasification/build/bootloader-prefix/tmp"
+  "E:/Tesis/espressif/waste-clasification/build/bootloader-prefix/src/bootloader-stamp"
+  "E:/Tesis/espressif/waste-clasification/build/bootloader-prefix/src"
+  "E:/Tesis/espressif/waste-clasification/build/bootloader-prefix/src/bootloader-stamp"
 )
 
 set(configSubDirs )
 foreach(subDir IN LISTS configSubDirs)
-    file(MAKE_DIRECTORY "C:/Users/Recursiva/Documents/waste-clasification/build/bootloader-prefix/src/bootloader-stamp/${subDir}")
+    file(MAKE_DIRECTORY "E:/Tesis/espressif/waste-clasification/build/bootloader-prefix/src/bootloader-stamp/${subDir}")
 endforeach()
 if(cfgdir)
-  file(MAKE_DIRECTORY "C:/Users/Recursiva/Documents/waste-clasification/build/bootloader-prefix/src/bootloader-stamp${cfgdir}") # cfgdir has leading slash
+  file(MAKE_DIRECTORY "E:/Tesis/espressif/waste-clasification/build/bootloader-prefix/src/bootloader-stamp${cfgdir}") # cfgdir has leading slash
 endif()

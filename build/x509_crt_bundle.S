@@ -1,4 +1,4 @@
-/* * Data converted from C:/Users/Recursiva/Documents/waste-clasification/build/esp-idf/mbedtls/x509_crt_bundle
+/* * Data converted from E:/Tesis/espressif/waste-clasification/build/esp-idf/mbedtls/x509_crt_bundle
  */
 .data
 #if !defined (__APPLE__) && !defined (__linux__)
