@@ -18,8 +18,8 @@ end
 
 # Load bootloader symbols
 set confirm off
-    add-symbol-file E:/Tesis/espressif/waste-clasification/build/bootloader/bootloader.elf
+    add-symbol-file E:/Tesis/Espressif codes/waste-clasification/build/bootloader/bootloader.elf
 set confirm on
 
 # Load application symbols
-file E:/Tesis/espressif/waste-clasification/build/waste-clasification.elf
+file E:/Tesis/Espressif codes/waste-clasification/build/waste-clasification.elf

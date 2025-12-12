@@ -1,0 +1,448 @@
+Command: C:\Users\vanes\.espressif\python_env\idf5.5_py3.11_env\Scripts\python.exe C:\Users\vanes\esp\v5.5.1\esp-idf\tools/idf_monitor.py -p COM6 -b 115200 --toolchain-prefix xtensa-esp32-elf- --target esp32 --revision 0 E:\Tesis\Espressif codes\waste-clasification\build\waste-clasification.elf E:\Tesis\Espressif codes\waste-clasification\build\bootloader\bootloader.elf --force-color -m 'C:\Users\vanes\.espressif\python_env\idf5.5_py3.11_env\Scripts\python.exe' 'C:\Users\vanes\esp\v5.5.1\esp-idf\tools\idf.py'
+ets Jul 29 2019 12:21:46
+
+rst:0x1 (POWERON_RESET),boot:0x13 (SPI_FAST_FLASH_BOOT)
+configsip: 0, SPIWP:0xee
+clk_drv:0x00,q_drv:0x00,d_drv:0x00,cs0_drv:0x00,hd_drv:0x00,wp_drv:0x00
+mode:DIO, clock div:2
+load:0x3fff0030,len:6380
+ho 0 tail 12 room 4
+load:0x40078000,len:15916
+load:0x40080400,len:3860
+entry 0x40080638
+[0;32mI (29) boot: ESP-IDF v5.5.1 2nd stage bootloader[0m
+[0;32mI (29) boot: compile time Dec 12 2025 12:12:48[0m
+[0;32mI (29) boot: Multicore bootloader[0m
+[0;32mI (31) boot: chip revision: v3.1[0m
+[0;32mI (33) boot.esp32: SPI Speed      : 40MHz[0m
+[0;32mI (37) boot.esp32: SPI Mode       : DIO[0m
+[0;32mI (41) boot.esp32: SPI Flash Size : 4MB[0m
+[0;32mI (44) boot: Enabling RNG early entropy source...[0m
+[0;32mI (49) boot: Partition Table:[0m
+[0;32mI (51) boot: ## Label            Usage          Type ST Offset   Length[0m
+[0;32mI (58) boot:  0 nvs              WiFi data        01 02 00009000 00006000[0m
+[0;32mI (64) boot:  1 otadata          OTA data         01 00 0000f000 00002000[0m
+[0;32mI (71) boot:  2 phy_init         RF data          01 01 00011000 00001000[0m
+[0;32mI (77) boot:  3 ota_0            OTA app          00 10 00020000 001a9000[0m
+[0;32mI (84) boot:  4 ota_1            OTA app          00 11 001d0000 001a9000[0m
+[0;32mI (90) boot: End of partition table[0m
+[0;32mI (94) boot: No factory image, trying OTA 0[0m
+[0;32mI (97) esp_image: segment 0: paddr=00020020 vaddr=3f400020 size=c64b0h (812208) map[0m
+[0;32mI (382) esp_image: segment 1: paddr=000e64d8 vaddr=3ffb0000 size=06784h ( 26500) load[0m
+[0;32mI (392) esp_image: segment 2: paddr=000ecc64 vaddr=40080000 size=033b4h ( 13236) load[0m
+[0;32mI (398) esp_image: segment 3: paddr=000f0020 vaddr=400d0020 size=bce90h (773776) map[0m
+[0;32mI (662) esp_image: segment 4: paddr=001aceb8 vaddr=400833b4 size=197b8h (104376) load[0m
+[0;32mI (703) esp_image: segment 5: paddr=001c6678 vaddr=50000000 size=00020h (    32) load[0m
+[0;32mI (718) boot: Loaded app from partition at offset 0x20000[0m
+[0;32mI (723) boot: Set actual ota_seq=1 in otadata[0][0m
+[0;32mI (723) boot: Disabling RNG early entropy source...[0m
+[0;32mI (735) quad_psram: This chip is ESP32-D0WD[0m
+[0;32mI (737) esp_psram: Found 8MB PSRAM device[0m
+[0;32mI (737) esp_psram: Speed: 40MHz[0m
+[0;32mI (737) esp_psram: PSRAM initialized, cache is in low/high (2-core) mode.[0m
+[0;33mW (742) esp_psram: Virtual address not enough for PSRAM, map as much as we can. 4MB is mapped[0m
+[0;32mI (750) cpu_start: Multicore app[0m
+[0;32mI (1659) esp_psram: SPI SRAM memory test OK[0m
+[0;32mI (1667) cpu_start: Pro cpu start user code[0m
+[0;32mI (1667) cpu_start: cpu freq: 160000000 Hz[0m
+[0;32mI (1667) app_init: Application information:[0m
+[0;32mI (1667) app_init: Project name:     waste-clasification[0m
+[0;32mI (1672) app_init: App version:      bcf2cfc-dirty[0m
+[0;32mI (1677) app_init: Compile time:     Dec 12 2025 12:10:00[0m
+[0;32mI (1682) app_init: ELF file SHA256:  05bb34114...[0m
+[0;32mI (1686) app_init: ESP-IDF:          v5.5.1[0m
+[0;32mI (1690) efuse_init: Min chip rev:     v0.0[0m
+[0;32mI (1694) efuse_init: Max chip rev:     v3.99 [0m
+[0;32mI (1698) efuse_init: Chip rev:         v3.1[0m
+[0;32mI (1703) heap_init: Initializing. RAM available for dynamic allocation:[0m
+[0;32mI (1709) heap_init: At 3FFAE6E0 len 00001920 (6 KiB): DRAM[0m
+[0;32mI (1714) heap_init: At 3FFBC310 len 00023CF0 (143 KiB): DRAM[0m
+[0;32mI (1719) heap_init: At 3FFE0440 len 00003AE0 (14 KiB): D/IRAM[0m
+[0;32mI (1725) heap_init: At 3FFE4350 len 0001BCB0 (111 KiB): D/IRAM[0m
+[0;32mI (1730) heap_init: At 4009CB6C len 00003494 (13 KiB): IRAM[0m
+[0;32mI (1736) esp_psram: Adding pool of 4096K of PSRAM memory to heap allocator[0m
+[0;32mI (1744) spi_flash: detected chip: generic[0m
+[0;32mI (1746) spi_flash: flash io: dio[0m
+[0;32mI (1751) main_task: Started on CPU0[0m
+[0;32mI (1761) esp_psram: Reserving pool of 32K of internal memory for DMA/internal allocations[0m
+[0;32mI (1761) main_task: Calling app_main()[0m
+[0;32mI (1811) wifi:wifi driver task: 3ffc45c4, prio:23, stack:6656, core=0[0m
+[0;32mI (1821) wifi:wifi firmware version: 14da9b7[0m
+[0;32mI (1821) wifi:wifi certification version: v7.0[0m
+[0;32mI (1821) wifi:config NVS flash: enabled[0m
+[0;32mI (1821) wifi:config nano formatting: disabled[0m
+[0;32mI (1831) wifi:Init data frame dynamic rx buffer num: 32[0m
+[0;32mI (1831) wifi:Init static rx mgmt buffer num: 5[0m
+[0;32mI (1841) wifi:Init management short buffer num: 32[0m
+[0;32mI (1841) wifi:Init dynamic tx buffer num: 32[0m
+[0;32mI (1841) wifi:Init static rx buffer size: 1600[0m
+[0;32mI (1851) wifi:Init static rx buffer num: 10[0m
+[0;32mI (1851) wifi:Init dynamic rx buffer num: 32[0m
+[0;32mI (1861) wifi_init: rx ba win: 6[0m
+[0;32mI (1861) wifi_init: accept mbox: 6[0m
+[0;32mI (1861) wifi_init: tcpip mbox: 32[0m
+[0;32mI (1871) wifi_init: udp mbox: 6[0m
+[0;32mI (1871) wifi_init: tcp mbox: 6[0m
+[0;32mI (1871) wifi_init: tcp tx win: 5760[0m
+[0;32mI (1871) wifi_init: tcp rx win: 5760[0m
+[0;32mI (1881) wifi_init: tcp mss: 1440[0m
+[0;32mI (1881) wifi_init: WiFi IRAM OP enabled[0m
+[0;32mI (1881) wifi_init: WiFi RX IRAM OP enabled[0m
+[0;32mI (1891) phy_init: phy_version 4861,b71b5ad,Aug  5 2025,11:16:06[0m
+[0;32mI (1961) wifi:mode : sta (f4:65:0b:e5:bf:34)[0m
+[0;32mI (1971) wifi:enable tsf[0m
+[0;32mI (1971) Connect_WiFi: wifi_init_sta finished.[0m
+[0;32mI (1981) wifi:new:<11,0>, old:<1,0>, ap:<255,255>, sta:<11,0>, prof:1, snd_ch_cfg:0x0[0m
+[0;32mI (1981) wifi:state: init -> auth (0xb0)[0m
+[0;32mI (1991) wifi:state: auth -> assoc (0x0)[0m
+[0;32mI (2001) wifi:state: assoc -> run (0x10)[0m
+[0;32mI (2011) wifi:<ba-add>idx:0 (ifx:0, a4:08:f5:f2:b4:ae), tid:0, ssn:0, winSize:64[0m
+[0;32mI (2011) wifi:<ba-add>idx:1 (ifx:0, a4:08:f5:f2:b4:ae), tid:5, ssn:0, winSize:64[0m
+[0;32mI (2031) wifi:connected with Castillo, aid = 1, channel 11, BW20, bssid = a4:08:f5:f2:b4:ae[0m
+[0;32mI (2031) wifi:security: WPA2-PSK, phy: bgn, rssi: -63[0m
+[0;32mI (2041) wifi:pm start, type: 1[0m
+
+[0;32mI (2041) wifi:dp: 1, bi: 102400, li: 3, scale listen interval from 307200 us to 307200 us[0m
+[0;32mI (2051) wifi:AP's beacon interval = 102400 us, DTIM period = 1[0m
+[0;32mI (4201) esp_netif_handlers: sta ip: 192.168.0.76, mask: 255.255.255.0, gw: 192.168.0.1[0m
+[0;32mI (4201) Connect_WiFi: got ip:192.168.0.76[0m
+[0;32mI (4201) Connect_WiFi: connected to ap SSID:Castillo password:Ambulante[0m
+[0;32mI (4211) cam_hal: cam init ok[0m
+[0;32mI (4211) sccb-ng: pin_sda 26 pin_scl 27[0m
+[0;32mI (4211) sccb-ng: sccb_i2c_port=1[0m
+[0;32mI (4241) camera: Camera PID=0x26 VER=0x42 MIDL=0x7f MIDH=0xa2[0m
+[0;32mI (4241) camera: Detected OV2640 camera[0m
+[0;32mI (4241) camera: Detected camera at address=0x30[0m
+[0;32mI (4321) cam_hal: PSRAM DMA mode disabled[0m
+[0;32mI (4321) cam_hal: buffer_size: 32768, half_buffer_size: 4096, node_buffer_size: 2048, node_cnt: 16, total_cnt: 3[0m
+[0;32mI (4321) cam_hal: Allocating 15360 Byte frame buffer in PSRAM[0m
+[0;32mI (4331) cam_hal: cam config ok[0m
+[0;32mI (4331) ov2640: Set PLL: clk_2x: 0, clk_div: 0, pclk_auto: 0, pclk_div: 8[0m
+[0;32mI (4411) CAM+TFLM: Buffers asignados en PSRAM[0m
+[0;32mI (4411) CAM+TFLM: Inicializando TensorFlow Lite Micro...[0m
+[0;32mI (4411) CAM+TFLM: Usando PSRAM para tensor arena.[0m
+[0;32mI (4541) CAM+TFLM: Modelo inicializado correctamente.[0m
+[0;32mI (4541) CAM+TFLM: Servidor HTTP iniciado[0m
+[0;32mI (4541) CAM+TFLM: ✅ Sistema listo: cámara + modelo funcionando[0m
+[0;32mI (4541) main_task: Returned from app_main()[0m
+[0;32mI (43891) wifi:state: run -> init (0x4c0)[0m
+[0;32mI (43911) wifi:pm stop, total sleep time: 31381035 us / 41869739 us[0m
+
+[0;32mI (43911) wifi:<ba-del>idx:0, tid:0[0m
+[0;32mI (43911) wifi:<ba-del>idx:1, tid:5[0m
+[0;32mI (43911) wifi:new:<11,0>, old:<11,0>, ap:<255,255>, sta:<11,0>, prof:1, snd_ch_cfg:0x0[0m
+[0;32mI (43921) Connect_WiFi: retry to connect to the AP[0m
+[0;32mI (43921) Connect_WiFi: connect to the AP fail[0m
+[0;32mI (43931) wifi:new:<11,0>, old:<11,0>, ap:<255,255>, sta:<11,0>, prof:1, snd_ch_cfg:0x0[0m
+[0;32mI (43931) wifi:state: init -> auth (0xb0)[0m
+[0;32mI (43961) wifi:state: auth -> assoc (0x0)[0m
+[0;32mI (44221) wifi:state: assoc -> run (0x10)[0m
+[0;32mI (44371) wifi:<ba-add>idx:0 (ifx:0, a4:08:f5:f2:b4:ae), tid:5, ssn:0, winSize:64[0m
+[0;32mI (44551) wifi:<ba-add>idx:1 (ifx:0, a4:08:f5:f2:b4:ae), tid:0, ssn:0, winSize:64[0m
+[0;32mI (45221) wifi:connected with Castillo, aid = 1, channel 11, BW20, bssid = a4:08:f5:f2:b4:ae[0m
+[0;32mI (45231) wifi:security: WPA2-PSK, phy: bgn, rssi: -65[0m
+[0;32mI (45231) wifi:pm start, type: 1[0m
+
+[0;32mI (45261) wifi:AP's beacon interval = 102400 us, DTIM period = 1[0m
+[0;32mI (46631) esp_netif_handlers: sta ip: 192.168.0.76, mask: 255.255.255.0, gw: 192.168.0.1[0m
+[0;32mI (46631) Connect_WiFi: got ip:192.168.0.76[0m
+
+assert failed: spinlock_acquire spinlock.h:142 (lock->count == 0)
+
+
+Backtrace: 0x4008d154:0x3ffc1a70 0x4008d119:0x3ffc1a90 0x40095599:0x3ffc1ab0 0x4008e0b6:0x3ffc1bd0 0x4008e7d5:0x3ffc1c00 0x400dd77a:0x3ffc1c20 0x40188f21:0x3ffc1c50 0x40188949:0x3ffc1c80 0x40188a09:0x3ffc1cc0 0x4008de6d:0x3ffc1ce0
+
+
+
+
+ELF file SHA256: 05bb34114
+
+Rebooting...
+ets Jul 29 2019 12:21:46
+
+rst:0xc (SW_CPU_RESET),boot:0x13 (SPI_FAST_FLASH_BOOT)
+configsip: 0, SPIWP:0xee
+clk_drv:0x00,q_drv:0x00,d_drv:0x00,cs0_drv:0x00,hd_drv:0x00,wp_drv:0x00
+mode:DIO, clock div:2
+load:0x3fff0030,len:6380
+ho 0 tail 12 room 4
+load:0x40078000,len:15916
+load:0x40080400,len:3860
+entry 0x40080638
+[0;32mI (29) boot: ESP-IDF v5.5.1 2nd stage bootloader[0m
+[0;32mI (29) boot: compile time Dec 12 2025 12:12:48[0m
+[0;32mI (29) boot: Multicore bootloader[0m
+[0;32mI (31) boot: chip revision: v3.1[0m
+[0;32mI (33) boot.esp32: SPI Speed      : 40MHz[0m
+[0;32mI (37) boot.esp32: SPI Mode       : DIO[0m
+[0;32mI (41) boot.esp32: SPI Flash Size : 4MB[0m
+[0;32mI (44) boot: Enabling RNG early entropy source...[0m
+I��I (49) esp_image: segment 0: paddr=00020020 vaddr=3f400020 size=c64b0h (812208) map
+[0;32mI (334) esp_image: segment 1: paddr=000e64d8 vaddr=3ffb0000 size=06784h ( 26500) load[0m
+[0;32mI (344) esp_image: segment 2: paddr=000ecc64 vaddr=40080000 size=033b4h ( 13236) load[0m
+[0;32mI (349) esp_image: segment 3: paddr=000f0020 vaddr=400d0020 size=bce90h (773776) map[0m
+[0;32mI (614) esp_image: segment 4: paddr=001aceb8 vaddr=400833b4 size=197b8h (104376) load[0m
+[0;32mI (655) esp_image: segment 5: paddr=001c6678 vaddr=50000000 size=00020h (    32) load[0m
+�,�I (670) quad_psram: This chip is ESP32-D0WD
+[0;32mI (672) esp_psram: Found 8MB PSRAM device[0m
+[0;32mI (672) esp_psram: Speed: 40MHz[0m
+[0;32mI (672) esp_psram: PSRAM initialized, cache is in low/high (2-core) mode.[0m
+[0;33mW (678) esp_psram: Virtual address not enough for PSRAM, map as much as we can. 4MB is mapped[0m
+[0;32mI (686) cpu_start: Multicore app[0m
+[0;32mI (1594) esp_psram: SPI SRAM memory test OK[0m
+[0;32mI (1602) cpu_start: Pro cpu start user code[0m
+[0;32mI (1602) cpu_start: cpu freq: 160000000 Hz[0m
+[0;32mI (1602) app_init: Application information:[0m
+[0;32mI (1603) app_init: Project name:     waste-clasification[0m
+[0;32mI (1608) app_init: App version:      bcf2cfc-dirty[0m
+[0;32mI (1612) app_init: Compile time:     Dec 12 2025 12:10:00[0m
+[0;32mI (1617) app_init: ELF file SHA256:  05bb34114...[0m
+[0;32mI (1622) app_init: ESP-IDF:          v5.5.1[0m
+[0;32mI (1626) efuse_init: Min chip rev:     v0.0[0m
+[0;32mI (1630) efuse_init: Max chip rev:     v3.99 [0m
+[0;32mI (1634) efuse_init: Chip rev:         v3.1[0m
+[0;32mI (1638) heap_init: Initializing. RAM available for dynamic allocation:[0m
+[0;32mI (1644) heap_init: At 3FFAE6E0 len 00001920 (6 KiB): DRAM[0m
+[0;32mI (1649) heap_init: At 3FFBC310 len 00023CF0 (143 KiB): DRAM[0m
+[0;32mI (1655) heap_init: At 3FFE0440 len 00003AE0 (14 KiB): D/IRAM[0m
+[0;32mI (1660) heap_init: At 3FFE4350 len 0001BCB0 (111 KiB): D/IRAM[0m
+[0;32mI (1666) heap_init: At 4009CB6C len 00003494 (13 KiB): IRAM[0m
+[0;32mI (1671) esp_psram: Adding pool of 4096K of PSRAM memory to heap allocator[0m
+[0;32mI (1679) spi_flash: detected chip: generic[0m
+[0;32mI (1681) spi_flash: flash io: dio[0m
+[0;32mI (1686) main_task: Started on CPU0[0m
+[0;32mI (1696) esp_psram: Reserving pool of 32K of internal memory for DMA/internal allocations[0m
+[0;32mI (1696) main_task: Calling app_main()[0m
+[0;32mI (1746) wifi:wifi driver task: 3ffc45c4, prio:23, stack:6656, core=0[0m
+[0;32mI (1756) wifi:wifi firmware version: 14da9b7[0m
+[0;32mI (1756) wifi:wifi certification version: v7.0[0m
+[0;32mI (1756) wifi:config NVS flash: enabled[0m
+[0;32mI (1756) wifi:config nano formatting: disabled[0m
+[0;32mI (1766) wifi:Init data frame dynamic rx buffer num: 32[0m
+[0;32mI (1766) wifi:Init static rx mgmt buffer num: 5[0m
+[0;32mI (1776) wifi:Init management short buffer num: 32[0m
+[0;32mI (1776) wifi:Init dynamic tx buffer num: 32[0m
+[0;32mI (1776) wifi:Init static rx buffer size: 1600[0m
+[0;32mI (1786) wifi:Init static rx buffer num: 10[0m
+[0;32mI (1786) wifi:Init dynamic rx buffer num: 32[0m
+[0;32mI (1796) wifi_init: rx ba win: 6[0m
+[0;32mI (1796) wifi_init: accept mbox: 6[0m
+[0;32mI (1796) wifi_init: tcpip mbox: 32[0m
+[0;32mI (1806) wifi_init: udp mbox: 6[0m
+[0;32mI (1806) wifi_init: tcp mbox: 6[0m
+[0;32mI (1806) wifi_init: tcp tx win: 5760[0m
+[0;32mI (1806) wifi_init: tcp rx win: 5760[0m
+[0;32mI (1816) wifi_init: tcp mss: 1440[0m
+[0;32mI (1816) wifi_init: WiFi IRAM OP enabled[0m
+[0;32mI (1816) wifi_init: WiFi RX IRAM OP enabled[0m
+[0;32mI (1826) phy_init: phy_version 4861,b71b5ad,Aug  5 2025,11:16:06[0m
+[0;32mI (1906) wifi:mode : sta (f4:65:0b:e5:bf:34)[0m
+[0;32mI (1906) wifi:enable tsf[0m
+[0;32mI (1916) Connect_WiFi: wifi_init_sta finished.[0m
+[0;32mI (1966) wifi:new:<11,0>, old:<1,0>, ap:<255,255>, sta:<11,0>, prof:1, snd_ch_cfg:0x0[0m
+[0;32mI (1966) wifi:state: init -> auth (0xb0)[0m
+[0;32mI (1976) wifi:state: auth -> assoc (0x0)[0m
+[0;32mI (1986) wifi:state: assoc -> run (0x10)[0m
+[0;32mI (2036) wifi:<ba-add>idx:0 (ifx:0, a4:08:f5:f2:b4:ae), tid:0, ssn:0, winSize:64[0m
+[0;32mI (2036) wifi:<ba-add>idx:1 (ifx:0, a4:08:f5:f2:b4:ae), tid:5, ssn:0, winSize:64[0m
+[0;32mI (2056) wifi:connected with Castillo, aid = 1, channel 11, BW20, bssid = a4:08:f5:f2:b4:ae[0m
+[0;32mI (2056) wifi:security: WPA2-PSK, phy: bgn, rssi: -57[0m
+[0;32mI (2066) wifi:pm start, type: 1[0m
+
+[0;32mI (2066) wifi:dp: 1, bi: 102400, li: 3, scale listen interval from 307200 us to 307200 us[0m
+[0;32mI (2076) wifi:AP's beacon interval = 102400 us, DTIM period = 1[0m
+[0;32mI (3156) esp_netif_handlers: sta ip: 192.168.0.76, mask: 255.255.255.0, gw: 192.168.0.1[0m
+[0;32mI (3156) Connect_WiFi: got ip:192.168.0.76[0m
+[0;32mI (3156) Connect_WiFi: connected to ap SSID:Castillo password:Ambulante[0m
+[0;32mI (3156) cam_hal: cam init ok[0m
+[0;32mI (3166) sccb-ng: pin_sda 26 pin_scl 27[0m
+[0;32mI (3166) sccb-ng: sccb_i2c_port=1[0m
+[0;32mI (3196) camera: Camera PID=0x26 VER=0x42 MIDL=0x7f MIDH=0xa2[0m
+[0;32mI (3196) camera: Detected OV2640 camera[0m
+[0;32mI (3196) camera: Detected camera at address=0x30[0m
+[0;32mI (3266) cam_hal: PSRAM DMA mode disabled[0m
+[0;32mI (3276) cam_hal: buffer_size: 32768, half_buffer_size: 4096, node_buffer_size: 2048, node_cnt: 16, total_cnt: 3[0m
+[0;32mI (3276) cam_hal: Allocating 15360 Byte frame buffer in PSRAM[0m
+[0;32mI (3276) cam_hal: cam config ok[0m
+[0;32mI (3286) ov2640: Set PLL: clk_2x: 0, clk_div: 0, pclk_auto: 0, pclk_div: 8[0m
+[0;32mI (3366) CAM+TFLM: Buffers asignados en PSRAM[0m
+[0;32mI (3366) CAM+TFLM: Inicializando TensorFlow Lite Micro...[0m
+[0;32mI (3366) CAM+TFLM: Usando PSRAM para tensor arena.[0m
+[0;32mI (3496) CAM+TFLM: Modelo inicializado correctamente.[0m
+[0;32mI (3496) CAM+TFLM: Servidor HTTP iniciado[0m
+[0;32mI (3506) CAM+TFLM: ✅ Sistema listo: cámara + modelo funcionando[0m
+[0;32mI (3506) main_task: Returned from app_main()[0m
+[0;32mI (12576) CAM+TFLM: 🧠 Objeto detectado: carton (54.51%)[0m
+[0;32mI (14416) CAM+TFLM: 🧠 Objeto detectado: metal (61.96%)[0m
+[0;32mI (16256) CAM+TFLM: 🧠 Objeto detectado: carton (54.90%)[0m
+[0;32mI (18596) CAM+TFLM: 🧠 Objeto detectado: carton (50.59%)[0m
+[0;32mI (20446) CAM+TFLM: 🧠 Objeto detectado: carton (58.43%)[0m
+[0;32mI (22286) CAM+TFLM: 🧠 Objeto detectado: carton (60.39%)[0m
+[0;32mI (24126) CAM+TFLM: 🧠 Objeto detectado: carton (60.39%)[0m
+[0;32mI (25956) CAM+TFLM: 🧠 Objeto detectado: carton (54.51%)[0m
+[0;32mI (27796) CAM+TFLM: 🧠 Objeto detectado: carton (58.43%)[0m
+[0;32mI (29636) CAM+TFLM: 🧠 Objeto detectado: carton (65.88%)[0m
+[0;32mI (31476) CAM+TFLM: 🧠 Objeto detectado: carton (58.43%)[0m
+[0;32mI (33326) CAM+TFLM: 🧠 Objeto detectado: metal (50.20%)[0m
+[0;32mI (35156) CAM+TFLM: 🧠 Objeto detectado: metal (46.27%)[0m
+[0;32mI (36986) CAM+TFLM: 🧠 Objeto detectado: metal (52.16%)[0m
+[0;32mI (43026) CAM+TFLM: 🧠 Objeto detectado: carton (49.41%)[0m
+[0;32mI (44876) CAM+TFLM: 🧠 Objeto detectado: carton (53.73%)[0m
+[0;32mI (46786) CAM+TFLM: 🧠 Objeto detectado: metal (45.49%)[0m
+[0;32mI (48626) CAM+TFLM: 🧠 Objeto detectado: carton (70.20%)[0m
+[0;32mI (50466) CAM+TFLM: 🧠 Objeto detectado: carton (45.49%)[0m
+[0;33mW (50466) httpd_txrx: httpd_sock_err: error in send : 104[0m
+[0;33mW (50466) httpd_uri: httpd_uri: uri handler execution failed[0m
+[0;32mI (312066) wifi:state: run -> init (0x7c0)[0m
+[0;32mI (312086) wifi:pm stop, total sleep time: 264732020 us / 310016287 us[0m
+
+[0;32mI (312086) wifi:<ba-del>idx:0, tid:0[0m
+[0;32mI (312086) wifi:<ba-del>idx:1, tid:5[0m
+[0;32mI (312086) wifi:new:<11,0>, old:<11,0>, ap:<255,255>, sta:<11,0>, prof:1, snd_ch_cfg:0x0[0m
+[0;32mI (312096) Connect_WiFi: retry to connect to the AP[0m
+[0;32mI (312096) Connect_WiFi: connect to the AP fail[0m
+[0;32mI (312116) wifi:new:<11,0>, old:<11,0>, ap:<255,255>, sta:<11,0>, prof:1, snd_ch_cfg:0x0[0m
+[0;32mI (312116) wifi:state: init -> auth (0xb0)[0m
+[0;32mI (312126) wifi:state: auth -> assoc (0x0)[0m
+[0;32mI (312136) wifi:state: assoc -> run (0x10)[0m
+[0;32mI (312196) wifi:<ba-add>idx:0 (ifx:0, a4:08:f5:f2:b4:ae), tid:5, ssn:0, winSize:64[0m
+[0;32mI (312206) wifi:<ba-add>idx:1 (ifx:0, a4:08:f5:f2:b4:ae), tid:0, ssn:0, winSize:64[0m
+[0;32mI (312226) wifi:connected with Castillo, aid = 3, channel 11, BW20, bssid = a4:08:f5:f2:b4:ae[0m
+[0;32mI (312226) wifi:security: WPA2-PSK, phy: bgn, rssi: -59[0m
+[0;32mI (312226) wifi:pm start, type: 1[0m
+
+[0;32mI (312276) wifi:AP's beacon interval = 102400 us, DTIM period = 1[0m
+[0;32mI (314356) esp_netif_handlers: sta ip: 192.168.0.76, mask: 255.255.255.0, gw: 192.168.0.1[0m
+[0;32mI (314356) Connect_WiFi: got ip:192.168.0.76[0m
+
+assert failed: spinlock_acquire spinlock.h:142 (lock->count == 0)
+
+
+Backtrace: 0x4008d154:0x3ffc1a70 0x4008d119:0x3ffc1a90 0x40095599:0x3ffc1ab0 0x4008e0b6:0x3ffc1bd0 0x4008e7d5:0x3ffc1c00 0x400dd77a:0x3ffc1c20 0x40188f21:0x3ffc1c50 0x40188949:0x3ffc1c80 0x40188a09:0x3ffc1cc0 0x4008de6d:0x3ffc1ce0
+
+
+
+
+ELF file SHA256: 05bb34114
+
+Rebooting...
+ets Jul 29 2019 12:21:46
+
+rst:0xc (SW_CPU_RESET),boot:0x13 (SPI_FAST_FLASH_BOOT)
+configsip: 0, SPIWP:0xee
+clk_drv:0x00,q_drv:0x00,d_drv:0x00,cs0_drv:0x00,hd_drv:0x00,wp_drv:0x00
+mode:DIO, clock div:2
+load:0x3fff0030,len:6380
+ho 0 tail 12 room 4
+load:0x40078000,len:15916
+load:0x40080400,len:3860
+entry 0x40080638
+[0;32mI (29) boot: ESP-IDF v5.5.1 2nd stage bootloader[0m
+[0;32mI (29) boot: compile time Dec 12 2025 12:12:48[0m
+[0;32mI (29) boot: Multicore bootloader[0m
+[0;32mI (31) boot: chip revision: v3.1[0m
+[0;32mI (33) boot.esp32: SPI Speed      : 40MHz[0m
+[0;32mI (37) boot.esp32: SPI Mode       : DIO[0m
+[0;32mI (41) boot.esp32: SPI Flash Size : 4MB[0m
+[0;32mI (44) boot: Enabling RNG early entropy source...[0m
+[0;32mI (49) boot: Partition Table:[0m
+[0;32mI (51) boot: ## Label            Usage          Type ST Offset   Length[0m
+[0;32mI (58) boot:  0 nvs              WiFi data        01 02 00009000 00006000[0m
+[0;32mI (64) boot:  1 otadata          OTA data         01 00 0000f000 00002000[0m
+[0;32mI (71) boot:  2 phy_init         RF data          01 01 00011000 00001000[0m
+[0;32mI (77) boot:  3 ota_0            OTA app          00 10 00020000 001a9000[0m
+[0;32mI (84) boot:  4 ota_1            OTA app          00 11 001d0000 001a9000[0m
+[0;32mI (90) boot: End of partition table[0m
+[0;32mI (706) boot: Loaded app from partition at offset 0x20000[0m
+[0;32mI (706) boot: Disabling RNG early entropy source...[0m
+[0;32mI (716) quad_psram: This chip is ESP32-D0WD[0m
+[0;32mI (718) esp_psram: Found 8MB PSRAM device[0m
+[0;32mI (718) esp_psram: Speed: 40MHz[0m
+[0;32mI (718) esp_psram: PSRAM initialized, cache is in low/high (2-core) mode.[0m
+[0;33mW (724) esp_psram: Virtual address not enough for PSRAM, map as much as we can. 4MB is mapped[0m
+[0;32mI (732) cpu_start: Multicore app[0m
+[0;32mI (1640) esp_psram: SPI SRAM memory test OK[0m
+[0;32mI (1648) cpu_start: Pro cpu start user code[0m
+[0;32mI (1648) cpu_start: cpu freq: 160000000 Hz[0m
+[0;32mI (1648) app_init: Application information:[0m
+[0;32mI (1649) app_init: Project name:     waste-clasification[0m
+[0;32mI (1654) app_init: App version:      bcf2cfc-dirty[0m
+[0;32mI (1658) app_init: Compile time:     Dec 12 2025 12:10:00[0m
+[0;32mI (1663) app_init: ELF file SHA256:  05bb34114...[0m
+[0;32mI (1668) app_init: ESP-IDF:          v5.5.1[0m
+[0;32mI (1672) efuse_init: Min chip rev:     v0.0[0m
+[0;32mI (1676) efuse_init: Max chip rev:     v3.99 [0m
+[0;32mI (1680) efuse_init: Chip rev:         v3.1[0m
+[0;32mI (1684) heap_init: Initializing. RAM available for dynamic allocation:[0m
+[0;32mI (1690) heap_init: At 3FFAE6E0 len 00001920 (6 KiB): DRAM[0m
+[0;32mI (1695) heap_init: At 3FFBC310 len 00023CF0 (143 KiB): DRAM[0m
+[0;32mI (1701) heap_init: At 3FFE0440 len 00003AE0 (14 KiB): D/IRAM[0m
+[0;32mI (1706) heap_init: At 3FFE4350 len 0001BCB0 (111 KiB): D/IRAM[0m
+[0;32mI (1712) heap_init: At 4009CB6C len 00003494 (13 KiB): IRAM[0m
+[0;32mI (1717) esp_psram: Adding pool of 4096K of PSRAM memory to heap allocator[0m
+[0;32mI (1725) spi_flash: detected chip: generic[0m
+[0;32mI (1727) spi_flash: flash io: dio[0m
+[0;32mI (1732) main_task: Started on CPU0[0m
+[0;32mI (1742) esp_psram: Reserving pool of 32K of internal memory for DMA/internal allocations[0m
+[0;32mI (1742) main_task: Calling app_main()[0m
+[0;32mI (1792) wifi:wifi driver task: 3ffc45c4, prio:23, stack:6656, core=0[0m
+[0;32mI (1802) wifi:wifi firmware version: 14da9b7[0m
+[0;32mI (1802) wifi:wifi certification version: v7.0[0m
+[0;32mI (1802) wifi:config NVS flash: enabled[0m
+[0;32mI (1802) wifi:config nano formatting: disabled[0m
+[0;32mI (1812) wifi:Init data frame dynamic rx buffer num: 32[0m
+[0;32mI (1812) wifi:Init static rx mgmt buffer num: 5[0m
+[0;32mI (1822) wifi:Init management short buffer num: 32[0m
+[0;32mI (1822) wifi:Init dynamic tx buffer num: 32[0m
+[0;32mI (1822) wifi:Init static rx buffer size: 1600[0m
+[0;32mI (1832) wifi:Init static rx buffer num: 10[0m
+[0;32mI (1832) wifi:Init dynamic rx buffer num: 32[0m
+[0;32mI (1842) wifi_init: rx ba win: 6[0m
+[0;32mI (1842) wifi_init: accept mbox: 6[0m
+[0;32mI (1842) wifi_init: tcpip mbox: 32[0m
+[0;32mI (1852) wifi_init: udp mbox: 6[0m
+[0;32mI (1852) wifi_init: tcp mbox: 6[0m
+[0;32mI (1852) wifi_init: tcp tx win: 5760[0m
+[0;32mI (1852) wifi_init: tcp rx win: 5760[0m
+[0;32mI (1862) wifi_init: tcp mss: 1440[0m
+[0;32mI (1862) wifi_init: WiFi IRAM OP enabled[0m
+[0;32mI (1862) wifi_init: WiFi RX IRAM OP enabled[0m
+[0;32mI (1872) phy_init: phy_version 4861,b71b5ad,Aug  5 2025,11:16:06[0m
+[0;32mI (1952) wifi:mode : sta (f4:65:0b:e5:bf:34)[0m
+[0;32mI (1952) wifi:enable tsf[0m
+[0;32mI (1952) Connect_WiFi: wifi_init_sta finished.[0m
+[0;32mI (4372) Connect_WiFi: retry to connect to the AP[0m
+[0;32mI (4372) Connect_WiFi: connect to the AP fail[0m
+[0;32mI (4432) wifi:new:<11,0>, old:<1,0>, ap:<255,255>, sta:<11,0>, prof:1, snd_ch_cfg:0x0[0m
+[0;32mI (4432) wifi:state: init -> auth (0xb0)[0m
+[0;32mI (4592) wifi:state: auth -> assoc (0x0)[0m
+[0;32mI (4722) wifi:state: assoc -> run (0x10)[0m
+[0;32mI (4772) wifi:<ba-add>idx:0 (ifx:0, a4:08:f5:f2:b4:ae), tid:5, ssn:0, winSize:64[0m
+[0;32mI (5022) wifi:<ba-add>idx:1 (ifx:0, a4:08:f5:f2:b4:ae), tid:0, ssn:0, winSize:64[0m
+[0;32mI (5292) wifi:connected with Castillo, aid = 3, channel 11, BW20, bssid = a4:08:f5:f2:b4:ae[0m
+[0;32mI (5292) wifi:security: WPA2-PSK, phy: bgn, rssi: -63[0m
+[0;32mI (5292) wifi:pm start, type: 1[0m
+
+[0;32mI (5292) wifi:dp: 1, bi: 102400, li: 3, scale listen interval from 307200 us to 307200 us[0m
+[0;32mI (5352) wifi:AP's beacon interval = 102400 us, DTIM period = 1[0m
+[0;32mI (6942) esp_netif_handlers: sta ip: 192.168.0.76, mask: 255.255.255.0, gw: 192.168.0.1[0m
+[0;32mI (6942) Connect_WiFi: got ip:192.168.0.76[0m
+[0;32mI (6942) Connect_WiFi: connected to ap SSID:Castillo password:Ambulante[0m
+[0;32mI (6942) cam_hal: cam init ok[0m
+[0;32mI (6952) sccb-ng: pin_sda 26 pin_scl 27[0m
+[0;32mI (6952) sccb-ng: sccb_i2c_port=1[0m
+[0;32mI (6982) camera: Camera PID=0x26 VER=0x42 MIDL=0x7f MIDH=0xa2[0m
+[0;32mI (6982) camera: Detected OV2640 camera[0m
+[0;32mI (6982) camera: Detected camera at address=0x30[0m
+[0;32mI (7052) cam_hal: PSRAM DMA mode disabled[0m
+[0;32mI (7062) cam_hal: buffer_size: 32768, half_buffer_size: 4096, node_buffer_size: 2048, node_cnt: 16, total_cnt: 3[0m
+[0;32mI (7062) cam_hal: Allocating 15360 Byte frame buffer in PSRAM[0m
+[0;32mI (7062) cam_hal: cam config ok[0m
+[0;32mI (7072) ov2640: Set PLL: clk_2x: 0, clk_div: 0, pclk_auto: 0, pclk_div: 8[0m
+[0;32mI (7152) CAM+TFLM: Buffers asignados en PSRAM[0m
+[0;32mI (7152) CAM+TFLM: Inicializando TensorFlow Lite Micro...[0m
+[0;32mI (7152) CAM+TFLM: Usando PSRAM para tensor arena.[0m
+[0;32mI (7282) CAM+TFLM: Modelo inicializado correctamente.[0m
+[0;32mI (7282) CAM+TFLM: Servidor HTTP iniciado[0m
+[0;32mI (7282) CAM+TFLM: ✅ Sistema listo: cámara + modelo funcionando[0m
+[0;32mI (7282) main_task: Returned from app_main()[0m

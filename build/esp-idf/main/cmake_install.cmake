@@ -1,4 +1,4 @@
-# Install script for directory: E:/Tesis/espressif/waste-clasification/main
+# Install script for directory: E:/Tesis/Espressif codes/waste-clasification/main
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)

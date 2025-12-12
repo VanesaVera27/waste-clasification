@@ -5,8 +5,8 @@ static const char *TAG = "Connect_WiFi";
 int s_retry_num = 0;
 
 
-#define WIFI_SSID "Castillo"
-#define WIFI_PASSWORD "Ambulante"
+#define WIFI_SSID "TeleRed-0A9D-2.4G"
+#define WIFI_PASSWORD "5BADFC0A9D"
 #define MAXIMUM_RETRY 5
 /* FreeRTOS event group to signal when we are connected*/
 EventGroupHandle_t s_wifi_event_group;

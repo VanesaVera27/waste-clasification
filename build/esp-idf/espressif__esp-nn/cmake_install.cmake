@@ -1,4 +1,4 @@
-# Install script for directory: E:/Tesis/espressif/waste-clasification/managed_components/espressif__esp-nn
+# Install script for directory: E:/Tesis/Espressif codes/waste-clasification/managed_components/espressif__esp-nn
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)

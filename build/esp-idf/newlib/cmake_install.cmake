@@ -39,6 +39,6 @@ endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for the subdirectory.
-  include("E:/Tesis/espressif/waste-clasification/build/esp-idf/newlib/src/port/cmake_install.cmake")
+  include("E:/Tesis/Espressif codes/waste-clasification/build/esp-idf/newlib/src/port/cmake_install.cmake")
 endif()
 

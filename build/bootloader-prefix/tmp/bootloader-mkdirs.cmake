@@ -10,18 +10,18 @@ if(NOT EXISTS "C:/Users/vanes/esp/v5.5.1/esp-idf/components/bootloader/subprojec
   file(MAKE_DIRECTORY "C:/Users/vanes/esp/v5.5.1/esp-idf/components/bootloader/subproject")
 endif()
 file(MAKE_DIRECTORY
-  "E:/Tesis/espressif/waste-clasification/build/bootloader"
-  "E:/Tesis/espressif/waste-clasification/build/bootloader-prefix"
-  "E:/Tesis/espressif/waste-clasification/build/bootloader-prefix/tmp"
-  "E:/Tesis/espressif/waste-clasification/build/bootloader-prefix/src/bootloader-stamp"
-  "E:/Tesis/espressif/waste-clasification/build/bootloader-prefix/src"
-  "E:/Tesis/espressif/waste-clasification/build/bootloader-prefix/src/bootloader-stamp"
+  "E:/Tesis/Espressif codes/waste-clasification/build/bootloader"
+  "E:/Tesis/Espressif codes/waste-clasification/build/bootloader-prefix"
+  "E:/Tesis/Espressif codes/waste-clasification/build/bootloader-prefix/tmp"
+  "E:/Tesis/Espressif codes/waste-clasification/build/bootloader-prefix/src/bootloader-stamp"
+  "E:/Tesis/Espressif codes/waste-clasification/build/bootloader-prefix/src"
+  "E:/Tesis/Espressif codes/waste-clasification/build/bootloader-prefix/src/bootloader-stamp"
 )
 
 set(configSubDirs )
 foreach(subDir IN LISTS configSubDirs)
-    file(MAKE_DIRECTORY "E:/Tesis/espressif/waste-clasification/build/bootloader-prefix/src/bootloader-stamp/${subDir}")
+    file(MAKE_DIRECTORY "E:/Tesis/Espressif codes/waste-clasification/build/bootloader-prefix/src/bootloader-stamp/${subDir}")
 endforeach()
 if(cfgdir)
-  file(MAKE_DIRECTORY "E:/Tesis/espressif/waste-clasification/build/bootloader-prefix/src/bootloader-stamp${cfgdir}") # cfgdir has leading slash
+  file(MAKE_DIRECTORY "E:/Tesis/Espressif codes/waste-clasification/build/bootloader-prefix/src/bootloader-stamp${cfgdir}") # cfgdir has leading slash
 endif()
