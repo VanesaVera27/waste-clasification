@@ -1,0 +1,1182 @@
+Command: C:\Users\vanes\.espressif\python_env\idf5.5_py3.11_env\Scripts\python.exe C:\Users\vanes\esp\v5.5.1\esp-idf\tools/idf_monitor.py -p COM6 -b 115200 --toolchain-prefix xtensa-esp32-elf- --target esp32 --revision 0 E:\Tesis\Espressif codes\waste-clasification\build\waste-clasification.elf E:\Tesis\Espressif codes\waste-clasification\build\bootloader\bootloader.elf --force-color -m 'C:\Users\vanes\.espressif\python_env\idf5.5_py3.11_env\Scripts\python.exe' 'C:\Users\vanes\esp\v5.5.1\esp-idf\tools\idf.py'
+ets Jul 29 2019 12:21:46
+
+rst:0x1 (POWERON_RESET),boot:0x13 (SPI_FAST_FLASH_BOOT)
+configsip: 0, SPIWP:0xee
+clk_drv:0x00,q_drv:0x00,d_drv:0x00,cs0_drv:0x00,hd_drv:0x00,wp_drv:0x00
+mode:DIO, clock div:2
+load:0x3fff0030,len:6380
+ho 0 tail 12 room 4
+load:0x40078000,len:15916
+load:0x40080400,len:3860
+entry 0x40080638
+[0;32mI (29) boot: ESP-IDF v5.5.1 2nd stage bootloader[0m
+[0;32mI (29) boot: compile time Dec 14 2025 15:29:27[0m
+[0;32mI (29) boot: Multicore bootloader[0m
+[0;32mI (31) boot: chip revision: v3.1[0m
+[0;32mI (33) boot.esp32: SPI Speed      : 40MHz[0m
+[0;32mI (37) boot.esp32: SPI Mode       : DIO[0m
+[0;32mI (41) boot.esp32: SPI Flash Size : 4MB[0m
+[0;32mI (44) boot: Enabling RNG early entropy source...[0m
+[0;32mI (49) boot: Partition Table:[0m
+[0;32mI (51) boot: ## Label            Usage          Type ST Offset   Length[0m
+[0;32mI (58) boot:  0 nvs              WiFi data        01 02 00009000 00006000[0m
+[0;32mI (64) boot:  1 otadata          OTA data         01 00 0000f000 00002000[0m
+[0;32mI (71) boot:  2 phy_init         RF data          01 01 00011000 00001000[0m
+[0;32mI (77) boot:  3 ota_0            OTA app          00 10 00020000 001a9000[0m
+[0;32mI (84) boot:  4 ota_1            OTA app          00 11 001d0000 001a9000[0m
+[0;32mI (90) boot: End of partition table[0m
+[0;32mI (93) boot: No factory image, trying OTA 0[0m
+[0;32mI (97) esp_image: segment 0: paddr=00020020 vaddr=3f400020 size=c2f64h (798564) map[0m
+[0;32mI (378) esp_image: segment 1: paddr=000e2f8c vaddr=3ffb0000 size=06774h ( 26484) load[0m
+[0;32mI (388) esp_image: segment 2: paddr=000e9708 vaddr=40080000 size=06910h ( 26896) load[0m
+[0;32mI (398) esp_image: segment 3: paddr=000f0020 vaddr=400d0020 size=afa94h (719508) map[0m
+[0;32mI (644) esp_image: segment 4: paddr=0019fabc vaddr=40086910 size=15eech ( 89836) load[0m
+[0;32mI (680) esp_image: segment 5: paddr=001b59b0 vaddr=50000000 size=00020h (    32) load[0m
+[0;32mI (694) boot: Loaded app from partition at offset 0x20000[0m
+[0;32mI (700) boot: Set actual ota_seq=1 in otadata[0][0m
+[0;32mI (700) boot: Disabling RNG early entropy source...[0m
+[0;32mI (711) quad_psram: This chip is ESP32-D0WD[0m
+[0;32mI (713) esp_psram: Found 8MB PSRAM device[0m
+[0;32mI (713) esp_psram: Speed: 40MHz[0m
+[0;32mI (713) esp_psram: PSRAM initialized, cache is in low/high (2-core) mode.[0m
+[0;33mW (719) esp_psram: Virtual address not enough for PSRAM, map as much as we can. 4MB is mapped[0m
+[0;32mI (727) cpu_start: Multicore app[0m
+[0;32mI (1635) esp_psram: SPI SRAM memory test OK[0m
+[0;32mI (1643) cpu_start: Pro cpu start user code[0m
+[0;32mI (1643) cpu_start: cpu freq: 160000000 Hz[0m
+[0;32mI (1643) app_init: Application information:[0m
+[0;32mI (1643) app_init: Project name:     waste-clasification[0m
+[0;32mI (1648) app_init: App version:      258a38a-dirty[0m
+[0;32mI (1653) app_init: Compile time:     Dec 14 2025 15:29:10[0m
+[0;32mI (1658) app_init: ELF file SHA256:  a346b5a81...[0m
+[0;32mI (1663) app_init: ESP-IDF:          v5.5.1[0m
+[0;32mI (1666) efuse_init: Min chip rev:     v0.0[0m
+[0;32mI (1670) efuse_init: Max chip rev:     v3.99 [0m
+[0;32mI (1674) efuse_init: Chip rev:         v3.1[0m
+[0;32mI (1679) heap_init: Initializing. RAM available for dynamic allocation:[0m
+[0;32mI (1685) heap_init: At 3FFAE6E0 len 00001920 (6 KiB): DRAM[0m
+[0;32mI (1690) heap_init: At 3FFBC2F8 len 00023D08 (143 KiB): DRAM[0m
+[0;32mI (1695) heap_init: At 3FFE0440 len 00003AE0 (14 KiB): D/IRAM[0m
+[0;32mI (1701) heap_init: At 3FFE4350 len 0001BCB0 (111 KiB): D/IRAM[0m
+[0;32mI (1706) heap_init: At 4009C7FC len 00003804 (14 KiB): IRAM[0m
+[0;32mI (1712) esp_psram: Adding pool of 4096K of PSRAM memory to heap allocator[0m
+[0;32mI (1720) spi_flash: detected chip: generic[0m
+[0;32mI (1722) spi_flash: flash io: dio[0m
+[0;32mI (1727) main_task: Started on CPU0[0m
+[0;32mI (1737) esp_psram: Reserving pool of 32K of internal memory for DMA/internal allocations[0m
+[0;32mI (1737) main_task: Calling app_main()[0m
+[0;32mI (1777) wifi:wifi driver task: 3ffc4150, prio:23, stack:6656, core=0[0m
+[0;32mI (1787) wifi:wifi firmware version: 14da9b7[0m
+[0;32mI (1787) wifi:wifi certification version: v7.0[0m
+[0;32mI (1787) wifi:config NVS flash: enabled[0m
+[0;32mI (1787) wifi:config nano formatting: disabled[0m
+[0;32mI (1797) wifi:Init data frame dynamic rx buffer num: 32[0m
+[0;32mI (1797) wifi:Init static rx mgmt buffer num: 5[0m
+[0;32mI (1807) wifi:Init management short buffer num: 32[0m
+[0;32mI (1807) wifi:Init dynamic tx buffer num: 32[0m
+[0;32mI (1807) wifi:Init static rx buffer size: 1600[0m
+[0;32mI (1817) wifi:Init static rx buffer num: 10[0m
+[0;32mI (1817) wifi:Init dynamic rx buffer num: 32[0m
+[0;32mI (1827) wifi_init: rx ba win: 6[0m
+[0;32mI (1827) wifi_init: accept mbox: 6[0m
+[0;32mI (1827) wifi_init: tcpip mbox: 32[0m
+[0;32mI (1837) wifi_init: udp mbox: 6[0m
+[0;32mI (1837) wifi_init: tcp mbox: 6[0m
+[0;32mI (1837) wifi_init: tcp tx win: 5760[0m
+[0;32mI (1837) wifi_init: tcp rx win: 5760[0m
+[0;32mI (1847) wifi_init: tcp mss: 1440[0m
+[0;32mI (1847) wifi_init: WiFi IRAM OP enabled[0m
+[0;32mI (1847) wifi_init: WiFi RX IRAM OP enabled[0m
+[0;32mI (1857) phy_init: phy_version 4861,b71b5ad,Aug  5 2025,11:16:06[0m
+[0;32mI (1927) phy_init: Saving new calibration data due to checksum failure or outdated calibration data, mode(0)[0m
+[0;32mI (1977) wifi:mode : sta (ec:e3:34:da:c5:b0)[0m
+[0;32mI (1977) wifi:enable tsf[0m
+[0;32mI (1977) ESPNOW: espnow [version: 2.0] init[0m
+[0;32mI (1977) CAM+TFLM: ESP-NOW Maestro configurado y Peer Esclavo añadido.[0m
+[0;32mI (1987) cam_hal: cam init ok[0m
+[0;32mI (1987) sccb-ng: pin_sda 26 pin_scl 27[0m
+[0;32mI (1987) sccb-ng: sccb_i2c_port=1[0m
+[0;32mI (2027) camera: Camera PID=0x26 VER=0x42 MIDL=0x7f MIDH=0xa2[0m
+[0;32mI (2027) camera: Detected OV2640 camera[0m
+[0;32mI (2027) camera: Detected camera at address=0x30[0m
+[0;32mI (2107) cam_hal: PSRAM DMA mode disabled[0m
+[0;32mI (2107) cam_hal: buffer_size: 32768, half_buffer_size: 4096, node_buffer_size: 2048, node_cnt: 16, total_cnt: 3[0m
+[0;32mI (2107) cam_hal: Allocating 15360 Byte frame buffer in PSRAM[0m
+[0;32mI (2107) cam_hal: cam config ok[0m
+[0;32mI (2117) ov2640: Set PLL: clk_2x: 0, clk_div: 0, pclk_auto: 0, pclk_div: 8[0m
+[0;32mI (2177) CAM+TFLM: Buffers asignados en PSRAM[0m
+[0;32mI (2187) CAM+TFLM: Inicializando TensorFlow Lite Micro...[0m
+[0;32mI (2187) CAM+TFLM: Usando PSRAM para tensor arena.[0m
+[0;32mI (2307) CAM+TFLM: Modelo inicializado correctamente.[0m
+[0;32mI (2307) CAM+TFLM: ✅ Sistema listo: espnow en bucle[0m
+[0;32mI (4197) CAM+TFLM: 🧠 Objeto detectado: carton (47.06%)[0m
+[0;32mI (4207) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (6567) CAM+TFLM: 🧠 Objeto detectado: carton (59.22%)[0m
+[0;32mI (6567) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (8927) CAM+TFLM: 🧠 Objeto detectado: carton (52.16%)[0m
+[0;32mI (8927) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (11287) CAM+TFLM: 🧠 Objeto detectado: carton (57.25%)[0m
+[0;32mI (11287) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (13647) CAM+TFLM: 🧠 Objeto detectado: carton (60.78%)[0m
+[0;32mI (13647) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (16007) CAM+TFLM: 🧠 Objeto detectado: carton (57.25%)[0m
+[0;32mI (16007) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (18367) CAM+TFLM: 🧠 Objeto detectado: carton (56.08%)[0m
+[0;32mI (18367) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (20727) CAM+TFLM: 🧠 Objeto detectado: carton (62.35%)[0m
+[0;32mI (20727) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (23087) CAM+TFLM: 🧠 Objeto detectado: carton (58.04%)[0m
+[0;32mI (23087) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (25447) CAM+TFLM: 🧠 Objeto detectado: carton (56.86%)[0m
+[0;32mI (25447) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (27807) CAM+TFLM: 🧠 Objeto detectado: carton (62.35%)[0m
+[0;32mI (27807) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (30167) CAM+TFLM: 🧠 Objeto detectado: carton (57.65%)[0m
+[0;32mI (30167) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (32527) CAM+TFLM: 🧠 Objeto detectado: carton (56.47%)[0m
+[0;32mI (32527) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (34887) CAM+TFLM: 🧠 Objeto detectado: carton (53.33%)[0m
+[0;32mI (34887) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (37247) CAM+TFLM: 🧠 Objeto detectado: carton (60.39%)[0m
+[0;32mI (37247) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (39607) CAM+TFLM: 🧠 Objeto detectado: carton (51.37%)[0m
+[0;32mI (39607) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (41967) CAM+TFLM: 🧠 Objeto detectado: carton (61.57%)[0m
+[0;32mI (41967) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (44327) CAM+TFLM: 🧠 Objeto detectado: carton (54.90%)[0m
+[0;32mI (44327) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (46687) CAM+TFLM: 🧠 Objeto detectado: carton (61.57%)[0m
+[0;32mI (46687) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (49047) CAM+TFLM: 🧠 Objeto detectado: carton (61.18%)[0m
+[0;32mI (49047) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (51407) CAM+TFLM: 🧠 Objeto detectado: carton (51.37%)[0m
+[0;32mI (51407) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (53767) CAM+TFLM: 🧠 Objeto detectado: carton (65.10%)[0m
+[0;32mI (53767) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (56127) CAM+TFLM: 🧠 Objeto detectado: carton (51.76%)[0m
+[0;32mI (56127) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (58487) CAM+TFLM: 🧠 Objeto detectado: carton (67.06%)[0m
+[0;32mI (58487) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (60847) CAM+TFLM: 🧠 Objeto detectado: carton (59.61%)[0m
+[0;32mI (60847) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (63207) CAM+TFLM: 🧠 Objeto detectado: carton (59.61%)[0m
+[0;32mI (63207) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (65567) CAM+TFLM: 🧠 Objeto detectado: carton (61.96%)[0m
+[0;32mI (65567) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (67927) CAM+TFLM: 🧠 Objeto detectado: carton (57.65%)[0m
+[0;32mI (67927) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (70287) CAM+TFLM: 🧠 Objeto detectado: carton (52.16%)[0m
+[0;32mI (70287) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (72647) CAM+TFLM: 🧠 Objeto detectado: carton (60.00%)[0m
+[0;32mI (72647) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (75007) CAM+TFLM: 🧠 Objeto detectado: carton (54.12%)[0m
+[0;32mI (75007) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (77367) CAM+TFLM: 🧠 Objeto detectado: carton (49.02%)[0m
+[0;32mI (77367) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (79727) CAM+TFLM: 🧠 Objeto detectado: carton (58.04%)[0m
+[0;32mI (79727) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (82087) CAM+TFLM: 🧠 Objeto detectado: carton (55.69%)[0m
+[0;32mI (82087) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (84447) CAM+TFLM: 🧠 Objeto detectado: carton (55.69%)[0m
+[0;32mI (84447) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (86807) CAM+TFLM: 🧠 Objeto detectado: carton (55.29%)[0m
+[0;32mI (86807) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (89167) CAM+TFLM: 🧠 Objeto detectado: carton (58.82%)[0m
+[0;32mI (89167) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (91527) CAM+TFLM: 🧠 Objeto detectado: carton (55.69%)[0m
+[0;32mI (91527) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (93887) CAM+TFLM: 🧠 Objeto detectado: carton (59.22%)[0m
+[0;32mI (93887) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (96247) CAM+TFLM: 🧠 Objeto detectado: carton (58.43%)[0m
+[0;32mI (96247) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (98607) CAM+TFLM: 🧠 Objeto detectado: carton (54.90%)[0m
+[0;32mI (98607) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (100967) CAM+TFLM: 🧠 Objeto detectado: carton (61.18%)[0m
+[0;32mI (100967) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (103327) CAM+TFLM: 🧠 Objeto detectado: carton (54.90%)[0m
+[0;32mI (103327) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (105687) CAM+TFLM: 🧠 Objeto detectado: carton (50.59%)[0m
+[0;32mI (105687) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (108047) CAM+TFLM: 🧠 Objeto detectado: carton (59.61%)[0m
+[0;32mI (108047) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (110407) CAM+TFLM: 🧠 Objeto detectado: carton (54.51%)[0m
+[0;32mI (110407) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (112767) CAM+TFLM: 🧠 Objeto detectado: carton (60.78%)[0m
+[0;32mI (112767) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (115127) CAM+TFLM: 🧠 Objeto detectado: carton (54.12%)[0m
+[0;32mI (115127) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (117487) CAM+TFLM: 🧠 Objeto detectado: carton (56.08%)[0m
+[0;32mI (117487) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (119847) CAM+TFLM: 🧠 Objeto detectado: carton (56.08%)[0m
+[0;32mI (119847) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (122207) CAM+TFLM: 🧠 Objeto detectado: carton (55.69%)[0m
+[0;32mI (122207) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (124567) CAM+TFLM: 🧠 Objeto detectado: carton (58.43%)[0m
+[0;32mI (124567) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (126927) CAM+TFLM: 🧠 Objeto detectado: carton (55.69%)[0m
+[0;32mI (126927) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (129287) CAM+TFLM: 🧠 Objeto detectado: carton (56.08%)[0m
+[0;32mI (129287) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (131647) CAM+TFLM: 🧠 Objeto detectado: carton (51.37%)[0m
+[0;32mI (131647) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (134007) CAM+TFLM: 🧠 Objeto detectado: carton (55.69%)[0m
+[0;32mI (134007) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (136367) CAM+TFLM: 🧠 Objeto detectado: carton (50.98%)[0m
+[0;32mI (136367) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (138727) CAM+TFLM: 🧠 Objeto detectado: carton (59.22%)[0m
+[0;32mI (138727) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (141087) CAM+TFLM: 🧠 Objeto detectado: carton (58.04%)[0m
+[0;32mI (141087) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (143447) CAM+TFLM: 🧠 Objeto detectado: carton (58.43%)[0m
+[0;32mI (143447) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (145807) CAM+TFLM: 🧠 Objeto detectado: carton (54.12%)[0m
+[0;32mI (145807) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (148167) CAM+TFLM: 🧠 Objeto detectado: carton (54.90%)[0m
+[0;32mI (148167) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (150527) CAM+TFLM: 🧠 Objeto detectado: carton (56.47%)[0m
+[0;32mI (150527) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (152887) CAM+TFLM: 🧠 Objeto detectado: carton (57.65%)[0m
+[0;32mI (152887) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (155247) CAM+TFLM: 🧠 Objeto detectado: carton (55.69%)[0m
+[0;32mI (155247) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (157607) CAM+TFLM: 🧠 Objeto detectado: carton (56.86%)[0m
+[0;32mI (157607) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (159967) CAM+TFLM: 🧠 Objeto detectado: carton (52.16%)[0m
+[0;32mI (159967) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (162327) CAM+TFLM: 🧠 Objeto detectado: carton (54.51%)[0m
+[0;32mI (162327) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (164687) CAM+TFLM: 🧠 Objeto detectado: carton (49.80%)[0m
+[0;32mI (164687) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (167047) CAM+TFLM: 🧠 Objeto detectado: carton (52.94%)[0m
+[0;32mI (167047) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (169407) CAM+TFLM: 🧠 Objeto detectado: carton (54.12%)[0m
+[0;32mI (169407) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (171767) CAM+TFLM: 🧠 Objeto detectado: carton (59.22%)[0m
+[0;32mI (171767) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (174127) CAM+TFLM: 🧠 Objeto detectado: carton (54.12%)[0m
+[0;32mI (174127) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (176487) CAM+TFLM: 🧠 Objeto detectado: carton (65.10%)[0m
+[0;32mI (176487) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (178847) CAM+TFLM: 🧠 Objeto detectado: carton (65.10%)[0m
+[0;32mI (178847) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (181207) CAM+TFLM: 🧠 Objeto detectado: carton (62.35%)[0m
+[0;32mI (181207) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (183567) CAM+TFLM: 🧠 Objeto detectado: carton (71.37%)[0m
+[0;32mI (183577) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (185937) CAM+TFLM: 🧠 Objeto detectado: carton (62.35%)[0m
+[0;32mI (185937) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (188297) CAM+TFLM: 🧠 Objeto detectado: carton (55.29%)[0m
+[0;32mI (188297) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (190657) CAM+TFLM: 🧠 Objeto detectado: carton (54.90%)[0m
+[0;32mI (190657) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (193017) CAM+TFLM: 🧠 Objeto detectado: carton (52.94%)[0m
+[0;32mI (193017) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (195377) CAM+TFLM: 🧠 Objeto detectado: carton (53.33%)[0m
+[0;32mI (195377) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (197737) CAM+TFLM: 🧠 Objeto detectado: carton (57.25%)[0m
+[0;32mI (197737) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (200097) CAM+TFLM: 🧠 Objeto detectado: carton (66.67%)[0m
+[0;32mI (200097) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (202457) CAM+TFLM: 🧠 Objeto detectado: carton (59.22%)[0m
+[0;32mI (202457) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (204817) CAM+TFLM: 🧠 Objeto detectado: carton (70.59%)[0m
+[0;32mI (204817) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (207177) CAM+TFLM: 🧠 Objeto detectado: carton (58.04%)[0m
+[0;32mI (207177) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (209537) CAM+TFLM: 🧠 Objeto detectado: carton (57.25%)[0m
+[0;32mI (209537) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (211897) CAM+TFLM: 🧠 Objeto detectado: carton (61.96%)[0m
+[0;32mI (211897) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (214257) CAM+TFLM: 🧠 Objeto detectado: carton (52.55%)[0m
+[0;32mI (214257) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (216617) CAM+TFLM: 🧠 Objeto detectado: carton (60.39%)[0m
+[0;32mI (216617) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (218977) CAM+TFLM: 🧠 Objeto detectado: carton (62.35%)[0m
+[0;32mI (218977) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (221337) CAM+TFLM: 🧠 Objeto detectado: carton (58.82%)[0m
+[0;32mI (221337) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (223697) CAM+TFLM: 🧠 Objeto detectado: carton (51.37%)[0m
+[0;32mI (223697) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (226057) CAM+TFLM: 🧠 Objeto detectado: carton (57.25%)[0m
+[0;32mI (226057) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (228417) CAM+TFLM: 🧠 Objeto detectado: carton (57.65%)[0m
+[0;32mI (228417) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (230777) CAM+TFLM: 🧠 Objeto detectado: carton (61.57%)[0m
+[0;32mI (230777) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (233137) CAM+TFLM: 🧠 Objeto detectado: carton (52.55%)[0m
+[0;32mI (233137) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+ets Jul 29 2019 12:21:46
+
+rst:0x1 (POWERON_RESET),boot:0x13 (SPI_FAST_FLASH_BOOT)
+configsip: 0, SPIWP:0xee
+clk_drv:0x00,q_drv:0x00,d_drv:0x00,cs0_drv:0x00,hd_drv:0x00,wp_drv:0x00
+mode:DIO, clock div:2
+load:0x3fff0030,len:6380
+ho 0 tail 12 room 4
+load:0x40078000,len:15916
+load:0x40080400,len:3860
+entry 0x40080638
+[0;32mI (29) boot: ESP-IDF v5.5.1 2nd stage bootloader[0m
+[0;32mI (29) boot: compile time Dec 14 2025 13:06:58[0m
+[0;32mI (29) boot: Multicore bootloader[0m
+[0;32mI (31) boot: chip revision: v3.1[0m
+[0;32mI (33) boot.esp32: SPI Speed      : 40MHz[0m
+[0;32mI (37) boot.esp32: SPI Mode       : DIO[0m
+[0;32mI (41) boot.esp32: SPI Flash Size : 2MB[0m
+[0;32mI (44) boot: Enabling RNG early entropy source...[0m
+[0;32mI (49) boot: Partition Table:[0m
+[0;32mI (51) boot: ## Label            Usage          Type ST Offset   Length[0m
+[0;32mI (58) boot:  0 nvs              WiFi data        01 02 00009000 00006000[0m
+[0;32mI (64) boot:  1 phy_init         RF data          01 01 0000f000 00001000[0m
+[0;32mI (71) boot:  2 factory          factory app      00 00 00010000 00100000[0m
+[0;32mI (77) boot: End of partition table[0m
+[0;32mI (81) esp_image: segment 0: paddr=00010020 vaddr=3f400020 size=1826ch ( 98924) map[0m
+[0;32mI (122) esp_image: segment 1: paddr=00028294 vaddr=3ffb0000 size=03f64h ( 16228) load[0m
+[0;32mI (128) esp_image: segment 2: paddr=0002c200 vaddr=40080000 size=03e18h ( 15896) load[0m
+[0;32mI (134) esp_image: segment 3: paddr=00030020 vaddr=400d0020 size=82460h (533600) map[0m
+[0;32mI (317) esp_image: segment 4: paddr=000b2488 vaddr=40083e18 size=141c4h ( 82372) load[0m
+[0;32mI (349) esp_image: segment 5: paddr=000c6654 vaddr=50000000 size=00020h (    32) load[0m
+[0;32mI (361) boot: Loaded app from partition at offset 0x10000[0m
+[0;32mI (361) boot: Disabling RNG early entropy source...[0m
+[0;32mI (372) cpu_start: Multicore app[0m
+[0;32mI (380) cpu_start: Pro cpu start user code[0m
+[0;32mI (380) cpu_start: cpu freq: 160000000 Hz[0m
+[0;32mI (380) app_init: Application information:[0m
+[0;32mI (380) app_init: Project name:     servos-control-tesis[0m
+[0;32mI (385) app_init: App version:      1[0m
+[0;32mI (389) app_init: Compile time:     Dec 14 2025 13:06:46[0m
+[0;32mI (394) app_init: ELF file SHA256:  acd38b648...[0m
+[0;32mI (398) app_init: ESP-IDF:          v5.5.1[0m
+[0;32mI (402) efuse_init: Min chip rev:     v0.0[0m
+[0;32mI (406) efuse_init: Max chip rev:     v3.99 [0m
+[0;32mI (410) efuse_init: Chip rev:         v3.1[0m
+[0;32mI (414) heap_init: Initializing. RAM available for dynamic allocation:[0m
+[0;32mI (420) heap_init: At 3FFAE6E0 len 00001920 (6 KiB): DRAM[0m
+[0;32mI (425) heap_init: At 3FFB80A8 len 00027F58 (159 KiB): DRAM[0m
+[0;32mI (430) heap_init: At 3FFE0440 len 00003AE0 (14 KiB): D/IRAM[0m
+[0;32mI (436) heap_init: At 3FFE4350 len 0001BCB0 (111 KiB): D/IRAM[0m
+[0;32mI (441) heap_init: At 40097FDC len 00008024 (32 KiB): IRAM[0m
+[0;32mI (448) spi_flash: detected chip: generic[0m
+[0;32mI (450) spi_flash: flash io: dio[0m
+[0;33mW (453) spi_flash: Detected size(4096k) larger than the size in the binary image header(2048k). Using the size in the binary image header.[0m
+[0;32mI (466) main_task: Started on CPU0[0m
+[0;32mI (476) main_task: Calling app_main()[0m
+[0;32mI (476) SERVO_SLAVE: Servos inicializados.[0m
+[0;32mI (476) SERVO_SLAVE: Servos en posición inicial (0 grados)[0m
+[0;32mI (516) wifi:wifi driver task: 3ffbfeac, prio:23, stack:6656, core=0[0m
+[0;32mI (526) wifi:wifi firmware version: 14da9b7[0m
+[0;32mI (526) wifi:wifi certification version: v7.0[0m
+[0;32mI (526) wifi:config NVS flash: enabled[0m
+[0;32mI (526) wifi:config nano formatting: disabled[0m
+[0;32mI (536) wifi:Init data frame dynamic rx buffer num: 32[0m
+[0;32mI (536) wifi:Init static rx mgmt buffer num: 5[0m
+[0;32mI (536) wifi:Init management short buffer num: 32[0m
+[0;32mI (546) wifi:Init dynamic tx buffer num: 32[0m
+[0;32mI (546) wifi:Init static rx buffer size: 1600[0m
+[0;32mI (556) wifi:Init static rx buffer num: 10[0m
+[0;32mI (556) wifi:Init dynamic rx buffer num: 32[0m
+[0;32mI (566) wifi_init: rx ba win: 6[0m
+[0;32mI (566) wifi_init: accept mbox: 6[0m
+[0;32mI (566) wifi_init: tcpip mbox: 32[0m
+[0;32mI (566) wifi_init: udp mbox: 6[0m
+[0;32mI (576) wifi_init: tcp mbox: 6[0m
+[0;32mI (576) wifi_init: tcp tx win: 5760[0m
+[0;32mI (576) wifi_init: tcp rx win: 5760[0m
+[0;32mI (586) wifi_init: tcp mss: 1440[0m
+[0;32mI (586) wifi_init: WiFi IRAM OP enabled[0m
+[0;32mI (586) wifi_init: WiFi RX IRAM OP enabled[0m
+[0;32mI (596) phy_init: phy_version 4861,b71b5ad,Aug  5 2025,11:16:06[0m
+[0;32mI (666) wifi:mode : sta (f4:65:0b:e5:bf:34)[0m
+[0;32mI (666) wifi:enable tsf[0m
+[0;32mI (676) ESPNOW: espnow [version: 2.0] init[0m
+[0;32mI (676) SERVO_SLAVE: ESP-NOW Esclavo configurado. Listo para recibir.[0m
+[0;32mI (676) SERVO_SLAVE: ✅ Sistema de Control listo. Esperando clases (ESP-NOW)...[0m
+[0;32mI (686) SERVO_SLAVE: Clase recibida via ESP-NOW: 0[0m
+[0;32mI (686) SERVO_SLAVE: ⚙️ Servo 2 a 180° (Cartón)[0m
+[0;32mI (2186) SERVO_SLAVE: Servos en posición inicial (0 grados)[0m
+[0;32mI (3036) SERVO_SLAVE: Clase recibida via ESP-NOW: 0[0m
+[0;32mI (3036) SERVO_SLAVE: ⚙️ Servo 2 a 180° (Cartón)[0m
+[0;32mI (4536) SERVO_SLAVE: Servos en posición inicial (0 grados)[0m
+[0;32mI (5416) SERVO_SLAVE: Clase recibida via ESP-NOW: 0[0m
+[0;32mI (5416) SERVO_SLAVE: ⚙️ Servo 2 a 180° (Cartón)[0m
+[0;32mI (6916) SERVO_SLAVE: Servos en posición inicial (0 grados)[0m
+[0;32mI (7776) SERVO_SLAVE: Clase recibida via ESP-NOW: 0[0m
+[0;32mI (7776) SERVO_SLAVE: ⚙️ Servo 2 a 180° (Cartón)[0m
+[0;32mI (9276) SERVO_SLAVE: Servos en posición inicial (0 grados)[0m
+[0;32mI (10146) SERVO_SLAVE: Clase recibida via ESP-NOW: 0[0m
+[0;32mI (10146) SERVO_SLAVE: ⚙️ Servo 2 a 180° (Cartón)[0m
+[0;32mI (11646) SERVO_SLAVE: Servos en posición inicial (0 grados)[0m
+[0;32mI (12516) SERVO_SLAVE: Clase recibida via ESP-NOW: 0[0m
+[0;32mI (12516) SERVO_SLAVE: ⚙️ Servo 2 a 180° (Cartón)[0m
+[0;32mI (14016) SERVO_SLAVE: Servos en posición inicial (0 grados)[0m
+[0;32mI (14886) SERVO_SLAVE: Clase recibida via ESP-NOW: 0[0m
+[0;32mI (14886) SERVO_SLAVE: ⚙️ Servo 2 a 180° (Cartón)[0m
+[0;32mI (16386) SERVO_SLAVE: Servos en posición inicial (0 grados)[0m
+[0;32mI (17306) SERVO_SLAVE: Clase recibida via ESP-NOW: 0[0m
+[0;32mI (17306) SERVO_SLAVE: ⚙️ Servo 2 a 180° (Cartón)[0m
+[0;32mI (18806) SERVO_SLAVE: Servos en posición inicial (0 grados)[0m
+[0;32mI (19626) SERVO_SLAVE: Clase recibida via ESP-NOW: 0[0m
+[0;32mI (19626) SERVO_SLAVE: ⚙️ Servo 2 a 180° (Cartón)[0m
+[0;32mI (21126) SERVO_SLAVE: Servos en posición inicial (0 grados)[0m
+[0;32mI (22026) SERVO_SLAVE: Clase recibida via ESP-NOW: 0[0m
+[0;32mI (22026) SERVO_SLAVE: ⚙️ Servo 2 a 180° (Cartón)[0m
+[0;32mI (23526) SERVO_SLAVE: Servos en posición inicial (0 grados)[0m
+[0;32mI (24396) SERVO_SLAVE: Clase recibida via ESP-NOW: 0[0m
+[0;32mI (24396) SERVO_SLAVE: ⚙️ Servo 2 a 180° (Cartón)[0m
+[0;32mI (25896) SERVO_SLAVE: Servos en posición inicial (0 grados)[0m
+[0;32mI (26756) SERVO_SLAVE: Clase recibida via ESP-NOW: 0[0m
+[0;32mI (26756) SERVO_SLAVE: ⚙️ Servo 2 a 180° (Cartón)[0m
+[0;32mI (28256) SERVO_SLAVE: Servos en posición inicial (0 grados)[0m
+[0;32mI (29106) SERVO_SLAVE: Clase recibida via ESP-NOW: 0[0m
+[0;32mI (29106) SERVO_SLAVE: ⚙️ Servo 2 a 180° (Cartón)[0m
+[0;32mI (30606) SERVO_SLAVE: Servos en posición inicial (0 grados)[0m
+[0;32mI (31466) SERVO_SLAVE: Clase recibida via ESP-NOW: 0[0m
+[0;32mI (31466) SERVO_SLAVE: ⚙️ Servo 2 a 180° (Cartón)[0m
+[0;32mI (32966) SERVO_SLAVE: Servos en posición inicial (0 grados)[0m
+[0;32mI (33906) SERVO_SLAVE: Clase recibida via ESP-NOW: 0[0m
+[0;32mI (33906) SERVO_SLAVE: ⚙️ Servo 2 a 180° (Cartón)[0m
+[0;32mI (35406) SERVO_SLAVE: Servos en posición inicial (0 grados)[0m
+[0;32mI (36216) SERVO_SLAVE: Clase recibida via ESP-NOW: 0[0m
+[0;32mI (36216) SERVO_SLAVE: ⚙️ Servo 2 a 180° (Cartón)[0m
+[0;32mI (37716) SERVO_SLAVE: Servos en posición inicial (0 grados)[0m
+[0;32mI (38616) SERVO_SLAVE: Clase recibida via ESP-NOW: 0[0m
+[0;32mI (38616) SERVO_SLAVE: ⚙️ Servo 2 a 180° (Cartón)[0m
+[0;32mI (40116) SERVO_SLAVE: Servos en posición inicial (0 grados)[0m
+[0;32mI (40976) SERVO_SLAVE: Clase recibida via ESP-NOW: 0[0m
+[0;32mI (40976) SERVO_SLAVE: ⚙️ Servo 2 a 180° (Cartón)[0m
+[0;32mI (42476) SERVO_SLAVE: Servos en posición inicial (0 grados)[0m
+[0;32mI (43326) SERVO_SLAVE: Clase recibida via ESP-NOW: 0[0m
+[0;32mI (43336) SERVO_SLAVE: ⚙️ Servo 2 a 180° (Cartón)[0m
+[0;32mI (44836) SERVO_SLAVE: Servos en posición inicial (0 grados)[0m
+[0;32mI (45696) SERVO_SLAVE: Clase recibida via ESP-NOW: 0[0m
+[0;32mI (45696) SERVO_SLAVE: ⚙️ Servo 2 a 180° (Cartón)[0m
+[0;32mI (47196) SERVO_SLAVE: Servos en posición inicial (0 grados)[0m
+[0;32mI (48056) SERVO_SLAVE: Clase recibida via ESP-NOW: 0[0m
+[0;32mI (48056) SERVO_SLAVE: ⚙️ Servo 2 a 180° (Cartón)[0m
+[0;32mI (49556) SERVO_SLAVE: Servos en posición inicial (0 grados)[0m
+[0;32mI (50456) SERVO_SLAVE: Clase recibida via ESP-NOW: 0[0m
+[0;32mI (50456) SERVO_SLAVE: ⚙️ Servo 2 a 180° (Cartón)[0m
+[0;32mI (51956) SERVO_SLAVE: Servos en posición inicial (0 grados)[0m
+[0;32mI (52826) SERVO_SLAVE: Clase recibida via ESP-NOW: 0[0m
+[0;32mI (52826) SERVO_SLAVE: ⚙️ Servo 2 a 180° (Cartón)[0m
+[0;32mI (54326) SERVO_SLAVE: Servos en posición inicial (0 grados)[0m
+[0;32mI (55186) SERVO_SLAVE: Clase recibida via ESP-NOW: 0[0m
+[0;32mI (55186) SERVO_SLAVE: ⚙️ Servo 2 a 180° (Cartón)[0m
+[0;32mI (56686) SERVO_SLAVE: Servos en posición inicial (0 grados)[0m
+[0;32mI (57546) SERVO_SLAVE: Clase recibida via ESP-NOW: 0[0m
+[0;32mI (57546) SERVO_SLAVE: ⚙️ Servo 2 a 180° (Cartón)[0m
+[0;32mI (59046) SERVO_SLAVE: Servos en posición inicial (0 grados)[0m
+[0;32mI (59916) SERVO_SLAVE: Clase recibida via ESP-NOW: 0[0m
+[0;32mI (59916) SERVO_SLAVE: ⚙️ Servo 2 a 180° (Cartón)[0m
+[0;32mI (61416) SERVO_SLAVE: Servos en posición inicial (0 grados)[0m
+[0;32mI (62286) SERVO_SLAVE: Clase recibida via ESP-NOW: 0[0m
+[0;32mI (62286) SERVO_SLAVE: ⚙️ Servo 2 a 180° (Cartón)[0m
+[0;32mI (63786) SERVO_SLAVE: Servos en posición inicial (0 grados)[0m
+[0;32mI (64646) SERVO_SLAVE: Clase recibida via ESP-NOW: 0[0m
+[0;32mI (64646) SERVO_SLAVE: ⚙️ Servo 2 a 180° (Cartón)[0m
+[0;32mI (66146) SERVO_SLAVE: Servos en posición inicial (0 grados)[0m
+[0;32mI (67066) SERVO_SLAVE: Clase recibida via ESP-NOW: 0[0m
+[0;32mI (67066) SERVO_SLAVE: ⚙️ Servo 2 a 180° (Cartón)[0m
+[0;32mI (68566) SERVO_SLAVE: Servos en posición inicial (0 grados)[0m
+[0;32mI (69426) SERVO_SLAVE: Clase recibida via ESP-NOW: 0[0m
+[0;32mI (69426) SERVO_SLAVE: ⚙️ Servo 2 a 180° (Cartón)[0m
+[0;32mI (70926) SERVO_SLAVE: Servos en posición inicial (0 grados)[0m
+[0;32mI (71776) SERVO_SLAVE: Clase recibida via ESP-NOW: 0[0m
+[0;32mI (71776) SERVO_SLAVE: ⚙️ Servo 2 a 180° (Cartón)[0m
+[0;32mI (73276) SERVO_SLAVE: Servos en posición inicial (0 grados)[0m
+[0;32mI (74136) SERVO_SLAVE: Clase recibida via ESP-NOW: 0[0m
+[0;32mI (74136) SERVO_SLAVE: ⚙️ Servo 2 a 180° (Cartón)[0m
+[0;32mI (75636) SERVO_SLAVE: Servos en posición inicial (0 grados)[0m
+[0;32mI (76516) SERVO_SLAVE: Clase recibida via ESP-NOW: 0[0m
+[0;32mI (76516) SERVO_SLAVE: ⚙️ Servo 2 a 180° (Cartón)[0m
+[0;32mI (78016) SERVO_SLAVE: Servos en posición inicial (0 grados)[0m
+[0;32mI (78876) SERVO_SLAVE: Clase recibida via ESP-NOW: 0[0m
+[0;32mI (78876) SERVO_SLAVE: ⚙️ Servo 2 a 180° (Cartón)[0m
+[0;32mI (80376) SERVO_SLAVE: Servos en posición inicial (0 grados)[0m
+[0;32mI (81226) SERVO_SLAVE: Clase recibida via ESP-NOW: 0[0m
+[0;32mI (81226) SERVO_SLAVE: ⚙️ Servo 2 a 180° (Cartón)[0m
+[0;32mI (82726) SERVO_SLAVE: Servos en posición inicial (0 grados)[0m
+[0;32mI (83606) SERVO_SLAVE: Clase recibida via ESP-NOW: 0[0m
+[0;32mI (83606) SERVO_SLAVE: ⚙️ Servo 2 a 180° (Cartón)[0m
+[0;32mI (85106) SERVO_SLAVE: Servos en posición inicial (0 grados)[0m
+[0;32mI (86016) SERVO_SLAVE: Clase recibida via ESP-NOW: 0[0m
+[0;32mI (86016) SERVO_SLAVE: ⚙️ Servo 2 a 180° (Cartón)[0m
+[0;32mI (87516) SERVO_SLAVE: Servos en posición inicial (0 grados)[0m
+[0;32mI (88366) SERVO_SLAVE: Clase recibida via ESP-NOW: 0[0m
+[0;32mI (88366) SERVO_SLAVE: ⚙️ Servo 2 a 180° (Cartón)[0m
+[0;32mI (89866) SERVO_SLAVE: Servos en posición inicial (0 grados)[0m
+[0;32mI (90716) SERVO_SLAVE: Clase recibida via ESP-NOW: 0[0m
+[0;32mI (90716) SERVO_SLAVE: ⚙️ Servo 2 a 180° (Cartón)[0m
+[0;32mI (92216) SERVO_SLAVE: Servos en posición inicial (0 grados)[0m
+[0;32mI (93106) SERVO_SLAVE: Clase recibida via ESP-NOW: 0[0m
+[0;32mI (93106) SERVO_SLAVE: ⚙️ Servo 2 a 180° (Cartón)[0m
+[0;32mI (94606) SERVO_SLAVE: Servos en posición inicial (0 grados)[0m
+[0;32mI (95466) SERVO_SLAVE: Clase recibida via ESP-NOW: 0[0m
+[0;32mI (95466) SERVO_SLAVE: ⚙️ Servo 2 a 180° (Cartón)[0m
+[0;32mI (96966) SERVO_SLAVE: Servos en posición inicial (0 grados)[0m
+[0;32mI (97816) SERVO_SLAVE: Clase recibida via ESP-NOW: 0[0m
+[0;32mI (97816) SERVO_SLAVE: ⚙️ Servo 2 a 180° (Cartón)[0m
+[0;32mI (99316) SERVO_SLAVE: Servos en posición inicial (0 grados)[0m
+[0;32mI (100176) SERVO_SLAVE: Clase recibida via ESP-NOW: 0[0m
+[0;32mI (100176) SERVO_SLAVE: ⚙️ Servo 2 a 180° (Cartón)[0m
+[0;32mI (101676) SERVO_SLAVE: Servos en posición inicial (0 grados)[0m
+[0;32mI (102596) SERVO_SLAVE: Clase recibida via ESP-NOW: 0[0m
+[0;32mI (102596) SERVO_SLAVE: ⚙️ Servo 2 a 180° (Cartón)[0m
+[0;32mI (104096) SERVO_SLAVE: Servos en posición inicial (0 grados)[0m
+[0;32mI (104946) SERVO_SLAVE: Clase recibida via ESP-NOW: 0[0m
+[0;32mI (104946) SERVO_SLAVE: ⚙️ Servo 2 a 180° (Cartón)[0m
+[0;32mI (106446) SERVO_SLAVE: Servos en posición inicial (0 grados)[0m
+[0;32mI (107286) SERVO_SLAVE: Clase recibida via ESP-NOW: 1[0m
+[0;32mI (107286) SERVO_SLAVE: ⚙️ Servo 1 a 90° (Metal)[0m
+[0;32mI (108786) SERVO_SLAVE: Servos en posición inicial (0 grados)[0m
+[0;32mI (109666) SERVO_SLAVE: Clase recibida via ESP-NOW: 1[0m
+[0;32mI (109666) SERVO_SLAVE: ⚙️ Servo 1 a 90° (Metal)[0m
+[0;32mI (111166) SERVO_SLAVE: Servos en posición inicial (0 grados)[0m
+[0;32mI (112006) SERVO_SLAVE: Clase recibida via ESP-NOW: 1[0m
+[0;32mI (112006) SERVO_SLAVE: ⚙️ Servo 1 a 90° (Metal)[0m
+[0;32mI (113506) SERVO_SLAVE: Servos en posición inicial (0 grados)[0m
+[0;32mI (114366) SERVO_SLAVE: Clase recibida via ESP-NOW: 1[0m
+[0;32mI (114376) SERVO_SLAVE: ⚙️ Servo 1 a 90° (Metal)[0m
+[0;32mI (115876) SERVO_SLAVE: Servos en posición inicial (0 grados)[0m
+[0;32mI (116736) SERVO_SLAVE: Clase recibida via ESP-NOW: 0[0m
+[0;32mI (116736) SERVO_SLAVE: ⚙️ Servo 2 a 180° (Cartón)[0m
+[0;32mI (118236) SERVO_SLAVE: Servos en posición inicial (0 grados)[0m
+[0;32mI (119106) SERVO_SLAVE: Clase recibida via ESP-NOW: 0[0m
+[0;32mI (119106) SERVO_SLAVE: ⚙️ Servo 2 a 180° (Cartón)[0m
+[0;32mI (120606) SERVO_SLAVE: Servos en posición inicial (0 grados)[0m
+ets Jul 29 2019 12:21:46
+
+rst:0x1 (POWERON_RESET),boot:0x13 (SPI_FAST_FLASH_BOOT)
+configsip: 0, SPIWP:0xee
+clk_drv:0x00,q_drv:0x00,d_drv:0x00,cs0_drv:0x00,hd_drv:0x00,wp_drv:0x00
+mode:DIO, clock div:2
+load:0x3fff0030,len:6380
+ho 0 tail 12 room 4
+load:0x40078000,len:15916
+load:0x40080400,len:3860
+entry 0x40080638
+[0;32mI (29) boot: ESP-IDF v5.5.1 2nd stage bootloader[0m
+[0;32mI (29) boot: compile time Dec 14 2025 15:29:27[0m
+[0;32mI (29) boot: Multicore bootloader[0m
+[0;32mI (31) boot: chip revision: v3.1[0m
+[0;32mI (33) boot.esp32: SPI Speed      : 40MHz[0m
+[0;32mI (37) boot.esp32: SPI Mode       : DIO[0m
+[0;32mI (41) boot.esp32: SPI Flash Size : 4MB[0m
+[0;32mI (44) boot: Enabling RNG early entropy source...[0m
+[0;32mI (49) boot: Partition Table:[0m
+[0;32mI (51) boot: ## Label            Usage          Type ST Offset   Length[0m
+[0;32mI (58) boot:  0 nvs              WiFi data        01 02 00009000 00006000[0m
+[0;32mI (64) boot:  1 otadata          OTA data         01 00 0000f000 00002000[0m
+[0;32mI (71) boot:  2 phy_init         RF data          01 01 00011000 00001000[0m
+[0;32mI (77) boot:  3 ota_0            OTA app          00 10 00020000 001a9000[0m
+[0;32mI (84) boot:  4 ota_1            OTA app          00 11 001d0000 001a9000[0m
+[0;32mI (90) boot: End of partition table[0m
+[0;32mI (94) esp_image: segment 0: paddr=00020020 vaddr=3f400020 size=c2f64h (798564) map[0m
+[0;32mI (374) esp_image: segment 1: paddr=000e2f8c vaddr=3ffb0000 size=06774h ( 26484) load[0m
+[0;32mI (384) esp_image: segment 2: paddr=000e9708 vaddr=40080000 size=06910h ( 26896) load[0m
+[0;32mI (395) esp_image: segment 3: paddr=000f0020 vaddr=400d0020 size=afa94h (719508) map[0m
+[0;32mI (641) esp_image: segment 4: paddr=0019fabc vaddr=40086910 size=15eech ( 89836) load[0m
+[0;32mI (676) esp_image: segment 5: paddr=001b59b0 vaddr=50000000 size=00020h (    32) load[0m
+[0;32mI (690) boot: Loaded app from partition at offset 0x20000[0m
+[0;32mI (690) boot: Disabling RNG early entropy source...[0m
+[0;32mI (701) quad_psram: This chip is ESP32-D0WD[0m
+[0;32mI (703) esp_psram: Found 8MB PSRAM device[0m
+[0;32mI (703) esp_psram: Speed: 40MHz[0m
+[0;32mI (703) esp_psram: PSRAM initialized, cache is in low/high (2-core) mode.[0m
+[0;33mW (708) esp_psram: Virtual address not enough for PSRAM, map as much as we can. 4MB is mapped[0m
+[0;32mI (716) cpu_start: Multicore app[0m
+[0;32mI (1624) esp_psram: SPI SRAM memory test OK[0m
+[0;32mI (1633) cpu_start: Pro cpu start user code[0m
+[0;32mI (1633) cpu_start: cpu freq: 160000000 Hz[0m
+[0;32mI (1633) app_init: Application information:[0m
+[0;32mI (1633) app_init: Project name:     waste-clasification[0m
+[0;32mI (1638) app_init: App version:      258a38a-dirty[0m
+[0;32mI (1643) app_init: Compile time:     Dec 14 2025 15:29:10[0m
+[0;32mI (1648) app_init: ELF file SHA256:  a346b5a81...[0m
+[0;32mI (1652) app_init: ESP-IDF:          v5.5.1[0m
+[0;32mI (1656) efuse_init: Min chip rev:     v0.0[0m
+[0;32mI (1660) efuse_init: Max chip rev:     v3.99 [0m
+[0;32mI (1664) efuse_init: Chip rev:         v3.1[0m
+[0;32mI (1668) heap_init: Initializing. RAM available for dynamic allocation:[0m
+[0;32mI (1674) heap_init: At 3FFAE6E0 len 00001920 (6 KiB): DRAM[0m
+[0;32mI (1679) heap_init: At 3FFBC2F8 len 00023D08 (143 KiB): DRAM[0m
+[0;32mI (1685) heap_init: At 3FFE0440 len 00003AE0 (14 KiB): D/IRAM[0m
+[0;32mI (1690) heap_init: At 3FFE4350 len 0001BCB0 (111 KiB): D/IRAM[0m
+[0;32mI (1696) heap_init: At 4009C7FC len 00003804 (14 KiB): IRAM[0m
+[0;32mI (1702) esp_psram: Adding pool of 4096K of PSRAM memory to heap allocator[0m
+[0;32mI (1709) spi_flash: detected chip: generic[0m
+[0;32mI (1712) spi_flash: flash io: dio[0m
+[0;32mI (1716) main_task: Started on CPU0[0m
+[0;32mI (1726) esp_psram: Reserving pool of 32K of internal memory for DMA/internal allocations[0m
+[0;32mI (1726) main_task: Calling app_main()[0m
+[0;32mI (1766) wifi:wifi driver task: 3ffc41d4, prio:23, stack:6656, core=0[0m
+[0;32mI (1776) wifi:wifi firmware version: 14da9b7[0m
+[0;32mI (1776) wifi:wifi certification version: v7.0[0m
+[0;32mI (1776) wifi:config NVS flash: enabled[0m
+[0;32mI (1776) wifi:config nano formatting: disabled[0m
+[0;32mI (1786) wifi:Init data frame dynamic rx buffer num: 32[0m
+[0;32mI (1786) wifi:Init static rx mgmt buffer num: 5[0m
+[0;32mI (1796) wifi:Init management short buffer num: 32[0m
+[0;32mI (1796) wifi:Init dynamic tx buffer num: 32[0m
+[0;32mI (1796) wifi:Init static rx buffer size: 1600[0m
+[0;32mI (1806) wifi:Init static rx buffer num: 10[0m
+[0;32mI (1806) wifi:Init dynamic rx buffer num: 32[0m
+[0;32mI (1816) wifi_init: rx ba win: 6[0m
+[0;32mI (1816) wifi_init: accept mbox: 6[0m
+[0;32mI (1816) wifi_init: tcpip mbox: 32[0m
+[0;32mI (1826) wifi_init: udp mbox: 6[0m
+[0;32mI (1826) wifi_init: tcp mbox: 6[0m
+[0;32mI (1826) wifi_init: tcp tx win: 5760[0m
+[0;32mI (1826) wifi_init: tcp rx win: 5760[0m
+[0;32mI (1836) wifi_init: tcp mss: 1440[0m
+[0;32mI (1836) wifi_init: WiFi IRAM OP enabled[0m
+[0;32mI (1836) wifi_init: WiFi RX IRAM OP enabled[0m
+[0;32mI (1846) phy_init: phy_version 4861,b71b5ad,Aug  5 2025,11:16:06[0m
+[0;32mI (1926) wifi:mode : sta (ec:e3:34:da:c5:b0)[0m
+[0;32mI (1926) wifi:enable tsf[0m
+[0;32mI (1926) ESPNOW: espnow [version: 2.0] init[0m
+[0;32mI (1926) CAM+TFLM: ESP-NOW Maestro configurado y Peer Esclavo añadido.[0m
+[0;32mI (1926) cam_hal: cam init ok[0m
+[0;32mI (1936) sccb-ng: pin_sda 26 pin_scl 27[0m
+[0;32mI (1936) sccb-ng: sccb_i2c_port=1[0m
+[0;32mI (1966) camera: Camera PID=0x26 VER=0x42 MIDL=0x7f MIDH=0xa2[0m
+[0;32mI (1966) camera: Detected OV2640 camera[0m
+[0;32mI (1966) camera: Detected camera at address=0x30[0m
+[0;32mI (2046) cam_hal: PSRAM DMA mode disabled[0m
+[0;32mI (2046) cam_hal: buffer_size: 32768, half_buffer_size: 4096, node_buffer_size: 2048, node_cnt: 16, total_cnt: 3[0m
+[0;32mI (2046) cam_hal: Allocating 15360 Byte frame buffer in PSRAM[0m
+[0;32mI (2046) cam_hal: cam config ok[0m
+[0;32mI (2056) ov2640: Set PLL: clk_2x: 0, clk_div: 0, pclk_auto: 0, pclk_div: 8[0m
+[0;32mI (2116) CAM+TFLM: Buffers asignados en PSRAM[0m
+[0;32mI (2126) CAM+TFLM: Inicializando TensorFlow Lite Micro...[0m
+[0;32mI (2126) CAM+TFLM: Usando PSRAM para tensor arena.[0m
+[0;32mI (2246) CAM+TFLM: Modelo inicializado correctamente.[0m
+[0;32mI (2246) CAM+TFLM: ✅ Sistema listo: espnow en bucle[0m
+[0;32mI (4136) CAM+TFLM: 🧠 Objeto detectado: metal (47.84%)[0m
+[0;32mI (4146) CAM+TFLM: ESP-NOW enviado: Clase 1[0m
+[0;32mI (6506) CAM+TFLM: 🧠 Objeto detectado: carton (58.43%)[0m
+[0;32mI (6516) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (8876) CAM+TFLM: 🧠 Objeto detectado: carton (83.92%)[0m
+[0;32mI (8876) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (11236) CAM+TFLM: 🧠 Objeto detectado: carton (61.18%)[0m
+[0;32mI (11236) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (13596) CAM+TFLM: 🧠 Objeto detectado: carton (69.41%)[0m
+[0;32mI (13596) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (15956) CAM+TFLM: 🧠 Objeto detectado: carton (65.49%)[0m
+[0;32mI (15956) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (18316) CAM+TFLM: 🧠 Objeto detectado: carton (67.06%)[0m
+[0;32mI (18316) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (20676) CAM+TFLM: 🧠 Objeto detectado: carton (50.98%)[0m
+[0;32mI (20676) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (23036) CAM+TFLM: 🧠 Objeto detectado: carton (53.73%)[0m
+[0;32mI (23036) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (25396) CAM+TFLM: 🧠 Objeto detectado: carton (55.29%)[0m
+[0;32mI (25396) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (27756) CAM+TFLM: 🧠 Objeto detectado: carton (54.51%)[0m
+[0;32mI (27756) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (30116) CAM+TFLM: 🧠 Objeto detectado: carton (59.22%)[0m
+[0;32mI (30116) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (32476) CAM+TFLM: 🧠 Objeto detectado: carton (52.16%)[0m
+[0;32mI (32476) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (34836) CAM+TFLM: 🧠 Objeto detectado: carton (50.20%)[0m
+[0;32mI (34836) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (37196) CAM+TFLM: 🧠 Objeto detectado: carton (58.04%)[0m
+[0;32mI (37196) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (39556) CAM+TFLM: 🧠 Objeto detectado: carton (43.14%)[0m
+[0;32mI (39556) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (41916) CAM+TFLM: 🧠 Objeto detectado: carton (48.24%)[0m
+[0;32mI (41916) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (44276) CAM+TFLM: 🧠 Objeto detectado: carton (52.16%)[0m
+[0;32mI (44276) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (46636) CAM+TFLM: 🧠 Objeto detectado: carton (50.20%)[0m
+[0;32mI (46636) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (48996) CAM+TFLM: 🧠 Objeto detectado: carton (50.98%)[0m
+[0;32mI (48996) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (51356) CAM+TFLM: 🧠 Objeto detectado: carton (52.55%)[0m
+[0;32mI (51356) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (53716) CAM+TFLM: 🧠 Objeto detectado: carton (53.33%)[0m
+[0;32mI (53716) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (56076) CAM+TFLM: 🧠 Objeto detectado: carton (49.02%)[0m
+[0;32mI (56076) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (58436) CAM+TFLM: 🧠 Objeto detectado: carton (46.67%)[0m
+[0;32mI (58436) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (60796) CAM+TFLM: 🧠 Objeto detectado: carton (49.80%)[0m
+[0;32mI (60796) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (63156) CAM+TFLM: 🧠 Objeto detectado: carton (49.02%)[0m
+[0;32mI (63156) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (65516) CAM+TFLM: 🧠 Objeto detectado: carton (45.88%)[0m
+[0;32mI (65516) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (67876) CAM+TFLM: 🧠 Objeto detectado: carton (46.27%)[0m
+[0;32mI (67876) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (70236) CAM+TFLM: 🧠 Objeto detectado: carton (46.67%)[0m
+[0;32mI (70236) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (72596) CAM+TFLM: 🧠 Objeto detectado: carton (50.20%)[0m
+[0;32mI (72596) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (74956) CAM+TFLM: 🧠 Objeto detectado: carton (40.78%)[0m
+[0;32mI (74956) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (77316) CAM+TFLM: 🧠 Objeto detectado: carton (52.55%)[0m
+[0;32mI (77316) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (79676) CAM+TFLM: 🧠 Objeto detectado: carton (41.18%)[0m
+[0;32mI (79676) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (82036) CAM+TFLM: 🧠 Objeto detectado: carton (42.35%)[0m
+[0;32mI (82036) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (84396) CAM+TFLM: 🧠 Objeto detectado: carton (40.39%)[0m
+[0;32mI (84396) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (86756) CAM+TFLM: 🧠 Objeto detectado: carton (47.84%)[0m
+[0;32mI (86756) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (89116) CAM+TFLM: 🧠 Objeto detectado: carton (48.24%)[0m
+[0;32mI (89116) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (91476) CAM+TFLM: 🧠 Objeto detectado: carton (35.29%)[0m
+[0;32mI (91476) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (93836) CAM+TFLM: 🧠 Objeto detectado: carton (37.25%)[0m
+[0;32mI (93836) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (96196) CAM+TFLM: 🧠 Objeto detectado: carton (38.82%)[0m
+[0;32mI (96196) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (98556) CAM+TFLM: 🧠 Objeto detectado: carton (38.04%)[0m
+[0;32mI (98556) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (100916) CAM+TFLM: 🧠 Objeto detectado: carton (48.24%)[0m
+[0;32mI (100916) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (103276) CAM+TFLM: 🧠 Objeto detectado: carton (41.57%)[0m
+[0;32mI (103276) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (105636) CAM+TFLM: 🧠 Objeto detectado: carton (40.78%)[0m
+[0;32mI (105636) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (107996) CAM+TFLM: 🧠 Objeto detectado: carton (41.96%)[0m
+[0;32mI (107996) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (110356) CAM+TFLM: 🧠 Objeto detectado: carton (51.37%)[0m
+[0;32mI (110356) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (112716) CAM+TFLM: 🧠 Objeto detectado: carton (39.22%)[0m
+[0;32mI (112716) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (115076) CAM+TFLM: 🧠 Objeto detectado: carton (44.71%)[0m
+[0;32mI (115076) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (117436) CAM+TFLM: 🧠 Objeto detectado: carton (43.92%)[0m
+[0;32mI (117436) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (119796) CAM+TFLM: 🧠 Objeto detectado: carton (46.27%)[0m
+[0;32mI (119796) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (122156) CAM+TFLM: 🧠 Objeto detectado: carton (40.78%)[0m
+[0;32mI (122156) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (124516) CAM+TFLM: 🧠 Objeto detectado: carton (45.49%)[0m
+[0;32mI (124516) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (126876) CAM+TFLM: 🧠 Objeto detectado: metal (54.90%)[0m
+[0;32mI (126876) CAM+TFLM: ESP-NOW enviado: Clase 1[0m
+[0;32mI (129236) CAM+TFLM: 🧠 Objeto detectado: metal (52.16%)[0m
+[0;32mI (129236) CAM+TFLM: ESP-NOW enviado: Clase 1[0m
+[0;32mI (131596) CAM+TFLM: 🧠 Objeto detectado: metal (56.47%)[0m
+[0;32mI (131596) CAM+TFLM: ESP-NOW enviado: Clase 1[0m
+[0;32mI (133956) CAM+TFLM: 🧠 Objeto detectado: metal (50.20%)[0m
+[0;32mI (133956) CAM+TFLM: ESP-NOW enviado: Clase 1[0m
+[0;32mI (136316) CAM+TFLM: 🧠 Objeto detectado: metal (56.08%)[0m
+[0;32mI (136316) CAM+TFLM: ESP-NOW enviado: Clase 1[0m
+[0;32mI (138676) CAM+TFLM: 🧠 Objeto detectado: metal (52.55%)[0m
+[0;32mI (138676) CAM+TFLM: ESP-NOW enviado: Clase 1[0m
+[0;32mI (141036) CAM+TFLM: 🧠 Objeto detectado: carton (40.78%)[0m
+[0;32mI (141036) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (143396) CAM+TFLM: 🧠 Objeto detectado: carton (42.35%)[0m
+[0;32mI (143396) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (145756) CAM+TFLM: 🧠 Objeto detectado: carton (45.88%)[0m
+[0;32mI (145756) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (148116) CAM+TFLM: 🧠 Objeto detectado: carton (35.29%)[0m
+[0;32mI (148116) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (150476) CAM+TFLM: 🧠 Objeto detectado: carton (41.96%)[0m
+[0;32mI (150476) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (152836) CAM+TFLM: 🧠 Objeto detectado: carton (37.25%)[0m
+[0;32mI (152836) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (155196) CAM+TFLM: 🧠 Objeto detectado: carton (45.49%)[0m
+[0;32mI (155196) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (157556) CAM+TFLM: 🧠 Objeto detectado: carton (36.47%)[0m
+[0;32mI (157556) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (159916) CAM+TFLM: 🧠 Objeto detectado: carton (41.57%)[0m
+[0;32mI (159916) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (162276) CAM+TFLM: 🧠 Objeto detectado: carton (51.76%)[0m
+[0;32mI (162276) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (164636) CAM+TFLM: 🧠 Objeto detectado: carton (39.61%)[0m
+[0;32mI (164636) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (166996) CAM+TFLM: 🧠 Objeto detectado: carton (44.31%)[0m
+[0;32mI (166996) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (169356) CAM+TFLM: 🧠 Objeto detectado: carton (38.04%)[0m
+[0;32mI (169356) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (171716) CAM+TFLM: 🧠 Objeto detectado: carton (39.61%)[0m
+[0;32mI (171716) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (174076) CAM+TFLM: 🧠 Objeto detectado: carton (43.14%)[0m
+[0;32mI (174076) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (176436) CAM+TFLM: 🧠 Objeto detectado: carton (41.57%)[0m
+[0;32mI (176436) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (178796) CAM+TFLM: 🧠 Objeto detectado: carton (44.31%)[0m
+[0;32mI (178796) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (181156) CAM+TFLM: 🧠 Objeto detectado: metal (51.76%)[0m
+[0;32mI (181156) CAM+TFLM: ESP-NOW enviado: Clase 1[0m
+[0;32mI (183516) CAM+TFLM: 🧠 Objeto detectado: metal (45.10%)[0m
+[0;32mI (183516) CAM+TFLM: ESP-NOW enviado: Clase 1[0m
+[0;32mI (185876) CAM+TFLM: 🧠 Objeto detectado: metal (48.24%)[0m
+[0;32mI (185876) CAM+TFLM: ESP-NOW enviado: Clase 1[0m
+[0;32mI (188236) CAM+TFLM: 🧠 Objeto detectado: metal (43.92%)[0m
+[0;32mI (188236) CAM+TFLM: ESP-NOW enviado: Clase 1[0m
+[0;32mI (190596) CAM+TFLM: 🧠 Objeto detectado: carton (52.94%)[0m
+[0;32mI (190596) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (192956) CAM+TFLM: 🧠 Objeto detectado: carton (42.75%)[0m
+[0;32mI (192956) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (195316) CAM+TFLM: 🧠 Objeto detectado: carton (51.37%)[0m
+[0;32mI (195316) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (197676) CAM+TFLM: 🧠 Objeto detectado: carton (48.24%)[0m
+[0;32mI (197676) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (200036) CAM+TFLM: 🧠 Objeto detectado: carton (43.14%)[0m
+[0;32mI (200036) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (202396) CAM+TFLM: 🧠 Objeto detectado: carton (38.43%)[0m
+[0;32mI (202396) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (204756) CAM+TFLM: 🧠 Objeto detectado: carton (43.53%)[0m
+[0;32mI (204756) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (207116) CAM+TFLM: 🧠 Objeto detectado: carton (39.22%)[0m
+[0;32mI (207116) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (209476) CAM+TFLM: 🧠 Objeto detectado: carton (46.27%)[0m
+[0;32mI (209476) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (211836) CAM+TFLM: 🧠 Objeto detectado: carton (45.49%)[0m
+[0;32mI (211836) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (214196) CAM+TFLM: 🧠 Objeto detectado: carton (47.45%)[0m
+[0;32mI (214196) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (216556) CAM+TFLM: 🧠 Objeto detectado: carton (47.45%)[0m
+[0;32mI (216556) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (218916) CAM+TFLM: 🧠 Objeto detectado: carton (51.37%)[0m
+[0;32mI (218916) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (221276) CAM+TFLM: 🧠 Objeto detectado: carton (52.55%)[0m
+[0;32mI (221276) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (223636) CAM+TFLM: 🧠 Objeto detectado: carton (52.16%)[0m
+[0;32mI (223636) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (225996) CAM+TFLM: 🧠 Objeto detectado: carton (50.59%)[0m
+[0;32mI (225996) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (228356) CAM+TFLM: 🧠 Objeto detectado: carton (57.65%)[0m
+[0;32mI (228356) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (230716) CAM+TFLM: 🧠 Objeto detectado: carton (53.33%)[0m
+[0;32mI (230716) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (233076) CAM+TFLM: 🧠 Objeto detectado: carton (47.84%)[0m
+[0;32mI (233076) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (235436) CAM+TFLM: 🧠 Objeto detectado: carton (51.37%)[0m
+[0;32mI (235436) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (237796) CAM+TFLM: 🧠 Objeto detectado: carton (58.82%)[0m
+[0;32mI (237796) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (240156) CAM+TFLM: 🧠 Objeto detectado: carton (38.04%)[0m
+[0;32mI (240156) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (242516) CAM+TFLM: 🧠 Objeto detectado: carton (36.08%)[0m
+[0;32mI (242516) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (244876) CAM+TFLM: 🧠 Objeto detectado: carton (45.88%)[0m
+[0;32mI (244876) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (247236) CAM+TFLM: 🧠 Objeto detectado: metal (41.18%)[0m
+[0;32mI (247236) CAM+TFLM: ESP-NOW enviado: Clase 1[0m
+[0;32mI (249596) CAM+TFLM: 🧠 Objeto detectado: metal (40.00%)[0m
+[0;32mI (249596) CAM+TFLM: ESP-NOW enviado: Clase 1[0m
+[0;32mI (251956) CAM+TFLM: 🧠 Objeto detectado: metal (47.06%)[0m
+[0;32mI (251956) CAM+TFLM: ESP-NOW enviado: Clase 1[0m
+[0;32mI (254316) CAM+TFLM: 🧠 Objeto detectado: metal (38.43%)[0m
+[0;32mI (254316) CAM+TFLM: ESP-NOW enviado: Clase 1[0m
+[0;32mI (256676) CAM+TFLM: 🧠 Objeto detectado: carton (45.10%)[0m
+[0;32mI (256676) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (259036) CAM+TFLM: 🧠 Objeto detectado: carton (45.49%)[0m
+[0;32mI (259036) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (261396) CAM+TFLM: 🧠 Objeto detectado: metal (36.08%)[0m
+[0;32mI (261396) CAM+TFLM: ESP-NOW enviado: Clase 1[0m
+[0;32mI (263756) CAM+TFLM: 🧠 Objeto detectado: carton (41.18%)[0m
+[0;32mI (263756) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (266116) CAM+TFLM: 🧠 Objeto detectado: carton (44.71%)[0m
+[0;32mI (266116) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (268476) CAM+TFLM: 🧠 Objeto detectado: carton (48.24%)[0m
+[0;32mI (268476) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (270836) CAM+TFLM: 🧠 Objeto detectado: carton (44.31%)[0m
+[0;32mI (270836) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (273196) CAM+TFLM: 🧠 Objeto detectado: carton (42.35%)[0m
+[0;32mI (273196) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (275556) CAM+TFLM: 🧠 Objeto detectado: carton (43.92%)[0m
+[0;32mI (275556) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (277916) CAM+TFLM: 🧠 Objeto detectado: carton (40.39%)[0m
+[0;32mI (277916) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (280276) CAM+TFLM: 🧠 Objeto detectado: carton (42.75%)[0m
+[0;32mI (280276) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (282636) CAM+TFLM: 🧠 Objeto detectado: carton (43.53%)[0m
+[0;32mI (282636) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (284996) CAM+TFLM: 🧠 Objeto detectado: carton (45.49%)[0m
+[0;32mI (284996) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (287356) CAM+TFLM: 🧠 Objeto detectado: carton (48.24%)[0m
+[0;32mI (287356) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (289716) CAM+TFLM: 🧠 Objeto detectado: carton (43.14%)[0m
+[0;32mI (289716) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (292076) CAM+TFLM: 🧠 Objeto detectado: carton (36.47%)[0m
+[0;32mI (292076) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (294436) CAM+TFLM: 🧠 Objeto detectado: carton (40.78%)[0m
+[0;32mI (294436) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (296796) CAM+TFLM: 🧠 Objeto detectado: carton (35.69%)[0m
+[0;32mI (296796) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (299156) CAM+TFLM: 🧠 Objeto detectado: carton (39.22%)[0m
+[0;32mI (299156) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (301516) CAM+TFLM: 🧠 Objeto detectado: carton (43.53%)[0m
+[0;32mI (301516) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (303876) CAM+TFLM: 🧠 Objeto detectado: carton (43.92%)[0m
+[0;32mI (303876) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (306236) CAM+TFLM: 🧠 Objeto detectado: carton (38.43%)[0m
+[0;32mI (306236) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (308596) CAM+TFLM: 🧠 Objeto detectado: carton (41.18%)[0m
+[0;32mI (308596) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (310956) CAM+TFLM: 🧠 Objeto detectado: carton (42.35%)[0m
+[0;32mI (310956) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (313316) CAM+TFLM: 🧠 Objeto detectado: metal (39.22%)[0m
+[0;32mI (313316) CAM+TFLM: ESP-NOW enviado: Clase 1[0m
+[0;32mI (315676) CAM+TFLM: 🧠 Objeto detectado: carton (40.39%)[0m
+[0;32mI (315676) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (318036) CAM+TFLM: 🧠 Objeto detectado: carton (40.00%)[0m
+[0;32mI (318036) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (320396) CAM+TFLM: 🧠 Objeto detectado: carton (42.35%)[0m
+[0;32mI (320396) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (322756) CAM+TFLM: 🧠 Objeto detectado: metal (38.82%)[0m
+[0;32mI (322756) CAM+TFLM: ESP-NOW enviado: Clase 1[0m
+[0;32mI (325116) CAM+TFLM: 🧠 Objeto detectado: carton (38.82%)[0m
+[0;32mI (325116) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (327476) CAM+TFLM: 🧠 Objeto detectado: carton (39.22%)[0m
+[0;32mI (327476) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (329836) CAM+TFLM: 🧠 Objeto detectado: carton (41.96%)[0m
+[0;32mI (329836) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (332196) CAM+TFLM: 🧠 Objeto detectado: carton (42.75%)[0m
+[0;32mI (332196) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (334556) CAM+TFLM: 🧠 Objeto detectado: carton (43.53%)[0m
+[0;32mI (334556) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (336916) CAM+TFLM: 🧠 Objeto detectado: carton (40.78%)[0m
+[0;32mI (336916) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (339276) CAM+TFLM: 🧠 Objeto detectado: carton (42.75%)[0m
+[0;32mI (339276) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (341636) CAM+TFLM: 🧠 Objeto detectado: carton (39.61%)[0m
+[0;32mI (341636) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (343996) CAM+TFLM: 🧠 Objeto detectado: carton (42.75%)[0m
+[0;32mI (343996) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (346356) CAM+TFLM: 🧠 Objeto detectado: carton (40.78%)[0m
+[0;32mI (346356) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (348716) CAM+TFLM: 🧠 Objeto detectado: metal (37.25%)[0m
+[0;32mI (348716) CAM+TFLM: ESP-NOW enviado: Clase 1[0m
+[0;32mI (351076) CAM+TFLM: 🧠 Objeto detectado: carton (47.06%)[0m
+[0;32mI (351076) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (353436) CAM+TFLM: 🧠 Objeto detectado: carton (40.78%)[0m
+[0;32mI (353436) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (355796) CAM+TFLM: 🧠 Objeto detectado: carton (41.18%)[0m
+[0;32mI (355796) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (358156) CAM+TFLM: 🧠 Objeto detectado: carton (36.47%)[0m
+[0;32mI (358156) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (360516) CAM+TFLM: 🧠 Objeto detectado: carton (45.10%)[0m
+[0;32mI (360516) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (362876) CAM+TFLM: 🧠 Objeto detectado: carton (43.14%)[0m
+[0;32mI (362876) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (365236) CAM+TFLM: 🧠 Objeto detectado: carton (39.61%)[0m
+[0;32mI (365236) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (367596) CAM+TFLM: 🧠 Objeto detectado: carton (40.00%)[0m
+[0;32mI (367596) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (369956) CAM+TFLM: 🧠 Objeto detectado: carton (37.65%)[0m
+[0;32mI (369956) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (372316) CAM+TFLM: 🧠 Objeto detectado: carton (41.96%)[0m
+[0;32mI (372316) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (374676) CAM+TFLM: 🧠 Objeto detectado: carton (41.57%)[0m
+[0;32mI (374676) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (377036) CAM+TFLM: 🧠 Objeto detectado: carton (41.57%)[0m
+[0;32mI (377036) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (379396) CAM+TFLM: 🧠 Objeto detectado: carton (48.63%)[0m
+[0;32mI (379396) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (381756) CAM+TFLM: 🧠 Objeto detectado: carton (42.75%)[0m
+[0;32mI (381756) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (384116) CAM+TFLM: 🧠 Objeto detectado: carton (37.65%)[0m
+[0;32mI (384116) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (386476) CAM+TFLM: 🧠 Objeto detectado: carton (39.22%)[0m
+[0;32mI (386476) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (388836) CAM+TFLM: 🧠 Objeto detectado: carton (42.75%)[0m
+[0;32mI (388836) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (391196) CAM+TFLM: 🧠 Objeto detectado: carton (41.18%)[0m
+[0;32mI (391196) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (393556) CAM+TFLM: 🧠 Objeto detectado: carton (40.78%)[0m
+[0;32mI (393556) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (395916) CAM+TFLM: 🧠 Objeto detectado: carton (40.00%)[0m
+[0;32mI (395916) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (398276) CAM+TFLM: 🧠 Objeto detectado: metal (41.57%)[0m
+[0;32mI (398276) CAM+TFLM: ESP-NOW enviado: Clase 1[0m
+[0;32mI (400636) CAM+TFLM: 🧠 Objeto detectado: carton (40.78%)[0m
+[0;32mI (400636) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (402996) CAM+TFLM: 🧠 Objeto detectado: carton (39.61%)[0m
+[0;32mI (402996) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (405356) CAM+TFLM: 🧠 Objeto detectado: carton (39.61%)[0m
+[0;32mI (405356) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (407716) CAM+TFLM: 🧠 Objeto detectado: carton (47.06%)[0m
+[0;32mI (407716) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (410076) CAM+TFLM: 🧠 Objeto detectado: carton (43.92%)[0m
+[0;32mI (410076) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (412436) CAM+TFLM: 🧠 Objeto detectado: carton (38.04%)[0m
+[0;32mI (412436) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (414796) CAM+TFLM: 🧠 Objeto detectado: metal (40.00%)[0m
+[0;32mI (414796) CAM+TFLM: ESP-NOW enviado: Clase 1[0m
+[0;32mI (417156) CAM+TFLM: 🧠 Objeto detectado: carton (43.53%)[0m
+[0;32mI (417156) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (419516) CAM+TFLM: 🧠 Objeto detectado: carton (44.71%)[0m
+[0;32mI (419516) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (421876) CAM+TFLM: 🧠 Objeto detectado: metal (38.82%)[0m
+[0;32mI (421876) CAM+TFLM: ESP-NOW enviado: Clase 1[0m
+[0;32mI (424236) CAM+TFLM: 🧠 Objeto detectado: metal (39.22%)[0m
+[0;32mI (424236) CAM+TFLM: ESP-NOW enviado: Clase 1[0m
+[0;32mI (426596) CAM+TFLM: 🧠 Objeto detectado: carton (43.53%)[0m
+[0;32mI (426596) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (428956) CAM+TFLM: 🧠 Objeto detectado: carton (42.75%)[0m
+[0;32mI (428956) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (431316) CAM+TFLM: 🧠 Objeto detectado: carton (35.69%)[0m
+[0;32mI (431316) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (433676) CAM+TFLM: 🧠 Objeto detectado: carton (43.14%)[0m
+[0;32mI (433676) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (436036) CAM+TFLM: 🧠 Objeto detectado: carton (39.22%)[0m
+[0;32mI (436036) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (438396) CAM+TFLM: 🧠 Objeto detectado: carton (43.14%)[0m
+[0;32mI (438396) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (440756) CAM+TFLM: 🧠 Objeto detectado: carton (38.04%)[0m
+[0;32mI (440756) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (443116) CAM+TFLM: 🧠 Objeto detectado: carton (43.53%)[0m
+[0;32mI (443116) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (445476) CAM+TFLM: 🧠 Objeto detectado: carton (45.10%)[0m
+[0;32mI (445476) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (447836) CAM+TFLM: 🧠 Objeto detectado: carton (41.57%)[0m
+[0;32mI (447836) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (450196) CAM+TFLM: 🧠 Objeto detectado: carton (38.43%)[0m
+[0;32mI (450196) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (452556) CAM+TFLM: 🧠 Objeto detectado: carton (39.22%)[0m
+[0;32mI (452556) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (454916) CAM+TFLM: 🧠 Objeto detectado: metal (38.43%)[0m
+[0;32mI (454916) CAM+TFLM: ESP-NOW enviado: Clase 1[0m
+[0;32mI (457276) CAM+TFLM: 🧠 Objeto detectado: carton (39.61%)[0m
+[0;32mI (457276) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (459636) CAM+TFLM: 🧠 Objeto detectado: carton (42.35%)[0m
+[0;32mI (459636) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (461996) CAM+TFLM: 🧠 Objeto detectado: carton (44.31%)[0m
+[0;32mI (461996) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (464356) CAM+TFLM: 🧠 Objeto detectado: carton (47.45%)[0m
+[0;32mI (464356) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (466716) CAM+TFLM: 🧠 Objeto detectado: carton (35.69%)[0m
+[0;32mI (466716) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (469076) CAM+TFLM: 🧠 Objeto detectado: carton (45.88%)[0m
+[0;32mI (469076) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (471436) CAM+TFLM: 🧠 Objeto detectado: carton (45.88%)[0m
+[0;32mI (471436) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (473796) CAM+TFLM: 🧠 Objeto detectado: carton (37.25%)[0m
+[0;32mI (473796) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (476156) CAM+TFLM: 🧠 Objeto detectado: carton (41.57%)[0m
+[0;32mI (476156) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (478516) CAM+TFLM: 🧠 Objeto detectado: carton (46.27%)[0m
+[0;32mI (478516) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (480876) CAM+TFLM: 🧠 Objeto detectado: carton (36.08%)[0m
+[0;32mI (480876) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (483236) CAM+TFLM: 🧠 Objeto detectado: carton (40.78%)[0m
+[0;32mI (483236) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (485596) CAM+TFLM: 🧠 Objeto detectado: carton (41.96%)[0m
+[0;32mI (485596) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+[0;32mI (487956) CAM+TFLM: 🧠 Objeto detectado: carton (43.14%)[0m
+[0;32mI (487956) CAM+TFLM: ESP-NOW enviado: Clase 0[0m
+�ets Jul 29 2019 12:21:46
+
+rst:0x1 (POWERON_RESET),boot:0x13 (SPI_FAST_FLASH_BOOT)
+configsip: 0, SPIWP:0xee
+clk_drv:0x00,q_drv:0x00,d_drv:0x00,cs0_drv:0x00,hd_drv:0x00,wp_drv:0x00
+mode:DIO, clock div:2
+load:0x3fff0030,len:6380
+ho 0 tail 12 room 4
+load:0x40078000,len:15916
+load:0x40080400,len:3860
+entry 0x40080638
+[0;32mI (29) boot: ESP-IDF v5.5.1 2nd stage bootloader[0m
+[0;32mI (29) boot: compile time Dec 14 2025 13:06:58[0m
+[0;32mI (29) boot: Multicore bootloader[0m
+[0;32mI (31) boot: chip revision: v3.1[0m
+[0;32mI (33) boot.esp32: SPI Speed      : 40MHz[0m
+[0;32mI (37) boot.esp32: SPI Mode       : DIO[0m
+[0;32mI (41) boot.esp32: SPI Flash Size : 2MB[0m
+[0;32mI (44) boot: Enabling RNG early entropy source...[0m
+[0;32mI (49) boot: Partition Table:[0m
+[0;32mI (51) boot: ## Label            Usage          Type ST Offset   Length[0m
+[0;32mI (58) boot:  0 nvs              WiFi data        01 02 00009000 00006000[0m
+[0;32mI (64) boot:  1 phy_init         RF data          01 01 0000f000 00001000[0m
+[0;32mI (71) boot:  2 factory          factory app      00 00 00010000 00100000[0m
+[0;32mI (77) boot: End of partition table[0m
+[0;32mI (81) esp_image: segment 0: paddr=00010020 vaddr=3f400020 size=1826ch ( 98924) map[0m
+[0;32mI (122) esp_image: segment 1: paddr=00028294 vaddr=3ffb0000 size=03f64h ( 16228) load[0m
+[0;32mI (128) esp_image: segment 2: paddr=0002c200 vaddr=40080000 size=03e18h ( 15896) load[0m
+[0;32mI (134) esp_image: segment 3: paddr=00030020 vaddr=400d0020 size=82460h (533600) map[0m
+[0;32mI (317) esp_image: segment 4: paddr=000b2488 vaddr=40083e18 size=141c4h ( 82372) load[0m
+[0;32mI (349) esp_image: segment 5: paddr=000c6654 vaddr=50000000 size=00020h (    32) load[0m
+[0;32mI (361) boot: Loaded app from partition at offset 0x10000[0m
+[0;32mI (361) boot: Disabling RNG early entropy source...[0m
+[0;32mI (372) cpu_start: Multicore app[0m
+[0;32mI (380) cpu_start: Pro cpu start user code[0m
+[0;32mI (380) cpu_start: cpu freq: 160000000 Hz[0m
+[0;32mI (380) app_init: Application information:[0m
+[0;32mI (380) app_init: Project name:     servos-control-tesis[0m
+[0;32mI (385) app_init: App version:      1[0m
+[0;32mI (389) app_init: Compile time:     Dec 14 2025 13:06:46[0m
+[0;32mI (394) app_init: ELF file SHA256:  acd38b648...[0m
+[0;32mI (398) app_init: ESP-IDF:          v5.5.1[0m
+[0;32mI (402) efuse_init: Min chip rev:     v0.0[0m
+[0;32mI (406) efuse_init: Max chip rev:     v3.99 [0m
+[0;32mI (410) efuse_init: Chip rev:         v3.1[0m
+[0;32mI (414) heap_init: Initializing. RAM available for dynamic allocation:[0m
+[0;32mI (420) heap_init: At 3FFAE6E0 len 00001920 (6 KiB): DRAM[0m
+[0;32mI (425) heap_init: At 3FFB80A8 len 00027F58 (159 KiB): DRAM[0m
+[0;32mI (430) heap_init: At 3FFE0440 len 00003AE0 (14 KiB): D/IRAM[0m
+[0;32mI (436) heap_init: At 3FFE4350 len 0001BCB0 (111 KiB): D/IRAM[0m
+[0;32mI (441) heap_init: At 40097FDC len 00008024 (32 KiB): IRAM[0m
+[0;32mI (448) spi_flash: detected chip: generic[0m
+[0;32mI (450) spi_flash: flash io: dio[0m
+[0;33mW (453) spi_flash: Detected size(4096k) larger than the size in the binary image header(2048k). Using the size in the binary image header.[0m
+[0;32mI (466) main_task: Started on CPU0[0m
+[0;32mI (476) main_task: Calling app_main()[0m
+[0;32mI (476) SERVO_SLAVE: Servos inicializados.[0m
+[0;32mI (476) SERVO_SLAVE: Servos en posición inicial (0 grados)[0m
+[0;32mI (516) wifi:wifi driver task: 3ffbfeac, prio:23, stack:6656, core=0[0m
+[0;32mI (526) wifi:wifi firmware version: 14da9b7[0m
+[0;32mI (526) wifi:wifi certification version: v7.0[0m
+[0;32mI (526) wifi:config NVS flash: enabled[0m
+[0;32mI (526) wifi:config nano formatting: disabled[0m
+[0;32mI (536) wifi:Init data frame dynamic rx buffer num: 32[0m
+[0;32mI (536) wifi:Init static rx mgmt buffer num: 5[0m
+[0;32mI (536) wifi:Init management short buffer num: 32[0m
+[0;32mI (546) wifi:Init dynamic tx buffer num: 32[0m
+[0;32mI (546) wifi:Init static rx buffer size: 1600[0m
+[0;32mI (556) wifi:Init static rx buffer num: 10[0m
+[0;32mI (556) wifi:Init dynamic rx buffer num: 32[0m
+[0;32mI (566) wifi_init: rx ba win: 6[0m
+[0;32mI (566) wifi_init: accept mbox: 6[0m
+[0;32mI (566) wifi_init: tcpip mbox: 32[0m
+[0;32mI (566) wifi_init: udp mbox: 6[0m
+[0;32mI (576) wifi_init: tcp mbox: 6[0m
+[0;32mI (576) wifi_init: tcp tx win: 5760[0m
+[0;32mI (576) wifi_init: tcp rx win: 5760[0m
+[0;32mI (586) wifi_init: tcp mss: 1440[0m
+[0;32mI (586) wifi_init: WiFi IRAM OP enabled[0m
+[0;32mI (586) wifi_init: WiFi RX IRAM OP enabled[0m
+[0;32mI (596) phy_init: phy_version 4861,b71b5ad,Aug  5 2025,11:16:06[0m
+[0;32mI (666) wifi:mode : sta (f4:65:0b:e5:bf:34)[0m
+[0;32mI (666) wifi:enable tsf[0m
+[0;32mI (666) ESPNOW: espnow [version: 2.0] init[0m
+[0;32mI (666) SERVO_SLAVE: ESP-NOW Esclavo configurado. Listo para recibir.[0m
+[0;32mI (676) SERVO_SLAVE: ✅ Sistema de Control listo. Esperando clases (ESP-NOW)...[0m
+ets Jul 29 2019 12:21:46
+
+rst:0x1 (POWERON_RESET),boot:0x13 (SPI_FAST_FLASH_BOOT)
+configsip: 0, SPIWP:0xee
+clk_drv:0x00,q_drv:0x00,d_drv:0x00,cs0_drv:0x00,hd_drv:0x00,wp_drv:0x00
+mode:DIO, clock div:2
+load:0x3fff0030,len:6380
+ho 0 tail 12 room 4
+load:0x40078000,len:15916
+load:0x40080400,len:3860
+entry 0x40080638
+[0;32mI (29) boot: ESP-IDF v5.5.1 2nd stage bootloader[0m
+[0;32mI (29) boot: compile time Dec 14 2025 13:06:58[0m
+[0;32mI (29) boot: Multicore bootloader[0m
+[0;32mI (31) boot: chip revision: v3.1[0m
+[0;32mI (33) boot.esp32: SPI Speed      : 40MHz[0m
+[0;32mI (37) boot.esp32: SPI Mode       : DIO[0m
+[0;32mI (41) boot.esp32: SPI Flash Size : 2MB[0m
+[0;32mI (44) boot: Enabling RNG early entropy source...[0m
+[0;32mI (49) boot: Partition Table:[0m
+[0;32mI (51) boot: ## Label            Usage          Type ST Offset   Length[0m
+[0;32mI (58) boot:  0 nvs              WiFi data        01 02 00009000 00006000[0m
+[0;32mI (64) boot:  1 phy_init         RF data          01 01 0000f000 00001000[0m
+[0;32mI (71) boot:  2 factory          factory app      00 00 00010000 00100000[0m
+[0;32mI (77) boot: End of partition table[0m
+[0;32mI (81) esp_image: segment 0: paddr=00010020 vaddr=3f400020 size=1826ch ( 98924) map[0m
+[0;32mI (122) esp_image: segment 1: paddr=00028294 vaddr=3ffb0000 size=03f64h ( 16228) load[0m
+[0;32mI (128) esp_image: segment 2: paddr=0002c200 vaddr=40080000 size=03e18h ( 15896) load[0m
+[0;32mI (134) esp_image: segment 3: paddr=00030020 vaddr=400d0020 size=82460h (533600) map[0m

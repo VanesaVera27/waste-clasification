@@ -16,6 +16,11 @@
 #include "esp_camera.h"
 #include "esp_http_server.h"
 
+// --- INCLUSIONES DE ESP-NOW (NUEVO) ---
+#include "esp_wifi.h"
+#include "esp_now.h"
+// ------------------------------------
+
 #include "connect_wifi.h"
 
 #include "model_data.h"
@@ -28,13 +33,28 @@
 
 static const char *TAG = "CAM+TFLM";
 
+// =========================================================
+//                   CONFIGURACIÓN ESP-NOW (NUEVO)
+// =========================================================
+// Dirección MAC del ESP32 Esclavo (DEBES REEMPLAZAR ESTO)
+// *****************************************************************
+uint8_t peer_mac_address[] = {0xF4, 0x65, 0x0B, 0xE5, 0xBF, 0x34}; 
+// *****************************************************************
+
+// Estructura de datos a enviar (Debe coincidir con la del Esclavo)
+typedef struct {
+    int class_id;
+} class_data_t;
+
+static bool esp_now_initialized = false;
+
 // ===== CONFIGURACIÓN CAMARA =====
 #define PART_BOUNDARY "123456789000000000000987654321"
 static const char* _STREAM_CONTENT_TYPE = "multipart/x-mixed-replace;boundary=" PART_BOUNDARY;
 static const char* _STREAM_BOUNDARY = "\r\n--" PART_BOUNDARY "\r\n";
 static const char* _STREAM_PART = "Content-Type: image/jpeg\r\nContent-Length: %u\r\n\r\n";
 
-#define CONFIG_XCLK_FREQ 20000000
+#define CONFIG_XCLK_FREQ 10000000
 #define CAM_WIDTH 320
 #define CAM_HEIGHT 240
 #define TARGET_SIZE 96
@@ -57,6 +77,45 @@ std::map<int, std::string> label_map = {
 };
 
 // ===== FUNCIONES =====
+
+// Función de inicialización ESP-NOW (AHORA SOLO MANEJA ESP-NOW PEER)
+void init_espnow_master() {
+    // Inicializar ESP-NOW
+    if (esp_now_init() != ESP_OK) {
+        ESP_LOGE(TAG, "Error inicializando ESP-NOW");
+        return;
+    }
+    esp_now_initialized = true;
+
+    // Registrar el Peer (Esclavo)
+    esp_now_peer_info_t peer_info;
+    memset(&peer_info, 0, sizeof(peer_info));
+    memcpy(peer_info.peer_addr, peer_mac_address, 6);
+    peer_info.channel = 0; 
+    peer_info.encrypt = false;
+
+    if (esp_now_add_peer(&peer_info) != ESP_OK) {
+        ESP_LOGE(TAG, "Error al agregar Peer");
+        return;
+    }
+    ESP_LOGI(TAG, "ESP-NOW Maestro configurado y Peer Esclavo añadido.");
+}
+
+// Función de envío ESP-NOW (NUEVO)
+void send_class_by_espnow(int class_index) {
+    if (!esp_now_initialized) return;
+
+    class_data_t data;
+    data.class_id = class_index;
+
+    esp_err_t result = esp_now_send(peer_mac_address, (uint8_t *) &data, sizeof(data));
+    
+    if (result == ESP_OK) {
+        ESP_LOGI(TAG, "ESP-NOW enviado: Clase %d", class_index);
+    } else {
+        ESP_LOGE(TAG, "Error de envio ESP-NOW: %s", esp_err_to_name(result));
+    }
+}
 
 // Inicializar cámara
 static esp_err_t init_camera(void)
@@ -205,9 +264,13 @@ static void run_inference(camera_fb_t *fb)
         }
     }
 
-    if (predicted_class >= 0)
+    if (predicted_class >= 0) {
         ESP_LOGI(TAG, "🧠 Objeto detectado: %s (%.2f%%)",
-                 label_map[predicted_class].c_str(), max_prob * 100);
+                     label_map[predicted_class].c_str(), max_prob * 100);
+        
+        // 6️⃣ ENVIAR CLASE AL ESCLAVO POR ESP-NOW (¡NUEVO!)
+        send_class_by_espnow(predicted_class);
+    }
 }
 
 // Handler HTTP con inferencia
@@ -261,25 +324,53 @@ httpd_handle_t setup_server(void)
     return server;
 }
 
-// ===== MAIN =====
+// ===== MAIN (FINAL) =====
 extern "C" void app_main(void)
 {
+    // 0. Inicializar NVS
     esp_err_t ret = nvs_flash_init();
     if (ret == ESP_ERR_NVS_NO_FREE_PAGES || ret == ESP_ERR_NVS_NEW_VERSION_FOUND) {
         ESP_ERROR_CHECK(nvs_flash_erase());
         ret = nvs_flash_init();
     }
+    
+    // 1. Inicialización completa del stack de red (SOLO UNA VEZ)
+    ESP_ERROR_CHECK(esp_netif_init());
+    ESP_ERROR_CHECK(esp_event_loop_create_default()); 
+    //esp_netif_create_default_wifi_sta(); 
 
-    connect_wifi();
-    if (!wifi_connect_status) {
-        ESP_LOGE(TAG, "No se pudo conectar al WiFi.");
-        return;
-    }
+    // 2. Inicialización base del Wi-Fi
+    wifi_init_config_t cfg = WIFI_INIT_CONFIG_DEFAULT();
+    ESP_ERROR_CHECK(esp_wifi_init(&cfg));
+    ESP_ERROR_CHECK(esp_wifi_set_mode(WIFI_MODE_STA));
+    ESP_ERROR_CHECK(esp_wifi_start());
+    
+    // 3. Inicialización de ESP-NOW (solo la parte peer)
+    init_espnow_master(); 
 
+    //connect_wifi();
+
+    // 5. Componentes de la aplicación
     if (init_camera() != ESP_OK) return;
-    alloc_buffers();       // <-- Asignar buffers grandes en PSRAM
+    alloc_buffers();
     init_tflite();
-    setup_server();
+    //setup_server();
 
-    ESP_LOGI(TAG, "✅ Sistema listo: cámara + modelo funcionando");
+    ESP_LOGI(TAG, "✅ Sistema listo: espnow en bucle");
+
+    camera_fb_t *fb = NULL;
+    while(1) {
+        // 1. Capturar frame
+        fb = esp_camera_fb_get();
+        if (fb) {
+            // 2. Ejecutar TFLite y enviar por ESP-NOW
+            run_inference(fb);
+            
+            // 3. Liberar frame
+            esp_camera_fb_return(fb);
+        } else {
+            ESP_LOGE(TAG, "Fallo al capturar frame en bucle.");
+        }
+        vTaskDelay(pdMS_TO_TICKS(500)); // Esperar 0.5 segundos entre detecciones
+    }
 }
