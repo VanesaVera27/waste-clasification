@@ -371,6 +371,6 @@ extern "C" void app_main(void)
         } else {
             ESP_LOGE(TAG, "Fallo al capturar frame en bucle.");
         }
-        vTaskDelay(pdMS_TO_TICKS(500)); // Esperar 0.5 segundos entre detecciones
+        vTaskDelay(pdMS_TO_TICKS(10000));
     }
 }
