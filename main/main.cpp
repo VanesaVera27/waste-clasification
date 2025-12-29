@@ -31,6 +31,14 @@
 
 #include "img_converters.h"
 
+
+//-------- inclusiones para el PIR
+#include "driver/gpio.h"
+
+#define PIR_GPIO   GPIO_NUM_14
+#define FLASH_GPIO GPIO_NUM_4
+
+
 static const char *TAG = "CAM+TFLM";
 
 // =========================================================
@@ -77,6 +85,21 @@ std::map<int, std::string> label_map = {
 };
 
 // ===== FUNCIONES =====
+
+//Función de inicialización de PIR y FLASH
+void init_pir_and_flash()
+{
+    // Flash
+    gpio_reset_pin(FLASH_GPIO);
+    gpio_set_direction(FLASH_GPIO, GPIO_MODE_OUTPUT);
+    gpio_set_level(FLASH_GPIO, 0);  // apagado inicial
+
+    // PIR
+    gpio_reset_pin(PIR_GPIO);
+    gpio_set_direction(PIR_GPIO, GPIO_MODE_INPUT);
+
+    vTaskDelay(pdMS_TO_TICKS(500)); // estabilización
+}
 
 // Función de inicialización ESP-NOW (AHORA SOLO MANEJA ESP-NOW PEER)
 void init_espnow_master() {
@@ -354,23 +377,34 @@ extern "C" void app_main(void)
     if (init_camera() != ESP_OK) return;
     alloc_buffers();
     init_tflite();
-    //setup_server();
+    init_pir_and_flash();
 
     ESP_LOGI(TAG, "✅ Sistema listo: espnow en bucle");
 
     camera_fb_t *fb = NULL;
-    while(1) {
-        // 1. Capturar frame
-        fb = esp_camera_fb_get();
-        if (fb) {
-            // 2. Ejecutar TFLite y enviar por ESP-NOW
-            run_inference(fb);
-            
-            // 3. Liberar frame
-            esp_camera_fb_return(fb);
-        } else {
-            ESP_LOGE(TAG, "Fallo al capturar frame en bucle.");
+    while (1) {
+        int pir = gpio_get_level(PIR_GPIO);
+
+        if (pir == 1) {
+            ESP_LOGI(TAG, "🚶 Movimiento detectado");
+
+            gpio_set_level(FLASH_GPIO, 1);  // prender flash
+
+            camera_fb_t *fb = esp_camera_fb_get();
+            if (fb) {
+                run_inference(fb);
+                esp_camera_fb_return(fb);
+            } else {
+                ESP_LOGE(TAG, "Fallo al capturar frame");
+            }
+
+            gpio_set_level(FLASH_GPIO, 0);  // apagar flash
+
+            // Evita clasificar 20 veces el mismo movimiento
+            vTaskDelay(pdMS_TO_TICKS(3000));
         }
-        vTaskDelay(pdMS_TO_TICKS(10000));
+
+        vTaskDelay(pdMS_TO_TICKS(100));
     }
+
 }

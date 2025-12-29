@@ -5,7 +5,7 @@
   "idf.openOcdConfigs": [
     "board/esp32-wrover-kit-3.3v.cfg"
   ],
-  "idf.portWin": "COM6",
+  "idf.portWin": "COM4",
   "idf.toolsPathWin": "C:\\Users\\vanes\\.espressif",
   "idf.customExtraVars": {
     "IDF_TARGET": "esp32"
@@ -19,5 +19,5 @@
   "files.associations": {
     "cstdint": "cpp"
   },
-  "idf.monitorPort": "COM6"
+  "idf.monitorPort": "COM4"
 }
