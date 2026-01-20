@@ -16,10 +16,9 @@
 #include "esp_camera.h"
 #include "esp_http_server.h"
 
-// --- INCLUSIONES DE ESP-NOW (NUEVO) ---
 #include "esp_wifi.h"
 #include "esp_now.h"
-// ------------------------------------
+
 
 #include "connect_wifi.h"
 
@@ -44,12 +43,13 @@ static const char *TAG = "CAM+TFLM";
 // =========================================================
 //                   CONFIGURACIÓN ESP-NOW (NUEVO)
 // =========================================================
-// Dirección MAC del ESP32 Esclavo (DEBES REEMPLAZAR ESTO)
+// Dirección MAC del ESP32 Esclavo
 // *****************************************************************
-uint8_t peer_mac_address[] = {0xF4, 0x65, 0x0B, 0xE5, 0xBF, 0x34}; 
+uint8_t peer_mac_address[] = {0xEC, 0xE3, 0x34, 0xDA, 0xC5, 0xB0}; 
+
 // *****************************************************************
 
-// Estructura de datos a enviar (Debe coincidir con la del Esclavo)
+// Estructura de datos a enviar 
 typedef struct {
     int class_id;
 } class_data_t;
@@ -101,7 +101,7 @@ void init_pir_and_flash()
     vTaskDelay(pdMS_TO_TICKS(500)); // estabilización
 }
 
-// Función de inicialización ESP-NOW (AHORA SOLO MANEJA ESP-NOW PEER)
+// Función de inicialización ESP-NOW 
 void init_espnow_master() {
     // Inicializar ESP-NOW
     if (esp_now_init() != ESP_OK) {
@@ -280,7 +280,7 @@ static void run_inference(camera_fb_t *fb)
     float max_prob = -1.0f;
 
     for (int i = 0; i < output->dims->data[1]; i++) {
-        float prob = (float)output->data.uint8[i] / 255.0f; // uint8 -> float
+        float prob = (float)output->data.uint8[i] / 255.0f; 
         if (prob > max_prob) {
             max_prob = prob;
             predicted_class = i;
@@ -291,7 +291,7 @@ static void run_inference(camera_fb_t *fb)
         ESP_LOGI(TAG, "🧠 Objeto detectado: %s (%.2f%%)",
                      label_map[predicted_class].c_str(), max_prob * 100);
         
-        // 6️⃣ ENVIAR CLASE AL ESCLAVO POR ESP-NOW (¡NUEVO!)
+        // 6️⃣ ENVIAR CLASE AL ESCLAVO POR ESP-NOW 
         send_class_by_espnow(predicted_class);
     }
 }
@@ -400,7 +400,6 @@ extern "C" void app_main(void)
 
             gpio_set_level(FLASH_GPIO, 0);  // apagar flash
 
-            // Evita clasificar 20 veces el mismo movimiento
             vTaskDelay(pdMS_TO_TICKS(3000));
         }
 
