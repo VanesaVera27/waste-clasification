@@ -19,6 +19,6 @@
   "files.associations": {
     "cstdint": "cpp"
   },
-  "idf.monitorPort": "COM6",
+  "idf.monitorPort": "COM4",
   "idf.currentSetup": "C:\\Users\\vanes\\esp\\v5.5.1\\esp-idf"
 }
