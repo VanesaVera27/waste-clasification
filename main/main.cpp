@@ -11,7 +11,10 @@
 
 #include "camera_pins.h"
 
+#include <sys/stat.h>
+
 static const char *TAG = "AUTO_CAM";
+
 
 // Flash (cambiar si hay conflicto)
 #define FLASH_GPIO GPIO_NUM_4
@@ -21,6 +24,8 @@ static const char *TAG = "AUTO_CAM";
 #define PIN_NUM_MOSI GPIO_NUM_15
 #define PIN_NUM_CLK  GPIO_NUM_14
 #define PIN_NUM_CS   GPIO_NUM_13
+
+
 
 static int photo_count = 0;
 
@@ -105,13 +110,38 @@ esp_err_t init_camera()
         .ledc_timer = LEDC_TIMER_0,
         .ledc_channel = LEDC_CHANNEL_0,
         .pixel_format = PIXFORMAT_JPEG,
-        .frame_size = FRAMESIZE_QXGA,
+        .frame_size = FRAMESIZE_VGA,
         .jpeg_quality = 10,
         .fb_count = 1
     };
 
     return esp_camera_init(&config);
 }
+
+// ============================
+// BUSCAR ÚLTIMO NÚMERO EN SD
+// ============================
+void find_last_photo_index() {
+    char path[64];
+    struct stat st;
+    
+    ESP_LOGI(TAG, "Buscando último índice de foto...");
+    
+    // Empezamos desde 0 y buscamos hasta encontrar un hueco libre
+    while (true) {
+        sprintf(path, "/sdcard/photo_%d.jpg", photo_count);
+        if (stat(path, &st) != 0) {
+            // Si stat devuelve != 0, el archivo NO existe
+            ESP_LOGI(TAG, "Siguiente índice disponible: %d", photo_count);
+            break;
+        }
+        photo_count++;
+        
+        // Seguridad para no entrar en loop infinito si la SD está llena
+        if(photo_count > 10000) break; 
+    }
+}
+
 
 // ============================
 // GUARDAR FOTO
@@ -161,20 +191,26 @@ extern "C" void app_main(void)
         return;
     }
 
-
+    find_last_photo_index();
 
     ESP_LOGI(TAG, "🚀 Listo - foto cada 3 segundos");
 
     while (1) {
-        gpio_set_level(FLASH_GPIO, 1); 
-        vTaskDelay(pdMS_TO_TICKS(900)); 
+
+        ESP_LOGI(TAG, "Saco foto");
+        
+ 
+        gpio_set_level(FLASH_GPIO,0.25);
+        vTaskDelay(pdMS_TO_TICKS(300));
         
         camera_fb_t *fb_discard = esp_camera_fb_get();
         esp_camera_fb_return(fb_discard);
+        gpio_set_level(FLASH_GPIO, 0);
 
         save_photo(); 
-        
-        gpio_set_level(FLASH_GPIO, 0);
+        ESP_LOGI(TAG, "Guardo foto");
+        ESP_LOGI(TAG, "Espera 3 segundos");
         vTaskDelay(pdMS_TO_TICKS(3000));
+
     }
 }
