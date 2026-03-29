@@ -105,8 +105,8 @@ esp_err_t init_camera()
         .ledc_timer = LEDC_TIMER_0,
         .ledc_channel = LEDC_CHANNEL_0,
         .pixel_format = PIXFORMAT_JPEG,
-        .frame_size = FRAMESIZE_QVGA,
-        .jpeg_quality = 12,
+        .frame_size = FRAMESIZE_QXGA,
+        .jpeg_quality = 10,
         .fb_count = 1
     };
 
@@ -161,17 +161,20 @@ extern "C" void app_main(void)
         return;
     }
 
+
+
     ESP_LOGI(TAG, "🚀 Listo - foto cada 3 segundos");
 
-    while (1)
-    {
-        gpio_set_level(FLASH_GPIO, 1);
-        vTaskDelay(pdMS_TO_TICKS(200));
+    while (1) {
+        gpio_set_level(FLASH_GPIO, 1); 
+        vTaskDelay(pdMS_TO_TICKS(900)); 
+        
+        camera_fb_t *fb_discard = esp_camera_fb_get();
+        esp_camera_fb_return(fb_discard);
 
-        save_photo();
-
+        save_photo(); 
+        
         gpio_set_level(FLASH_GPIO, 0);
-
         vTaskDelay(pdMS_TO_TICKS(3000));
     }
 }
