@@ -37,9 +37,12 @@ C:/Users/Recursiva/Documents/waste-clasification/build/esp-idf/esp_app_format/li
 C:/Users/Recursiva/Documents/waste-clasification/build/esp-idf/esp_bootloader_format/libesp_bootloader_format.a
 C:/Users/Recursiva/Documents/waste-clasification/build/esp-idf/esp_psram/libesp_psram.a
 C:/Users/Recursiva/Documents/waste-clasification/build/esp-idf/esp_driver_spi/libesp_driver_spi.a
-C:/Users/Recursiva/Documents/waste-clasification/build/esp-idf/esp_http_server/libesp_http_server.a
-C:/Users/Recursiva/Documents/waste-clasification/build/esp-idf/http_parser/libhttp_parser.a
+C:/Users/Recursiva/Documents/waste-clasification/build/esp-idf/esp_http_client/libesp_http_client.a
 C:/Users/Recursiva/Documents/waste-clasification/build/esp-idf/esp_event/libesp_event.a
+C:/Users/Recursiva/Documents/waste-clasification/build/esp-idf/tcp_transport/libtcp_transport.a
+C:/Users/Recursiva/Documents/waste-clasification/build/esp-idf/esp-tls/libesp-tls.a
+C:/Users/Recursiva/Documents/waste-clasification/build/esp-idf/http_parser/libhttp_parser.a
+C:/Users/Recursiva/Documents/waste-clasification/build/esp-idf/esp_http_server/libesp_http_server.a
 C:/Users/Recursiva/Documents/waste-clasification/build/esp-idf/nvs_flash/libnvs_flash.a
 C:/Users/Recursiva/Documents/waste-clasification/build/esp-idf/mbedtls/libmbedtls.a
 C:/Users/Recursiva/Documents/waste-clasification/build/esp-idf/esp_wifi/libesp_wifi.a
@@ -122,6 +125,9 @@ C:/Users/Recursiva/Documents/waste-clasification/build/esp-idf/esp_http_server/l
 C:/Users/Recursiva/Documents/waste-clasification/build/esp-idf/wear_levelling/libwear_levelling.a
 C:/Users/Recursiva/Documents/waste-clasification/build/esp-idf/fatfs/libfatfs.a
 C:/Users/Recursiva/Documents/waste-clasification/build/esp-idf/wear_levelling/libwear_levelling.a
+C:/Users/Recursiva/Documents/waste-clasification/build/esp-idf/esp-tls/libesp-tls.a
+C:/Users/Recursiva/Documents/waste-clasification/build/esp-idf/tcp_transport/libtcp_transport.a
+C:/Users/Recursiva/Documents/waste-clasification/build/esp-idf/esp_http_client/libesp_http_client.a
 C:/Users/Recursiva/Documents/waste-clasification/build/esp-idf/esp_psram/libesp_psram.a
 C:/Users/Recursiva/Documents/waste-clasification/build/esp-idf/espressif__esp_jpeg/libespressif__esp_jpeg.a
 C:/Users/Recursiva/Documents/waste-clasification/build/esp-idf/espressif__esp32-camera/libespressif__esp32-camera.a

@@ -3,7 +3,7 @@
 #include "nvs_flash.h"
 #include "driver/gpio.h"
 
-// SD por SPI (IMPORTANTE)
+// SD SPI
 #include "esp_vfs_fat.h"
 #include "sdmmc_cmd.h"
 #include "driver/sdspi_host.h"
@@ -13,16 +13,16 @@
 
 static const char *TAG = "AUTO_CAM";
 
-// Flash (cambiar si hay conflicto)
+// FLASH
 #define FLASH_GPIO GPIO_NUM_4
 
-// Pines SPI (ajustables)
+// SPI
 #define PIN_NUM_MISO GPIO_NUM_2
 #define PIN_NUM_MOSI GPIO_NUM_15
 #define PIN_NUM_CLK  GPIO_NUM_14
 #define PIN_NUM_CS   GPIO_NUM_13
 
-static int photo_count = 0;
+int photo_count = 0;
 
 // ============================
 // FLASH
@@ -35,12 +35,10 @@ void init_flash()
 }
 
 // ============================
-// SD por SPI (ESTABLE)
+// SD
 // ============================
 esp_err_t init_sdcard()
 {
-    esp_err_t ret;
-
     spi_bus_config_t bus_cfg = {
         .mosi_io_num = PIN_NUM_MOSI,
         .miso_io_num = PIN_NUM_MISO,
@@ -49,10 +47,9 @@ esp_err_t init_sdcard()
         .quadhd_io_num = -1,
     };
 
-    ret = spi_bus_initialize(SPI2_HOST, &bus_cfg, SPI_DMA_CH_AUTO);
-    if (ret != ESP_OK) {
-        ESP_LOGE(TAG, "Error init SPI");
-        return ret;
+    if (spi_bus_initialize(SPI2_HOST, &bus_cfg, SPI_DMA_CH_AUTO) != ESP_OK) {
+        ESP_LOGE(TAG, "Error SPI");
+        return ESP_FAIL;
     }
 
     sdspi_device_config_t slot_config = SDSPI_DEVICE_CONFIG_DEFAULT();
@@ -65,13 +62,11 @@ esp_err_t init_sdcard()
     };
 
     sdmmc_host_t host = SDSPI_HOST_DEFAULT();
-
     sdmmc_card_t *card;
-    ret = esp_vfs_fat_sdspi_mount("/sdcard", &host, &slot_config, &mount_config, &card);
 
-    if (ret != ESP_OK) {
-        ESP_LOGE(TAG, "❌ Error montando SD");
-        return ret;
+    if (esp_vfs_fat_sdspi_mount("/sdcard", &host, &slot_config, &mount_config, &card) != ESP_OK) {
+        ESP_LOGE(TAG, "Error SD");
+        return ESP_FAIL;
     }
 
     ESP_LOGI(TAG, "✅ SD OK");
@@ -79,7 +74,36 @@ esp_err_t init_sdcard()
 }
 
 // ============================
-// CÁMARA (TU CONFIG)
+// LEER CONTADOR
+// ============================
+void load_counter()
+{
+    FILE *f = fopen("/sdcard/count.txt", "r");
+    if (f == NULL) {
+        photo_count = 0;
+        return;
+    }
+
+    fscanf(f, "%d", &photo_count);
+    fclose(f);
+
+    ESP_LOGI(TAG, "Contador cargado: %d", photo_count);
+}
+
+// ============================
+// GUARDAR CONTADOR
+// ============================
+void save_counter()
+{
+    FILE *f = fopen("/sdcard/count.txt", "w");
+    if (f == NULL) return;
+
+    fprintf(f, "%d", photo_count);
+    fclose(f);
+}
+
+// ============================
+// CAMARA
 // ============================
 esp_err_t init_camera()
 {
@@ -105,6 +129,7 @@ esp_err_t init_camera()
         .ledc_timer = LEDC_TIMER_0,
         .ledc_channel = LEDC_CHANNEL_0,
         .pixel_format = PIXFORMAT_JPEG,
+
         .frame_size = FRAMESIZE_QVGA,
         .jpeg_quality = 12,
         .fb_count = 1
@@ -120,12 +145,12 @@ void save_photo()
 {
     camera_fb_t *fb = esp_camera_fb_get();
     if (!fb) {
-        ESP_LOGE(TAG, "Error capturando");
+        ESP_LOGE(TAG, "Error captura");
         return;
     }
 
     char path[64];
-    sprintf(path, "/sdcard/photo_%d.jpg", photo_count++);
+    sprintf(path, "/sdcard/photo_%d.jpg", photo_count);
 
     FILE *file = fopen(path, "wb");
     if (!file) {
@@ -138,6 +163,9 @@ void save_photo()
     fclose(file);
 
     ESP_LOGI(TAG, "📸 %s", path);
+
+    photo_count++;
+    save_counter(); // 🔥 clave
 
     esp_camera_fb_return(fb);
 }
@@ -161,7 +189,9 @@ extern "C" void app_main(void)
         return;
     }
 
-    ESP_LOGI(TAG, "🚀 Listo - foto cada 3 segundos");
+    load_counter();
+
+    ESP_LOGI(TAG, "🚀 Listo");
 
     while (1)
     {
@@ -172,6 +202,6 @@ extern "C" void app_main(void)
 
         gpio_set_level(FLASH_GPIO, 0);
 
-        vTaskDelay(pdMS_TO_TICKS(3000));
+        vTaskDelay(pdMS_TO_TICKS(4000));
     }
 }
