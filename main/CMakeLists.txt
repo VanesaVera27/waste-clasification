@@ -10,5 +10,5 @@ idf_component_register(
         esp_psram 
         freertos
     REQUIRES 
-        esp_wifi esp-tflite-micro nvs_flash esp_timer esp_http_server 
+        esp_wifi esp-tflite-micro nvs_flash esp_timer esp_http_server fatfs
 )
