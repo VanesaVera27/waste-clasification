@@ -50,6 +50,7 @@ static const char *TAG = "TESIS_CAM";
 
 
 static int photo_count = 0;  
+static char current_session_dir[32];
 
 // =========================================================
 //                   CONFIGURACIÓN ESP-NOW
@@ -135,36 +136,45 @@ esp_err_t init_sdcard() {
     return esp_vfs_fat_sdspi_mount("/sdcard", &host, &slot_config, &mount_config, &card);
 }
 
-// Función para encontrar el indice de fotos en SD
-void find_last_photo_index() {
-    char path[64];
+//Función para crear carpeta por sesión
+
+void create_session_folder() {
+    int session_id = 0;
     struct stat st;
-    while (photo_count < 10000) {
-        sprintf(path, "/sdcard/photo_%d.jpg", photo_count);
-        if (stat(path, &st) != 0) break;
-        photo_count++;
+    
+    // Buscar el siguiente ID de sesión disponible
+    do {
+        session_id++;
+        sprintf(current_session_dir, "/sdcard/s%d", session_id);
+    } while (stat(current_session_dir, &st) == 0); // Si la carpeta existe, prueba el siguiente ID
+
+    // Crear la carpeta
+    if (mkdir(current_session_dir, 0775) == 0) {
+        ESP_LOGI(TAG, "📁 Nueva sesión creada: %s", current_session_dir);
+    } else {
+        ESP_LOGE(TAG, "❌ Error al crear carpeta de sesión");
+        strcpy(current_session_dir, "/sdcard"); // Fallback a la raíz si falla
     }
-    ESP_LOGI(TAG, "Siguiente índice SD: %d", photo_count);
 }
 
 
-// Función para guardar el frame actual en la SD
+
 void save_fb_to_sd(camera_fb_t *fb, const char* label) {
     if (!fb) return;
     char path[128];
-    // Guardamos con el nombre de la clase para identificarla fácil
-    sprintf(path, "/sdcard/%d_%s.jpg", photo_count++, label);
+    
+    // Usamos el directorio de la sesión actual
+    sprintf(path, "%s/%d_img.jpg", current_session_dir, photo_count++);
 
     FILE *file = fopen(path, "wb");
     if (!file) {
-        ESP_LOGE(TAG, "Error al abrir archivo en SD");
+        ESP_LOGE(TAG, "Error al abrir archivo: %s", path);
         return;
     }
     fwrite(fb->buf, 1, fb->len, file);
     fclose(file);
     ESP_LOGI(TAG, "📸 Foto guardada: %s", path);
 }
-
 
 
 // Función de inicialización ESP-NOW 
@@ -338,22 +348,27 @@ static void run_inference_and_save(camera_fb_t *fb)
     int predicted_class = -1;
     float max_prob = -1.0f;
 
-    for (int i = 0; i < output->dims->data[1]; i++) {
-        float prob = (float)output->data.uint8[i] / 255.0f; 
+    for (int i = 0; i < 4 ; i++) {
+        float prob = (output->data.uint8[i] - output->params.zero_point) * output->params.scale;
         if (prob > max_prob) {
             max_prob = prob;
             predicted_class = i;
         }
     }
 
-    if (predicted_class >= 0) {
-        ESP_LOGI(TAG, "🧠 Objeto detectado: %s (%.2f%%)",
-                     label_map[predicted_class].c_str(), max_prob * 100);
+    // VALIDACIÓN DE SEGURIDAD PARA LA SD
+    if (predicted_class >= 0 && predicted_class <= 3) {
+        std::string label = label_map[predicted_class];
+        ESP_LOGI(TAG, "🧠 Objeto: %s (%.2f%%)", label.c_str(), max_prob * 100);
         
-        // 6️⃣ ENVIAR CLASE AL ESCLAVO POR ESP-NOW 
         send_class_by_espnow(predicted_class);
-        save_fb_to_sd(fb, label_map[predicted_class].c_str());
-
+        gpio_set_level(FLASH_GPIO, 0);
+        vTaskDelay(pdMS_TO_TICKS(100)); // Respiro para el voltaje
+        
+        // Guardar usando el label validado
+        save_fb_to_sd(fb, label.c_str());
+    } else {
+        ESP_LOGE(TAG, "Clase predicha fuera de rango: %d", predicted_class);
     }
 }
 
@@ -378,7 +393,8 @@ extern "C" void app_main(void)
     init_pir_and_flash();
 
     if (init_sdcard() == ESP_OK) {
-        find_last_photo_index();
+        create_session_folder();
+        photo_count=0;
     } else {
         ESP_LOGE(TAG, "Fallo crítico: No se pudo montar la SD");
     }
@@ -394,10 +410,24 @@ extern "C" void app_main(void)
         int pir = gpio_get_level(PIR_GPIO);
 
         if (pir == 1) {
+            
             ESP_LOGI(TAG, "🚶 Movimiento detectado");
-            gpio_set_level(FLASH_GPIO, 1); 
-            vTaskDelay(pdMS_TO_TICKS(400));
 
+            //1. Encender luz
+            gpio_set_level(FLASH_GPIO, 1); 
+
+            //2. Esperar a que el sensor se adapte a la luz 
+            vTaskDelay(pdMS_TO_TICKS(800));
+
+            //3. Limpiar buffer
+
+            camera_fb_t *fb_old = esp_camera_fb_get();
+            if (fb_old) {
+                esp_camera_fb_return(fb_old); 
+                ESP_LOGD(TAG, "Buffer limpiado");
+            }
+
+            //4. Captura que se va a usar 
             camera_fb_t *fb = esp_camera_fb_get();
             if (fb) {
                 run_inference_and_save(fb);
@@ -406,7 +436,7 @@ extern "C" void app_main(void)
                 ESP_LOGE(TAG, "Fallo al capturar frame");
             }
 
-            gpio_set_level(FLASH_GPIO, 0);
+            //5. Esperar para no saturar al sensor y los servos puedan trabajar tranquilos
             vTaskDelay(pdMS_TO_TICKS(4000));
         }
 
