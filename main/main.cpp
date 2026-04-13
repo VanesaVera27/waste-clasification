@@ -38,7 +38,7 @@ static const char *TAG = "TESIS_CAM";
 
 
 // Configuración de Pines
-#define PIR_GPIO   GPIO_NUM_12
+#define PIR_GPIO   GPIO_NUM_3
 #define FLASH_GPIO GPIO_NUM_4
 
 // Pines SPI para SD
@@ -66,7 +66,7 @@ typedef struct {
 static bool esp_now_initialized = false;
 
 // ===== CONFIGURACIÓN CAMARA & TFLM =====
-#define CONFIG_XCLK_FREQ 10000000
+#define CONFIG_XCLK_FREQ 8000000
 #define CAM_WIDTH 320
 #define CAM_HEIGHT 240
 #define TARGET_SIZE 96
@@ -146,14 +146,14 @@ void create_session_folder() {
     do {
         session_id++;
         sprintf(current_session_dir, "/sdcard/s%d", session_id);
-    } while (stat(current_session_dir, &st) == 0); // Si la carpeta existe, prueba el siguiente ID
+    } while (stat(current_session_dir, &st) == 0); 
 
     // Crear la carpeta
     if (mkdir(current_session_dir, 0775) == 0) {
         ESP_LOGI(TAG, "📁 Nueva sesión creada: %s", current_session_dir);
     } else {
         ESP_LOGE(TAG, "❌ Error al crear carpeta de sesión");
-        strcpy(current_session_dir, "/sdcard"); // Fallback a la raíz si falla
+        strcpy(current_session_dir, "/sdcard");
     }
 }
 
@@ -163,16 +163,17 @@ void save_fb_to_sd(camera_fb_t *fb, const char* label) {
     if (!fb) return;
     char path[128];
     
-    // Usamos el directorio de la sesión actual
-    sprintf(path, "%s/%d_img.jpg", current_session_dir, photo_count++);
+    sprintf(path, "%s/%d_%.3s.jpg", current_session_dir, photo_count++, label);
 
     FILE *file = fopen(path, "wb");
     if (!file) {
         ESP_LOGE(TAG, "Error al abrir archivo: %s", path);
         return;
     }
+    
     fwrite(fb->buf, 1, fb->len, file);
     fclose(file);
+    
     ESP_LOGI(TAG, "📸 Foto guardada: %s", path);
 }
 
